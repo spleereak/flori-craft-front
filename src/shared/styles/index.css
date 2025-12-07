@@ -9,6 +9,9 @@
 
   --spacing: 0.0625rem;
 
+  --breakpoint-*: initial;
+  --breakpoint-desktop: 1025px;
+
   --border-3: calc(var(--spacing) * 3);
   --border-2: calc(var(--spacing) * 2);
   --border-1: calc(var(--spacing) * 1);

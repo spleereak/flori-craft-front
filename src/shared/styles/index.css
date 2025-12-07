@@ -1,0 +1,16 @@
+@theme {
+  --color-green-main: #4F564E;
+  --color-grey-for-text: #808080;
+  --color-black: #030306;
+  --color-light-grey: #F6F6F5;
+  --color-brown: #3C3432;
+  --color-white: #FFFFFF;
+  --color-red: #C30003;
+
+  --spacing: 0.0625rem;
+
+  --border-3: calc(var(--spacing) * 3);
+  --border-2: calc(var(--spacing) * 2);
+  --border-1: calc(var(--spacing) * 1);
+  --border-0: calc(var(--spacing) * 0);
+}

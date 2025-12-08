@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 
-import { cn } from "@/src/utils/cn";
+import { cn } from "@/src/shared/lib/utils/cn";
 
 import { ButtonProps } from "../types/types";
 

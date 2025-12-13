@@ -65,7 +65,7 @@ const RangeSlider = React.forwardRef(
         </SliderPrimitive.Track>
         {localValues.map((_, index) => (
           <React.Fragment key={index}>
-            <SliderPrimitive.Thumb className="border-brown/50 focus-visible:ring-ring bg-brown desktop:h-40 desktop:w-40 block h-16 w-16 rounded-full border shadow transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50" />
+            <SliderPrimitive.Thumb className="border-brown/50 focus-visible:ring-ring bg-brown desktop:h-40 desktop:w-40 block h-24 w-24 rounded-full border shadow transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50" />
           </React.Fragment>
         ))}
       </SliderPrimitive.Root>

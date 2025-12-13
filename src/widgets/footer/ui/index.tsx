@@ -3,10 +3,16 @@ import Link from "next/link";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { TelegramIcon } from "@/src/shared/icons/TelegramIcon";
 import { WhatsappIcon } from "@/src/shared/icons/WhatsappIcon";
+import { cn } from "@/src/shared/lib/utils/cn";
 
-export const Footer = () => {
+export const Footer = ({ className }: { className?: string }) => {
   return (
-    <footer className="desktop:gap-133 gap-15 desktop:px-90 desktop:items-center flex flex-row items-start bg-[url('/images/bg.png')] px-16 py-60 text-white">
+    <footer
+      className={cn(
+        "desktop:gap-133 gap-15 desktop:px-90 desktop:items-center desktop:bg-[url('/images/bg.png')] flex flex-row items-start bg-[url('/images/mobile-bg.png')] bg-cover bg-center px-16 py-60 text-white",
+        className
+      )}
+    >
       <LogoIcon
         className="desktop:w-215 desktop:h-140 w-84 h-55"
         mode="light"

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import Link from "next/link";
+
 import { ProductsList } from "../components/ProductsList/ui";
 import { Tabs } from "../components/Tabs/ui";
 
@@ -158,15 +160,16 @@ export default function HomePage() {
           {catalog.map((category, i) => {
             const id = i.toString();
             return (
-              <ProductsList
-                ref={el => {
-                  sectionRefs.current[id] = el;
-                }}
-                category={category.category}
-                products={category.products}
-                key={id}
-                className="desktop:px-90 px-16"
-              />
+              <Link href={`/flowers/${id}`} key={id}>
+                <ProductsList
+                  ref={el => {
+                    sectionRefs.current[id] = el;
+                  }}
+                  category={category.category}
+                  products={category.products}
+                  className="desktop:px-90 px-16"
+                />
+              </Link>
             );
           })}
         </div>

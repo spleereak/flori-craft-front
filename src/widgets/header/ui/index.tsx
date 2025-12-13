@@ -1,10 +1,16 @@
 import { CartIcon } from "@/src/shared/icons/CartIcon";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { UserIcon } from "@/src/shared/icons/UserIcon";
+import { cn } from "@/src/shared/lib/utils/cn";
 
-export const Header = () => {
+export const Header = ({ className }: { className?: string }) => {
   return (
-    <header className="desktop:py-5 py-15 desktop:px-90 fixed z-50 flex w-full flex-row items-center justify-between overflow-x-hidden bg-white px-16 shadow-[0_4px_4px_rgba(0,0,0,0.2)]">
+    <header
+      className={cn(
+        "desktop:py-5 py-15 desktop:px-90 fixed z-50 flex w-full flex-row items-center justify-between overflow-x-hidden bg-white px-16 shadow-[0_4px_4px_rgba(0,0,0,0.2)]",
+        className
+      )}
+    >
       <div className="desktop:flex desktop:flex-row desktop:gap-48 desktop:items-center contents">
         <LogoIcon />
         <p className="p max-w-376 desktop:block text-grey-for-text hidden">

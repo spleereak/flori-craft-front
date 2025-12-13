@@ -5,6 +5,7 @@ import React from "react";
 import { cn } from "@/src/shared/lib/utils/cn";
 import { TabButton } from "@/src/shared/ui/TabButton";
 
+import { FilterPrice } from "../../FilterPrice/ui";
 import { TabsProps } from "../types";
 
 export const Tabs: React.FC<TabsProps> = ({
@@ -24,7 +25,7 @@ export const Tabs: React.FC<TabsProps> = ({
         className
       )}
     >
-      {/* price popup */}
+      <FilterPrice />
       {categories.map(category => (
         <TabButton
           key={category.id}

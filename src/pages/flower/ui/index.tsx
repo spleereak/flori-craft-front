@@ -48,7 +48,7 @@ export default function ProductPage() {
             <h3 className="h3">{formatPrice(product.price)}</h3>
             <SizeBlock sizes={product.availableSizes} />
           </div>
-          <div className="desktop:mb-30 desktop:flex-col fixed bottom-0 left-0 flex w-full flex-row gap-10 bg-white p-16">
+          <div className="desktop:mb-30 desktop:flex-col max-desktop:fixed desktop:p-0 bottom-0 left-0 flex w-full flex-row gap-10 bg-white p-16">
             <Button>Добавить в корзину</Button>
             <Button appearance="outline">Купить сейчас</Button>
           </div>

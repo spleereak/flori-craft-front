@@ -44,15 +44,15 @@ export default function ProductPage() {
         <ImagesBlock images={product.images} />
         <div className="desktop:pt-50 desktop:max-w-491 desktop:px-0 flex flex-col px-16 pt-12">
           <h3 className="h3 desktop:mb-46 mb-22">{product.name}</h3>
-          <div className="desktop:flex-col desktop:gap-24 desktop:justify-start desktop:mb-51 mb-22 flex justify-between">
-            <h3 className="h3">{formatPrice(product.price)}</h3>
+          <div className="desktop:flex-col desktop:gap-24 desktop:justify-start desktop:mb-51 mb-22 flex flex-row-reverse justify-between">
+            <h3 className="h3">{formatPrice(product.price)} ₽</h3>
             <SizeBlock sizes={product.availableSizes} />
           </div>
           <div className="desktop:mb-30 desktop:flex-col max-desktop:fixed desktop:p-0 bottom-0 left-0 flex w-full flex-row gap-10 bg-white p-16">
             <Button>Добавить в корзину</Button>
             <Button appearance="outline">Купить сейчас</Button>
           </div>
-          <div className="desktop:gap-24 text-grey-for-text flex flex-col gap-16">
+          <div className="desktop:gap-24 text-grey-for-text flex flex-col">
             {product.info.map((text, i) => (
               <p key={i} className="caption">
                 {text}

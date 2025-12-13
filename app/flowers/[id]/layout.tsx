@@ -19,10 +19,10 @@ export default function ProductLayout({
     <html>
       <body>
         <Header className="desktop:flex hidden" />
-        <main className="desktop:pt-232 desktop:px-90 desktop:pb-160 pb-80">
+        <main className="desktop:pt-232 desktop:px-90 desktop:pb-160 pb-110">
           {children}
         </main>
-        <Footer className="desktop:mb-0 mb-73" />
+        <Footer className="max-desktop:hidden" />
       </body>
     </html>
   );

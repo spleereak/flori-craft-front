@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from "@/src/shared/components/ui/popover";
 import { RangeSlider } from "@/src/shared/components/ui/range-slider";
+import { useMedia } from "@/src/shared/hooks/use-media";
 import { ArrowDown } from "@/src/shared/icons/ArrowDown";
 
 interface PriceProps {
@@ -21,6 +22,8 @@ export const FilterPrice = () => {
     priceFrom: undefined,
     priceTo: undefined,
   });
+
+  const { isDesktop } = useMedia();
 
   const updatePrice = (name: keyof PriceProps, value: number) => {
     setPrices(prev => ({
@@ -45,8 +48,9 @@ export const FilterPrice = () => {
         </div>
       </PopoverTrigger>
       <PopoverContent
+        onOpenAutoFocus={e => e.preventDefault()}
         className="w-full"
-        sideOffset={24}
+        sideOffset={!isDesktop ? 9 : 24}
         alignOffset={0}
         align="start"
       >
@@ -57,7 +61,7 @@ export const FilterPrice = () => {
               placeholder="от 0"
               min={0}
               max={60000}
-              value={String(prices.priceFrom)}
+              value={String(prices.priceFrom) || 0}
               onChange={e => updatePrice("priceFrom", Number(e.target.value))}
             />
             <Input
@@ -65,13 +69,13 @@ export const FilterPrice = () => {
               placeholder="до 60000"
               min={1000}
               max={60000}
-              value={String(prices.priceTo)}
+              value={String(prices.priceTo) || 60000}
               onChange={e => updatePrice("priceTo", Number(e.target.value))}
             />
           </div>
 
           <RangeSlider
-            min={prices.priceFrom || 0}
+            min={0}
             max={60000}
             step={100}
             value={[prices.priceFrom || 0, prices.priceTo || 60000]}

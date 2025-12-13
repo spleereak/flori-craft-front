@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import Link from "next/link";
-
 import { ProductsList } from "../components/ProductsList/ui";
 import { Tabs } from "../components/Tabs/ui";
 
@@ -150,26 +148,25 @@ export default function HomePage() {
         <div className="desktop:h-335 h-145 desktop:rounded-2xl desktop:px-90 w-full rounded-md bg-[#D9D9D9] px-16" />
       </div>
       <div className="relative flex flex-col items-center">
-        <h1 className="h1">Витрина</h1>
+        <h1 className="h1 desktop:pb-50 pb-14">Витрина</h1>
         <Tabs
           categories={categories}
           onSelect={scrollToCategory}
           activeTab={activeTab}
         />
-        <div className="gap-90 flex flex-col">
+        <div className="gap-90 desktop:pt-50 pt-13 flex flex-col">
           {catalog.map((category, i) => {
             const id = i.toString();
             return (
-              <Link href={`/flowers/${id}`} key={id}>
-                <ProductsList
-                  ref={el => {
-                    sectionRefs.current[id] = el;
-                  }}
-                  category={category.category}
-                  products={category.products}
-                  className="desktop:px-90 px-16"
-                />
-              </Link>
+              <ProductsList
+                key={id}
+                ref={el => {
+                  sectionRefs.current[id] = el;
+                }}
+                category={category.category}
+                products={category.products}
+                className="desktop:px-90 px-16"
+              />
             );
           })}
         </div>

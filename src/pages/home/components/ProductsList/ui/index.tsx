@@ -1,5 +1,7 @@
 import React, { forwardRef } from "react";
 
+import Link from "next/link";
+
 import { cn } from "@/src/shared/lib/utils/cn";
 
 import { ProductCard } from "../../ProductCard/ui";
@@ -18,12 +20,13 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
         <h1 className="h1">{category}</h1>
         <div className="desktop:grid-cols-3 desktop:gap-x-135 desktop:gap-y-80 gap-y-18 grid grid-cols-2 gap-x-7">
           {products.map((product, i) => (
-            <ProductCard
-              price={product.price}
-              imageSrc={product.imageSrc}
-              name={product.name}
-              key={i}
-            />
+            <Link href={`/flowers/${i}`} key={i}>
+              <ProductCard
+                price={product.price}
+                imageSrc={product.imageSrc}
+                name={product.name}
+              />
+            </Link>
           ))}
         </div>
       </div>

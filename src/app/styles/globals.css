@@ -5,7 +5,11 @@
 
 
 html {
-  font-size: 16px;
+  font-size: 0.833vw;
+
+  @media (max-width: 1024px) {
+    font-size: 4.266665vw;
+  }
 }
 
 body {
@@ -17,6 +21,10 @@ body {
 }
 
 @layer components {
+  p {
+    line-height: 1;
+  }
+
   .h1 {
     margin: 0 !important;
     font-family: 'Bodoni Moda', serif;
@@ -49,6 +57,8 @@ body {
   .p {
     font-weight: 500;
     font-size: 1.5rem;
+    margin: 0 !important;
+    line-height: 1;
 
     @media (max-width: 1024px) {
       font-size: 0.875rem;
@@ -58,6 +68,9 @@ body {
   .caption {
     font-weight: 500;
     font-size: 1.25rem;
+    line-height: 1.32;
+    margin: 0 !important;
+    max-height: max-content;
 
     @media (max-width: 1024px) {
       font-size: 0.625rem;
@@ -188,4 +201,13 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
 }

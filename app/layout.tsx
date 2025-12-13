@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import React from "react";
 
 import "@/src/app/styles/globals.css";
+import { Footer } from "@/src/widgets/footer/ui";
+import { Header } from "@/src/widgets/header/ui";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+      <body className={`antialiased`}>
+        <Header />
+        <main className="desktop:pt-172 pt-90 relative">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

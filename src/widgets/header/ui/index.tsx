@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { CartIcon } from "@/src/shared/icons/CartIcon";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { UserIcon } from "@/src/shared/icons/UserIcon";
@@ -18,7 +20,9 @@ export const Header = ({ className }: { className?: string }) => {
         </p>
       </div>
       <div className="desktop:gap-46 gap-27 flex flex-row">
-        <CartIcon />
+        <Link href="/cart">
+          <CartIcon />
+        </Link>
         <div className="desktop:flex desktop:flex-row desktop:gap-21 desktop:items-center contents">
           <UserIcon />
           <div className="desktop:flex p text-grey-for-text hidden flex-row items-center gap-24">

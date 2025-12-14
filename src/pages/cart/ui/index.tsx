@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import Link from "next/link";
 
-import { formatPrice } from "@/src/shared/lib/utils/helpers";
+import { formatPrice, formatProduct } from "@/src/shared/lib/utils/helpers";
 import { Button } from "@/src/shared/ui";
 import { Checkbox } from "@/src/shared/ui/Checkbox";
 
@@ -64,7 +64,9 @@ export default function CartPage() {
       </div>
       <div className="desktop:flex gap-13 mb-93 hidden flex-row items-start">
         <h1 className="h1 pt-13">Корзина</h1>
-        <p className="caption text-grey-for-text">товаров: {products.length}</p>
+        <p className="caption text-grey-for-text">
+          {formatProduct(products.length)}
+        </p>
       </div>
       <div className="desktop:flex-row desktop:gap-43 gap-25 relative flex flex-col">
         <div className="desktop:gap-30 flex w-full flex-col gap-20">
@@ -79,7 +81,9 @@ export default function CartPage() {
         <div className="desktop:max-h-482 max-h-259 desktop:top-200 desktop:py-24 desktop:px-20 p-15 desktop:sticky desktop:max-w-431 bg-light-grey flex flex-col rounded-2xl shadow-[1px_1px_4px_0_rgba(0,0,0,0.1),-1px_-1px_4px_0_rgba(0,0,0,0.1)]">
           <div className="desktop:gap-34 desktop:mb-51 mb-23 flex flex-col gap-14">
             <div className="flex flex-row justify-between">
-              <p className="caption text-grey-for-text">Товаров на сумму:</p>
+              <p className="caption text-grey-for-text">
+                {formatProduct(products.length)} на сумму:
+              </p>
               <p className="p">{formatPrice(totalPrice)} ₽</p>
             </div>
             <div className="flex flex-row justify-between">

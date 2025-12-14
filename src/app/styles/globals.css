@@ -6,6 +6,7 @@
 
 html {
   font-size: 0.833333vw;
+  font-family: 'Open Sans', sans-serif;
 
   @media (max-width: 1024px) {
     font-size: 4.266665vw;
@@ -17,7 +18,6 @@ body {
   color: var(--black);
   line-height: 1;
   letter-spacing: 0;
-  font-family: 'Open Sans', sans-serif;
 }
 
 @layer components {

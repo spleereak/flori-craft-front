@@ -96,7 +96,9 @@ export default function CartPage() {
             <h3 className="h3">{formatPrice(totalPrice)} ₽</h3>
           </div>
           <div className="desktop:gap-26 flex flex-col gap-16">
-            <Button className="desktop:w-391">Оформить заказ</Button>
+            <Button className="desktop:w-391 max-desktop:w-full">
+              Оформить заказ
+            </Button>
             <div className="desktop:gap-13 flex flex-row gap-11">
               <Checkbox
                 checked={checked}

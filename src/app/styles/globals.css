@@ -5,7 +5,7 @@
 
 
 html {
-  font-size: 0.833vw;
+  font-size: 0.833333vw;
 
   @media (max-width: 1024px) {
     font-size: 4.266665vw;

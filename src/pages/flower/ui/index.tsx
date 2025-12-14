@@ -32,7 +32,7 @@ export default function ProductPage() {
         className="desktop:flex hidden max-h-max flex-row items-center gap-12"
       >
         <ArrowLeft className="h-33 w-24" />
-        <p className="p max-h-max">На главную</p>
+        <p className="text_p max-h-max">На главную</p>
       </Link>
       <div className="desktop:max-w-1054 desktop:flex-row desktop:gap-24 relative flex w-full flex-col">
         <Link

@@ -29,13 +29,13 @@ export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
       )}
       <div className="desktop:flex-col flex flex-row justify-between">
         <div className="desktop:flex-row desktop:gap-188 desktop:justify-start desktop:w-max flex w-full flex-col justify-between">
-          <p className="p desktop:max-w-381 max-w-222 max-desktop:leading-[1.32]">
+          <p className="text_p desktop:max-w-381 max-w-222 max-desktop:leading-[1.32]">
             {product.name}
           </p>
           <div className="desktop:contents max-desktop:flex-row max-desktop:w-full max-desktop:items-end flex">
             <div className="desktop:gap-238 max-desktop:justify-between max-desktop:w-full max-desktop:mr-25 flex flex-row">
-              <p className="p text-grey-for-text">Размер {product.size}</p>
-              <p className="p desktop:text-black text-grey-for-text">
+              <p className="text_p text-grey-for-text">Размер {product.size}</p>
+              <p className="text_p desktop:text-black text-grey-for-text">
                 {formatPrice(product.price)} ₽
               </p>
             </div>

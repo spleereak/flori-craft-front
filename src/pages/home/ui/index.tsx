@@ -11,7 +11,7 @@ const catalog = [
     products: [
       {
         price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
+        name: "Пышный букет из ажурных роз. Букет 1 Галерея текст текст текст т...",
         imageSrc: "",
       },
       {
@@ -143,7 +143,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="gap-106 desktop:pb-160 desktop:pt-28 pb-100 flex min-h-screen w-full flex-col pt-40">
+    <div className="desktop:gap-106 gap-50 desktop:pb-160 desktop:pt-28 pb-100 flex min-h-screen w-full flex-col pt-40">
       <div className="desktop:px-90 px-16">
         <div className="desktop:h-335 h-145 desktop:rounded-2xl desktop:px-90 w-full rounded-md bg-[#D9D9D9] px-16" />
       </div>

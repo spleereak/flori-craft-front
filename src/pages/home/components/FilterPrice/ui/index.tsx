@@ -41,7 +41,7 @@ export const FilterPrice = () => {
     <Popover>
       <PopoverTrigger asChild>
         <div className="desktop:p-21 desktop:rounded-2xl bg-light-grey flex cursor-pointer flex-row items-center justify-center gap-11 rounded-md px-20 py-12">
-          <p className="p desktop:pr-16 max-h-max border-r border-[#80808059] pr-10">
+          <p className="text_p desktop:pr-16 max-h-max border-r border-[#80808059] pr-10">
             Цена
           </p>
           <ArrowDown />

@@ -84,11 +84,11 @@ export default function CartPage() {
               <p className="caption text-grey-for-text">
                 {formatProduct(products.length)} на сумму:
               </p>
-              <p className="p">{formatPrice(totalPrice)} ₽</p>
+              <p className="text_p">{formatPrice(totalPrice)} ₽</p>
             </div>
             <div className="flex flex-row justify-between">
               <p className="caption text-grey-for-text">Сумма со скидкой:</p>
-              <p className="p">{formatPrice(totalPrice)} ₽</p>
+              <p className="text_p">{formatPrice(totalPrice)} ₽</p>
             </div>
           </div>
           <div className="desktop:gap-22 desktop:mb-22 mb-15 flex flex-col gap-10">

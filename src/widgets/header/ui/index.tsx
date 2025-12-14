@@ -15,7 +15,7 @@ export const Header = ({ className }: { className?: string }) => {
     >
       <div className="desktop:flex desktop:flex-row desktop:gap-48 desktop:items-center contents">
         <LogoIcon />
-        <p className="p max-w-376 desktop:block text-grey-for-text hidden">
+        <p className="text_p max-w-376 desktop:block text-grey-for-text hidden">
           г. Москва, Береговой проезд, д.5А, к.1 ТЦ Фили Град, -1 этаж
         </p>
       </div>
@@ -25,7 +25,7 @@ export const Header = ({ className }: { className?: string }) => {
         </Link>
         <div className="desktop:flex desktop:flex-row desktop:gap-21 desktop:items-center contents">
           <UserIcon />
-          <div className="desktop:flex p text-grey-for-text hidden flex-row items-center gap-24">
+          <div className="desktop:flex text_p text-grey-for-text hidden flex-row items-center gap-24">
             <p>Вход</p>
             <p>/</p>
             <p>Регистрация</p>

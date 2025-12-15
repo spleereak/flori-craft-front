@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 
 import Image from "next/image";
 
+import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { TrashIcon } from "@/src/shared/icons/TrashIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
 import { formatPrice } from "@/src/shared/lib/utils/helpers";
@@ -9,10 +12,12 @@ import { formatPrice } from "@/src/shared/lib/utils/helpers";
 import { CartItemProps } from "../types";
 
 export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
+  const { removeItem } = useCartStore();
+
   return (
     <div
       className={cn(
-        "desktop:gap-44 desktop:h-274 h-145 flex w-full flex-row gap-12",
+        "desktop:justify-between desktop:h-274 h-145 flex w-full flex-row gap-12",
         className
       )}
     >
@@ -29,7 +34,7 @@ export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
       )}
       <div className="desktop:flex-col flex flex-row justify-between">
         <div className="desktop:flex-row desktop:gap-188 desktop:justify-start desktop:w-max flex w-full flex-col justify-between">
-          <p className="text_p desktop:max-w-381 max-w-222 max-desktop:leading-[1.32]">
+          <p className="text_p desktop:w-381 w-222 max-desktop:leading-[1.32]">
             {product.name}
           </p>
           <div className="desktop:contents max-desktop:flex-row max-desktop:w-full max-desktop:items-end flex">
@@ -39,10 +44,20 @@ export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
                 {formatPrice(product.price)} ₽
               </p>
             </div>
-            <TrashIcon className="desktop:hidden" />
+            <div
+              className="desktop:hidden"
+              onClick={() => removeItem(product.id)}
+            >
+              <TrashIcon />
+            </div>
           </div>
         </div>
-        <TrashIcon className="max-desktop:hidden" />
+        <div
+          className="max-desktop:hidden"
+          onClick={() => removeItem(product.id)}
+        >
+          <TrashIcon />
+        </div>
       </div>
     </div>
   );

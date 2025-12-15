@@ -11,8 +11,8 @@ import { ProductCardProps } from "../types";
 export const ProductCard: React.FC<ProductCardProps> = ({
   className,
   name,
-  price,
-  imageSrc,
+  priceList,
+  images,
 }) => {
   return (
     <div
@@ -21,9 +21,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         className
       )}
     >
-      {imageSrc ? (
+      {images[0] ? (
         <Image
-          src={imageSrc}
+          src={images[0]}
           alt=""
           width={490}
           height={490}
@@ -34,7 +34,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       )}
       <div className="desktop:p-24 desktop:gap-38 desktop:rounded-b-2xl flex flex-col gap-12 rounded-b-md bg-white p-6">
         <p className="text_p--switch line-clamp-2">{name}</p>
-        <Button appearance="accent">{formatPrice(price)} ₽</Button>
+        <Button appearance="accent">{formatPrice(priceList[0].price)} ₽</Button>
       </div>
     </div>
   );

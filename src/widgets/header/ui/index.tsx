@@ -1,11 +1,16 @@
+"use client";
+
 import Link from "next/link";
 
+import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { CartIcon } from "@/src/shared/icons/CartIcon";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { UserIcon } from "@/src/shared/icons/UserIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
 
 export const Header = ({ className }: { className?: string }) => {
+  const items = useCartStore(state => state.items);
+
   return (
     <header
       className={cn(
@@ -23,7 +28,16 @@ export const Header = ({ className }: { className?: string }) => {
       </div>
       <div className="desktop:gap-46 gap-27 flex flex-row">
         <Link href="/cart">
-          <CartIcon />
+          <div className="relative flex items-center justify-center">
+            {items.length > 0 && (
+              <div className="desktop:size-27 size-15 bg-brown desktop:-right-10 desktop:-top-10 absolute -right-4 -top-4 flex items-center justify-center rounded-full">
+                <p className="desktop:!text-[0.875rem] caption !text-[0.5rem] text-white">
+                  {items.length}
+                </p>
+              </div>
+            )}
+            <CartIcon />
+          </div>
         </Link>
         <div className="desktop:flex desktop:flex-row desktop:gap-21 desktop:items-center contents">
           <UserIcon />

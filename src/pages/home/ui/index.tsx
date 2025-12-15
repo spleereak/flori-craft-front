@@ -7,92 +7,229 @@ import { Tabs } from "../components/Tabs/ui";
 
 const catalog = [
   {
-    category: "Монобукет",
+    category: "Букеты",
     products: [
       {
-        price: 5999,
-        name: "Пышный букет из ажурных роз. Букет 1 Галерея текст текст текст т...",
-        imageSrc: "",
+        productId: "1",
+        priceList: [
+          {
+            size: "S",
+            price: 11250,
+          },
+          {
+            size: "M",
+            price: 12250,
+          },
+          {
+            size: "L",
+            price: 13250,
+          },
+        ],
+        name: "Букет Утро в Провансе",
+        images: ["", ""],
       },
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "2",
+        priceList: [
+          {
+            size: "S",
+            price: 12000,
+          },
+          {
+            size: "M",
+            price: 13000,
+          },
+          {
+            size: "L",
+            price: 14000,
+          },
+        ],
+        name: "Букет Розовое облако",
+        images: ["", ""],
       },
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "3",
+        priceList: [
+          {
+            size: "S",
+            price: 7500,
+          },
+          {
+            size: "M",
+            price: 8500,
+          },
+          {
+            size: "L",
+            price: 9500,
+          },
+        ],
+        name: "Букет из 15 роз",
+        images: ["", ""],
       },
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "4",
+        priceList: [
+          {
+            size: "S",
+            price: 10500,
+          },
+          {
+            size: "M",
+            price: 11500,
+          },
+          {
+            size: "L",
+            price: 12500,
+          },
+        ],
+        name: "Букет Сильва",
+        images: ["", ""],
       },
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "5",
+        priceList: [
+          {
+            size: "S",
+            price: 11500,
+          },
+          {
+            size: "M",
+            price: 12500,
+          },
+          {
+            size: "L",
+            price: 13500,
+          },
+        ],
+        name: "Букет Лилия",
+        images: ["", ""],
       },
     ],
   },
   {
-    category: "Монобукет",
+    category: "Композиции",
     products: [
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "6",
+        priceList: [
+          {
+            size: "S",
+            price: 17000,
+          },
+          {
+            size: "M",
+            price: 18000,
+          },
+          {
+            size: "L",
+            price: 19000,
+          },
+        ],
+        name: "Композиция Лето",
+        images: ["", ""],
       },
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "7",
+        priceList: [
+          {
+            size: "S",
+            price: 15000,
+          },
+          {
+            size: "M",
+            price: 16000,
+          },
+          {
+            size: "L",
+            price: 17000,
+          },
+        ],
+        name: "Композиция Признание",
+        images: ["", ""],
       },
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "8",
+        priceList: [
+          {
+            size: "S",
+            price: 2700,
+          },
+          {
+            size: "M",
+            price: 3700,
+          },
+          {
+            size: "L",
+            price: 4700,
+          },
+        ],
+        name: "Цветочный WOK",
+        images: ["", ""],
       },
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
-      },
-      {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "9",
+        priceList: [
+          {
+            size: "S",
+            price: 9000,
+          },
+          {
+            size: "M",
+            price: 10000,
+          },
+          {
+            size: "L",
+            price: 11000,
+          },
+        ],
+        name: "Композиция в плетённом кашпо",
+        images: ["", ""],
       },
     ],
   },
   {
-    category: "Монобукет",
+    category: "Вазы",
     products: [
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке текст",
-        imageSrc: "",
+        productId: "10",
+        priceList: [
+          {
+            size: "M",
+            price: 2000,
+          },
+          {
+            size: "L",
+            price: 2500,
+          },
+        ],
+        name: "Ваза Лед",
+        images: ["", ""],
       },
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "11",
+        priceList: [
+          {
+            size: "M",
+            price: 2000,
+          },
+        ],
+        name: "Ваза прямоугольная",
+        images: ["", ""],
       },
       {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
-      },
-      {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
-      },
-      {
-        price: 5999,
-        name: "Орхидеи с ажурными розами и эвкалиптом в коробке",
-        imageSrc: "",
+        productId: "12",
+        priceList: [
+          {
+            size: "M",
+            price: 4000,
+          },
+          {
+            size: "L",
+            price: 4500,
+          },
+        ],
+        name: "Ваза интерьерная",
+        images: ["", ""],
       },
     ],
   },

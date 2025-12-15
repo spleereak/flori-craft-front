@@ -8,6 +8,7 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   className,
   appearance = "primary",
   disabled = false,
+  onClick,
   children,
 }) => {
   return (
@@ -23,6 +24,7 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
         disabled && "pointer-events-none opacity-30",
         className
       )}
+      onClick={onClick}
     >
       {children}
     </button>

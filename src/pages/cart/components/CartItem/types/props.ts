@@ -1,10 +1,9 @@
-type availableSize = "S" | "M" | "L";
-
 export interface CartItemProps {
   className?: string;
   product: {
+    id: string;
     name: string;
-    size: availableSize;
+    size: string;
     price: number;
     imageSrc: string;
   };

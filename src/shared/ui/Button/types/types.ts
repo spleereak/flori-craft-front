@@ -4,4 +4,5 @@ export interface ButtonProps {
   className?: string;
   appearance?: ButtonAppearance;
   disabled?: boolean;
+  onClick?: () => void;
 }

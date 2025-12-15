@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import { cn } from "@/src/shared/lib/utils/cn";
 
@@ -8,13 +6,15 @@ import { SizeButton } from "../../SizeButton/ui";
 
 export const SizeBlock = ({
   sizes,
+  activeSize,
+  setActiveSize,
   className,
 }: {
   sizes: string[];
+  activeSize?: string;
+  setActiveSize: Dispatch<SetStateAction<string>>;
   className?: string;
 }) => {
-  const [activeSize, setActiveSize] = useState<string | null>();
-
   return (
     <div className={cn("desktop:gap-10 flex flex-row gap-16", className)}>
       {sizes.map((size, i) => (

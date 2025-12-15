@@ -152,6 +152,15 @@ body {
 }
 
 @layer components {
+  .accent--switch {
+    font-weight: 500;
+    font-size: 1.75rem;
+
+    @media (max-width: 1024px) {
+      font-size: 0.875rem;
+    }
+  }
+
   .text_p--switch {
     font-weight: 500;
     font-size: 1.5rem;

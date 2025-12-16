@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 
-import { localCart } from "../lib/localCart";
+import { sessionCart } from "../lib/sessionCart";
 import { CartItem } from "./cart.types";
 
 type CartState = {
@@ -22,27 +22,27 @@ export const useCartStore = create<CartState>((set, get) => ({
   hydrate: () => {
     if (get().isHydrated) return;
 
-    const items = localCart.get();
+    const items = sessionCart.get();
     set({ items, isHydrated: true });
   },
 
   addItem: item => {
     const currentItems = get().items;
-    const nextItems = localCart.add(currentItems, item);
+    const nextItems = sessionCart.add(currentItems, item);
 
     if (nextItems === currentItems) return;
 
-    localCart.save(nextItems);
+    sessionCart.save(nextItems);
     set({ items: nextItems });
   },
 
   removeItem: id => {
     const currentItems = get().items;
-    const nextItems = localCart.remove(currentItems, id);
+    const nextItems = sessionCart.remove(currentItems, id);
 
     if (nextItems === currentItems) return;
 
-    localCart.save(nextItems);
+    sessionCart.save(nextItems);
     set({ items: nextItems });
   },
 }));

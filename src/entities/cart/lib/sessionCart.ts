@@ -6,12 +6,12 @@ function isBrowser() {
   return typeof window !== "undefined";
 }
 
-export const localCart = {
+export const sessionCart = {
   get(): CartItem[] {
     if (!isBrowser) return [];
 
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = sessionStorage.getItem(STORAGE_KEY);
       return raw ? (JSON.parse(raw) as CartItem[]) : [];
     } catch {
       return [];
@@ -19,7 +19,7 @@ export const localCart = {
   },
   save(items: CartItem[]) {
     if (!isBrowser) return;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   },
 
   add(items: CartItem[], item: CartItem): CartItem[] {

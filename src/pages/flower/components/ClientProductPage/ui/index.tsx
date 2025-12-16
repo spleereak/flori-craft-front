@@ -73,7 +73,7 @@ export default function ClientProductPage({
       <div className="desktop:max-w-1054 desktop:flex-row desktop:gap-24 relative flex w-full flex-col">
         <Link
           href="/"
-          className="desktop:hidden absolute left-16 top-16 flex size-28 items-center justify-center rounded-full bg-white transition-all duration-300 active:opacity-80"
+          className="desktop:hidden fixed left-16 top-16 flex size-28 items-center justify-center rounded-full bg-white transition-all duration-300 active:opacity-80"
         >
           <CloseIcon />
         </Link>
@@ -94,7 +94,7 @@ export default function ClientProductPage({
             </Button>
             <Button appearance="outline">Купить сейчас</Button>
           </div>
-          <div className="desktop:gap-24 text-grey-for-text flex flex-col">
+          <div className="text-grey-for-text flex flex-col gap-24">
             {product.info.map((text, i) => (
               <p key={i} className="caption">
                 {text}

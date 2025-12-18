@@ -11,6 +11,7 @@ import { CloseIcon } from "@/src/shared/icons/CloseIcon";
 import { generateId } from "@/src/shared/lib/utils/generate-id";
 import { formatPrice } from "@/src/shared/lib/utils/helpers";
 import { Button } from "@/src/shared/ui";
+import { useToastStore } from "@/src/shared/ui/Toast";
 
 import { ImagesBlock } from "../../ImagesBlock/ui";
 import { SizeBlock } from "../../SizeBlock/ui";
@@ -28,6 +29,7 @@ export default function ClientProductPage({
   const sizes = product.priceList.map(item => item.size);
 
   const { items, addItem, removeItem } = useCartStore();
+  const openToast = useToastStore(state => state.open);
 
   const activePrice = product.priceList.find(
     item => item.size === activeSize
@@ -56,6 +58,8 @@ export default function ClientProductPage({
         price: activePrice!,
         images: product.images,
       });
+
+      openToast();
     } else {
       removeItem(cartItemId);
     }

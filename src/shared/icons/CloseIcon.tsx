@@ -3,7 +3,7 @@ import Image from "next/image";
 export const CloseIcon = () => {
   return (
     <Image
-      className="w-12"
+      className="desktop:size-20 size-12"
       src="/icons/close.png"
       alt="Image"
       width={12}

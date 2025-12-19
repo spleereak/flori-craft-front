@@ -66,7 +66,7 @@ export default function ClientProductPage({
   };
 
   return (
-    <div className="desktop:flex-row desktop:gap-184 desktop:flex w-full">
+    <div className="desktop:flex-row desktop:gap-184 desktop:flex desktop:items-start w-full">
       <Link
         href="/"
         className="desktop:flex hidden max-h-max flex-row items-center gap-12"

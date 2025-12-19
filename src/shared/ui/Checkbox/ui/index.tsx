@@ -14,7 +14,7 @@ export const Checkbox = ({
   return (
     <div
       className={cn(
-        "desktop:py-8 desktop:px-6 flex max-h-max max-w-max items-center justify-center px-2 py-3",
+        "desktop:py-8 desktop:px-6 desktop:max-h-28 desktop:max-w-28 max-h-18 max-w-18 flex items-center justify-center px-2 py-3",
         "border-3 border-brown desktop:rounded-md cursor-pointer rounded-sm",
         "transition-all duration-300 ease-in-out",
         "hover:opacity-80",

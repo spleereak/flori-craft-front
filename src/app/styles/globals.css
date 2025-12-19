@@ -164,7 +164,7 @@ body {
   .text_p--switch {
     font-weight: 500;
     font-size: 1.5rem;
-    line-height: 1;
+    line-height: 1.32;
     margin: 0 !important;
   }
 

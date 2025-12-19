@@ -12,7 +12,7 @@ import { Checkbox } from "@/src/shared/ui/Checkbox";
 import { CartItem } from "../components/CartItem/ui";
 
 export default function CartPage() {
-  const { items } = useCartStore();
+  const { items, isHydrated } = useCartStore();
 
   const totalPrice = items.reduce((acc, product) => product.price + acc, 0);
   const [checked, setChecked] = useState(false);
@@ -31,7 +31,9 @@ export default function CartPage() {
           {formatProduct(items.length)}
         </p>
       </div>
-      {items.length > 0 ? (
+      {!isHydrated ? (
+        <h1 className="h1">Загрузка</h1>
+      ) : items.length > 0 ? (
         <div className="desktop:flex-row desktop:gap-43 gap-25 relative flex flex-col">
           <div className="desktop:gap-30 flex w-full flex-col gap-20">
             {items.map(item => {

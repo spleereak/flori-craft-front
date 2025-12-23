@@ -10,6 +10,10 @@ import { cn } from "@/src/shared/lib/utils/cn";
 
 const links = [
   {
+    text: "Главная",
+    link: "/",
+  },
+  {
     text: "Программа лояльности",
     link: "#",
   },

@@ -4,12 +4,14 @@ import { cn } from "../lib/utils/cn";
 
 export const CartIcon = ({ className }: { className?: string }) => {
   return (
-    <Image
-      src="/icons/cart.png"
-      alt=""
-      width={40}
-      height={40}
-      className={cn("desktop:size-40 size-24", className)}
-    />
+    <div className="desktop:size-56 hover:bg-light-grey active:bg-light-grey flex size-44 items-center justify-center rounded-full border border-black bg-white transition-all duration-300 ease-in-out hover:opacity-80 active:opacity-80">
+      <Image
+        src="/icons/cart.png"
+        alt=""
+        width={40}
+        height={40}
+        className={cn("desktop:size-26 size-18", className)}
+      />
+    </div>
   );
 };

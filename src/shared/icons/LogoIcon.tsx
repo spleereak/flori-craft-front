@@ -16,7 +16,7 @@ export const LogoIcon = ({
       width={250}
       height={162}
       loading="eager"
-      className={cn("desktop:w-250 desktop:h-162 w-94 h-61", className)}
+      className={cn("desktop:w-220 desktop:h-132 w-94 h-61", className)}
     />
   );
 };

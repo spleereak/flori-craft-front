@@ -10,6 +10,11 @@ import { Header } from "@/src/widgets/header/ui";
 
 export const metadata: Metadata = {
   title: "Flori Craft",
+  icons: {
+    icon: "/icons/logo-shortcut.png",
+    shortcut: "/icons/logo-shortcut.png",
+    apple: "/icons/logo-shortcut.png",
+  },
 };
 
 export default function ProductLayout({

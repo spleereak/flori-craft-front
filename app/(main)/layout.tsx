@@ -28,7 +28,7 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <ClientLayout>
           <Header />
-          <main className="desktop:pt-172 pt-90 relative">{children}</main>
+          <main className="desktop:pt-142 pt-74 relative">{children}</main>
           <Footer />
         </ClientLayout>
       </body>

@@ -9,8 +9,8 @@ import { Header } from "@/src/widgets/header/ui";
 import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
-  title: "Flori Craft",
-  description: "Цветочный магазин Flori Craft",
+  title: "FloriCraft",
+  description: "Цветочный магазин FloriCraft",
   icons: {
     icon: "/icons/logo-shortcut.png",
     shortcut: "/icons/logo-shortcut.png",

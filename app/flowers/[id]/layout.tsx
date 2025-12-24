@@ -9,7 +9,7 @@ import { Footer } from "@/src/widgets/footer/ui";
 import { Header } from "@/src/widgets/header/ui";
 
 export const metadata: Metadata = {
-  title: "Flori Craft",
+  title: "FloriCraft",
   icons: {
     icon: "/icons/logo-shortcut.png",
     shortcut: "/icons/logo-shortcut.png",

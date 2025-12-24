@@ -65,7 +65,7 @@ export default function DeliveryPage() {
                     height={70}
                     className="size-70 object-cover"
                   />
-                  <p className="text_p">{inf.text}</p>
+                  <p className="text_p pt-15">{inf.text}</p>
                 </div>
               </div>
             </div>

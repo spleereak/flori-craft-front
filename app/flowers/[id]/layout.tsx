@@ -21,7 +21,7 @@ export default function ProductLayout({
     <html>
       <body>
         <ClientLayout>
-          <Header className="desktop:flex hidden" />
+          <Header className="max-desktop:hidden" />
           <main className="desktop:pt-232 desktop:px-90 desktop:pb-160 pb-110">
             {children}
             <CartToast />

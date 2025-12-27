@@ -27,7 +27,7 @@ const links = [
   },
   {
     text: "Уход за цветами",
-    link: "#",
+    link: "/flower-care",
   },
   {
     text: "Публичная оферта",

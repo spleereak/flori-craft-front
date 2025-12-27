@@ -3,10 +3,9 @@ import type { Metadata } from "next";
 import React from "react";
 
 import "@/src/app/styles/globals.css";
-import { Footer } from "@/src/widgets/footer/ui";
 import { Header } from "@/src/widgets/header/ui";
 
-import ClientLayout from "./ClientLayout";
+import ClientLayout from "./(main)/ClientLayout";
 
 export const metadata: Metadata = {
   title: "FloriCraft",
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function MainLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -27,9 +26,8 @@ export default function MainLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <ClientLayout>
-          <Header />
-          <main className="desktop:pt-142 pt-74 relative">{children}</main>
-          <Footer />
+          <Header className="desktop:hidden" />
+          {children}
         </ClientLayout>
       </body>
     </html>

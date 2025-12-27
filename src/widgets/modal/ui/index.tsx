@@ -65,7 +65,7 @@ export const Modal = ({
     <>
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-all duration-500 ease-out",
+          "fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-all duration-500 ease-in-out",
           isAnimating ? "opacity-100" : "opacity-0"
         )}
         onClick={onClose}
@@ -73,7 +73,7 @@ export const Modal = ({
 
       <div
         className={cn(
-          "desktop:pt-60 pt-30 fixed inset-y-0 right-0 z-50 w-full bg-white shadow-2xl transition-all duration-500 ease-out",
+          "desktop:pt-60 pt-30 fixed inset-y-0 right-0 z-50 w-full bg-white shadow-2xl transition-all duration-500 ease-in-out",
           isAnimating
             ? "translate-x-0 scale-100 opacity-100"
             : "translate-x-[20%] scale-95 opacity-0"
@@ -85,7 +85,7 @@ export const Modal = ({
         <button
           onClick={onClose}
           className={cn(
-            "desktop:right-90 desktop:top-44 hover:bg-light-grey absolute right-16 top-14 cursor-pointer rounded-full border border-white p-16 transition-all duration-500 hover:rotate-90 hover:border-black active:bg-gray-100",
+            "desktop:right-90 desktop:top-44 hover:bg-light-grey absolute right-16 top-14 cursor-pointer rounded-full border border-white p-16 transition-all duration-300 ease-in-out hover:rotate-90 hover:border-black active:bg-gray-100",
             isAnimating ? "rotate-0 opacity-100" : "rotate-180 opacity-0"
           )}
           aria-label="Закрыть меню"
@@ -96,12 +96,11 @@ export const Modal = ({
         <div className="desktop:px-90 desktop:gap-40 gap-30 flex h-full w-full flex-col px-16">
           <div
             className={cn(
-              "w-max transition-all duration-700 ease-out",
+              "w-max transition-all duration-300 ease-in-out",
               isAnimating
                 ? "translate-y-0 opacity-100"
                 : "-translate-y-8 opacity-0"
             )}
-            style={{ transitionDelay: "100ms" }}
           >
             <LogoIcon />
           </div>
@@ -111,14 +110,11 @@ export const Modal = ({
               <Link
                 key={i}
                 className={cn(
-                  "h3 text-grey-for-text max-w-max transition-all duration-700 ease-out hover:translate-x-2 hover:text-black active:text-black",
+                  "h3 text-grey-for-text max-w-max transition-all duration-300 ease-in-out hover:translate-x-2 hover:text-black active:text-black",
                   isAnimating
                     ? "translate-x-0 opacity-100"
                     : "-translate-x-8 opacity-0"
                 )}
-                style={{
-                  transitionDelay: `${200 + i * 50}ms`,
-                }}
                 href={link.link}
                 onClick={onClose}
               >

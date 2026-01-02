@@ -1,6 +1,6 @@
 import { IMaskInput } from "react-imask";
 
-import React from "react";
+import React, { useState } from "react";
 
 import { cn } from "@/src/shared/lib/utils/cn";
 import { Button } from "@/src/shared/ui";
@@ -20,6 +20,7 @@ export const Form: React.FC<FormProps> = ({ mode }) => {
     formData,
     errors,
   } = useForm({ mode });
+  const [phoneMask, setPhoneMask] = useState("Номер телефона");
 
   return (
     <form
@@ -39,9 +40,11 @@ export const Form: React.FC<FormProps> = ({ mode }) => {
           onAccept={(value: string) => handlePhoneChange(value)}
           className={cn(
             "desktop:rounded-2xl caption py-13 desktop:py-20 desktop:px-22 ring-none w-full rounded-md bg-white px-16 transition-all duration-300 ease-in-out focus:border-2 focus:border-black focus:outline-none",
-            errors.phone && "placeholder:text-red border-red border-2"
+            errors.phone && "placeholder:text-red border-red border-2",
+            phoneMask === "+7 (___) ___-__-__" && "placeholder:text-black"
           )}
-          placeholder="Номер телефона"
+          onFocus={() => setPhoneMask("+7 (___) ___-__-__")}
+          placeholder={phoneMask}
         />
       </div>
       {mode === "register" && (

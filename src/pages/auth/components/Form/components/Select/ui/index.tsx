@@ -43,7 +43,7 @@ export const Select: React.FC<SelectProps> = ({
             />
           </svg>
         </div>
-        Мужчина
+        <p className="text_p">Мужчина</p>
       </label>
       <label className="desktop:gap-12 flex cursor-pointer flex-row items-center gap-11">
         <input
@@ -69,7 +69,7 @@ export const Select: React.FC<SelectProps> = ({
             />
           </svg>
         </div>
-        Женщина
+        <p className="text_p">Женщина</p>
       </label>
     </div>
   );

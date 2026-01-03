@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { BurgerIcon } from "@/src/shared/icons/BurgerIcon";
 import { CartIcon } from "@/src/shared/icons/CartIcon";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { UserIcon } from "@/src/shared/icons/UserIcon";
+import { useAuthStore } from "@/src/shared/lib/stores/authStore";
 import { cn } from "@/src/shared/lib/utils/cn";
 
 import { Modal } from "../../modal";
@@ -18,6 +20,17 @@ export const Header = ({ className }: { className?: string }) => {
   const [shouldRender, setShouldRender] = useState(false);
 
   const items = useCartStore(state => state.items);
+
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const router = useRouter();
+
+  const handleUserIconClick = () => {
+    if (isAuthenticated) {
+      router.push("/profile");
+    } else {
+      router.push("/auth");
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -60,9 +73,9 @@ export const Header = ({ className }: { className?: string }) => {
               <CartIcon />
             </div>
           </Link>
-          <Link href="/auth">
+          <button onClick={handleUserIconClick}>
             <UserIcon />
-          </Link>
+          </button>
           <div onClick={() => setIsOpen(true)} className="cursor-pointer">
             <BurgerIcon />
           </div>

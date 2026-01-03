@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
-import { FormData, FormErrors } from "../types";
+import { FormData, FormErrors, FormProps } from "../types";
 
-export const useForm = ({ mode }: { mode: "register" | "login" }) => {
+export const useForm = ({ mode, onSuccess }: FormProps) => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     gender: "male",
@@ -88,18 +88,11 @@ export const useForm = ({ mode }: { mode: "register" | "login" }) => {
       return;
     }
 
-    const dataToSend =
-      mode === "register"
-        ? {
-            name: formData.name,
-            phone: formData.phone.slice(1),
-            gender: formData.gender,
-          }
-        : {
-            phone: formData.phone.slice(1),
-          };
-
-    console.log("Отправка данных", dataToSend);
+    onSuccess({
+      name: formData.name,
+      phone: formData.phone,
+      gender: formData.gender,
+    });
   };
 
   return {

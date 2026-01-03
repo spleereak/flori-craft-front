@@ -24,14 +24,12 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`antialiased`}>
-        <ClientLayout>
-          <Header />
-          <main className="desktop:pt-142 pt-74 relative">{children}</main>
-          <Footer />
-        </ClientLayout>
-      </body>
-    </html>
+    <>
+      <ClientLayout>
+        <Header />
+        <main className="desktop:pt-142 pt-74 relative">{children}</main>
+        <Footer />
+      </ClientLayout>
+    </>
   );
 }

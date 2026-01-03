@@ -10,7 +10,7 @@ import { FormInput, Select } from "../components";
 import { useForm } from "../model";
 import { FormProps } from "../types";
 
-export const Form: React.FC<FormProps> = ({ mode }) => {
+export const Form: React.FC<FormProps> = ({ mode, onSuccess }) => {
   const {
     handleChangeGender,
     handleCheckboxChange,
@@ -19,7 +19,7 @@ export const Form: React.FC<FormProps> = ({ mode }) => {
     handleSubmit,
     formData,
     errors,
-  } = useForm({ mode });
+  } = useForm({ mode, onSuccess });
 
   return (
     <form
@@ -66,7 +66,7 @@ export const Form: React.FC<FormProps> = ({ mode }) => {
           </Button>
           {errors.agreedToPolicy && (
             <p className="caption text-red">
-              Примите согласие с обработкай данных
+              Примите согласие с обработкой данных
             </p>
           )}
         </div>

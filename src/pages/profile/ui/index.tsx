@@ -36,10 +36,10 @@ export default function ProfilePage() {
       <div className="desktop:p-45 max-w-792 desktop:gap-67 gap-23 bg-light-grey flex w-full flex-col place-self-center rounded-2xl p-16">
         <h3 className="h3">Профиль</h3>
         <div className="flex w-full flex-col gap-12">
-          <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl w-full rounded-md bg-white">
+          <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl w-full rounded-md bg-white p-16">
             <p className="caption">{user.name}</p>
           </div>
-          <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl w-full rounded-md bg-white">
+          <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl w-full rounded-md bg-white p-16">
             <p className="caption">{user.phone}</p>
           </div>
         </div>
@@ -47,7 +47,7 @@ export default function ProfilePage() {
           <h3 className="h3">Программа лояльности</h3>
           <div className="desktop:gap-14 flex flex-col gap-8">
             <p className="caption">Оплачивайте до 15% от заказа бонусами</p>
-            <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl desktop:w-345 w-full rounded-md bg-white">
+            <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl desktop:w-345 w-full rounded-md bg-white p-16">
               <p className="caption">
                 {formatBonus(Number(user.currentPoints))}
               </p>

@@ -60,7 +60,9 @@ export const Header = ({ className }: { className?: string }) => {
               <CartIcon />
             </div>
           </Link>
-          <UserIcon />
+          <Link href="/auth">
+            <UserIcon />
+          </Link>
           <div onClick={() => setIsOpen(true)} className="cursor-pointer">
             <BurgerIcon />
           </div>

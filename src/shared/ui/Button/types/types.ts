@@ -5,4 +5,5 @@ export interface ButtonProps {
   appearance?: ButtonAppearance;
   disabled?: boolean;
   onClick?: () => void;
+  type?: "submit" | "reset" | "button";
 }

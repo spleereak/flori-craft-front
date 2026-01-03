@@ -10,9 +10,11 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   disabled = false,
   onClick,
   children,
+  type,
 }) => {
   return (
     <button
+      type={type}
       className={cn(
         "desktop:rounded-2xl flex items-center justify-center rounded-md transition-all duration-300 ease-in-out",
         appearance === "primary" &&

@@ -49,12 +49,14 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
               name: userData.name,
               phone: userData.phone,
               gender: userData.gender,
+              currentPoints: "500",
             }
           : {
               // При login эти данные должны прийти с бэкенда
               name: "Пользователь", // Заглушка
               phone: userData.phone,
               gender: "male" as const, // Заглушка
+              currentPoints: "500", // Заглушка
             };
 
       setAuth(true, userToSave);

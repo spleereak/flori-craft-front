@@ -16,7 +16,7 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
     <button
       type={type}
       className={cn(
-        "desktop:rounded-2xl flex items-center justify-center rounded-md transition-all duration-300 ease-in-out",
+        "desktop:rounded-2xl flex cursor-pointer items-center justify-center rounded-md transition-all duration-300 ease-in-out",
         appearance === "primary" &&
           "desktop:w-491 desktop:h-82 bg-brown text_p w-238 h-41 text-white hover:opacity-80 active:opacity-80",
         appearance === "outline" &&

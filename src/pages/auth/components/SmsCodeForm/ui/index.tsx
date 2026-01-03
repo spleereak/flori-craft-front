@@ -33,14 +33,14 @@ export const SmsCodeForm: React.FC<SmsCodeFormProps> = ({ userData, mode }) => {
         Мы отправили четырёхзначный код на номер {userData.phone}
       </p>
 
-      <div className="desktop:mb-48 mb-37 flex flex-col items-center">
+      <div className="desktop:mb-48 mb-37 desktop:gap-28 gap-17 flex flex-col items-center">
         <CodeInput
           value={code}
           onChange={handleCodeChange}
           disabled={isSubmitting}
           error={!!error}
         />
-        {error && <p className="caption text-red mt-8">{error}</p>}
+        {error && <p className="caption text-red">{error}</p>}
       </div>
 
       {canResend ? (

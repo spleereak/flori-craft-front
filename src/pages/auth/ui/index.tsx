@@ -16,7 +16,7 @@ export default function AuthPage() {
   } = useAuth();
 
   return (
-    <div className="desktop:px-90 max-desktop:min-h-screen desktop:pb-160 flex flex-col px-16 pt-40">
+    <div className="desktop:px-90 max-desktop:min-h-screen desktop:pb-210 flex flex-col px-16 pt-40">
       <div className="desktop:gap-20 desktop:mb-13 mb-33 flex flex-row items-center gap-10">
         <Link href="/" className="caption text-grey-for-text">
           Главная

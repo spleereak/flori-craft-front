@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useAuthStore } from "@/src/shared/lib/stores/authStore";
-import { formatBonus } from "@/src/shared/lib/utils/helpers";
 import { Button } from "@/src/shared/ui";
 
 export default function ProfilePage() {
@@ -41,17 +40,6 @@ export default function ProfilePage() {
           </div>
           <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl w-full rounded-md bg-white p-16">
             <p className="text_p--switch">{user.phone}</p>
-          </div>
-        </div>
-        <div className="gap-23 desktop:gap-45 flex flex-col">
-          <h3 className="h3">Программа лояльности</h3>
-          <div className="desktop:gap-14 flex flex-col gap-8">
-            <p className="caption">Оплачивайте до 15% от заказа бонусами</p>
-            <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl desktop:w-345 w-full rounded-md bg-white p-16">
-              <p className="text_p--switch">
-                {formatBonus(Number(user.currentPoints))}
-              </p>
-            </div>
           </div>
         </div>
         <Button

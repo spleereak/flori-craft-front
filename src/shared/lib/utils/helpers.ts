@@ -18,20 +18,3 @@ export function formatProduct(count: number) {
     return `${count} товаров`;
   }
 }
-
-export function formatBonus(count: number) {
-  const lastDigit = count % 10;
-  const lastTwoDigits = count % 100;
-
-  if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
-    return `${count} бонусов`;
-  }
-
-  if (lastDigit === 1) {
-    return `${count} бонус`;
-  } else if (lastDigit >= 2 && lastDigit <= 4) {
-    return `${count} бонуса`;
-  } else {
-    return `${count} бонусов`;
-  }
-}

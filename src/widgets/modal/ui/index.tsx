@@ -33,10 +33,6 @@ const links = [
     text: "Публичная оферта",
     link: "#",
   },
-  {
-    text: "Программа лояльности",
-    link: "#",
-  },
 ];
 
 export const Modal = ({

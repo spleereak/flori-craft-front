@@ -4,7 +4,6 @@ export interface AuthStoreProps {
     name: string;
     phone: string;
     gender: string;
-    currentPoints: string;
     token?: string;
   } | null;
   // eslint-disable-next-line no-unused-vars

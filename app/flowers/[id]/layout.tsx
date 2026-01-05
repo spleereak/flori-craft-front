@@ -23,17 +23,15 @@ export default function ProductLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
-      <body>
-        <ClientLayout>
-          <Header className="max-desktop:hidden" />
-          <main className="desktop:pt-232 desktop:px-90 desktop:pb-160 pb-110">
-            {children}
-            <CartToast />
-          </main>
-          <Footer className="max-desktop:hidden" />
-        </ClientLayout>
-      </body>
-    </html>
+    <>
+      <ClientLayout>
+        <Header className="max-desktop:hidden" />
+        <main className="desktop:pt-232 desktop:px-90 desktop:pb-160 pb-110">
+          {children}
+          <CartToast />
+        </main>
+        <Footer className="max-desktop:hidden" />
+      </ClientLayout>
+    </>
   );
 }

@@ -18,6 +18,7 @@ export const SmsCodeForm: React.FC<SmsCodeFormProps> = ({ userData, mode }) => {
     isSubmitting,
     formatTime,
     timeLeft,
+    codeInputRef,
   } = useSmsForm({ mode, userData });
 
   return (
@@ -29,12 +30,13 @@ export const SmsCodeForm: React.FC<SmsCodeFormProps> = ({ userData, mode }) => {
     >
       <h3 className="h3 desktop:mb-34 mb-12">Введите код из SMS</h3>
 
-      <p className="caption text-grey-for-text desktop:mb-42 mb-17">
+      <p className="caption text-grey-for-text desktop:mb-42 mb-17 desktop:max-w-392 max-w-191 text-center">
         Мы отправили четырёхзначный код на номер {userData.phone}
       </p>
 
       <div className="desktop:mb-48 mb-37 desktop:gap-28 gap-17 flex flex-col items-center">
         <CodeInput
+          ref={codeInputRef}
           value={code}
           onChange={handleCodeChange}
           disabled={isSubmitting}

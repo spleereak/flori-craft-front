@@ -24,7 +24,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="desktop:px-90 desktop:pb-147 gap-84 desktop:gap-104 flex w-full flex-col px-16 pb-80 pt-40">
+    <div className="desktop:px-90 gap-84 desktop:gap-104 flex min-h-screen w-full flex-col px-16 pb-80 pt-40">
       <div className="desktop:gap-20 desktop:mb-47 mb-25 flex flex-row items-center gap-10">
         <Link href="/" className="caption text-grey-for-text">
           Главная
@@ -36,10 +36,10 @@ export default function ProfilePage() {
         <h3 className="h3">Профиль</h3>
         <div className="flex w-full flex-col gap-12">
           <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl w-full rounded-md bg-white p-16">
-            <p className="text_p--switch">{user.name}</p>
+            <p className="text_p">{user.name}</p>
           </div>
           <div className="desktop:py-20 desktop:px-22 desktop:rounded-2xl w-full rounded-md bg-white p-16">
-            <p className="text_p--switch">{user.phone}</p>
+            <p className="text_p">{user.phone}</p>
           </div>
         </div>
         <Button

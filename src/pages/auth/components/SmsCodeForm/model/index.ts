@@ -6,6 +6,10 @@ import { useAuthStore } from "@/src/shared/lib/stores/authStore";
 
 import { SmsCodeFormProps } from "../types";
 
+interface CodeInputRef {
+  focusFirst: () => void;
+}
+
 export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
@@ -15,6 +19,7 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
   const setAuth = useAuthStore(state => state.setAuth);
   const router = useRouter();
   const hasAutoSubmitted = useRef(false);
+  const codeInputRef = useRef<CodeInputRef>(null);
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -64,6 +69,10 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
       setCode("");
       setIsSubmitting(false);
       hasAutoSubmitted.current = false;
+
+      setTimeout(() => {
+        codeInputRef.current?.focusFirst();
+      }, 0);
     }
   };
 
@@ -110,5 +119,6 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
     handleCodeChange,
     handleSubmit,
     handleResendCode,
+    codeInputRef,
   };
 };

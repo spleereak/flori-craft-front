@@ -10,8 +10,8 @@ import { BurgerIcon } from "@/src/shared/icons/BurgerIcon";
 import { CartIcon } from "@/src/shared/icons/CartIcon";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { UserIcon } from "@/src/shared/icons/UserIcon";
-import { useAuthStore } from "@/src/shared/lib/stores/authStore";
 import { cn } from "@/src/shared/lib/utils/cn";
+import { cookies } from "@/src/shared/lib/utils/cookies";
 
 import { Modal } from "../../modal";
 
@@ -21,11 +21,11 @@ export const Header = ({ className }: { className?: string }) => {
 
   const items = useCartStore(state => state.items);
 
-  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const router = useRouter();
 
   const handleUserIconClick = () => {
-    if (isAuthenticated) {
+    const userId = cookies.get("user_id");
+    if (userId) {
       router.push("/profile");
     } else {
       router.push("/auth");

@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { authApi } from "@/src/entities/user/api";
+
 type AuthStep = "form" | "sms";
 
 export const useAuth = () => {
@@ -13,7 +15,7 @@ export const useAuth = () => {
     gender: string;
   } | null>(null);
 
-  const handleFormSuccess = (data: {
+  const handleFormSuccess = async (data: {
     name: string;
     phone: string;
     gender: string;
@@ -21,8 +23,11 @@ export const useAuth = () => {
     setUserData(data);
     setAuthStep("sms");
     // Здесь будет запрос на отправку SMS когда backend готов
-    console.log("Отправка SMS на номер:", data.phone);
-    console.log("Режим:", activeAuth);
+    try {
+      await authApi.sendSms({ phone: data.phone });
+    } catch (error) {
+      console.error("Ошибка отправки SMS: ", error);
+    }
   };
 
   const handleChangeAuthType = (type: "register" | "login") => {

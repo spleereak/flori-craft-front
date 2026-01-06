@@ -1,21 +1,45 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { useAuthStore } from "@/src/shared/lib/stores/authStore";
-import { Button } from "@/src/shared/ui";
+import { authApi } from "@/src/entities/user/api";
+import { ProfileResponse } from "@/src/entities/user/api/authApi";
+import { ExitIcon } from "@/src/shared/icons/ExitIcon";
+import { cookies } from "@/src/shared/lib/utils/cookies";
 
 export default function ProfilePage() {
-  const { user, isAuthenticated, logout } = useAuthStore();
+  const [user, setUser] = useState<ProfileResponse | null>();
   const router = useRouter();
 
   const handleLogout = () => {
-    logout();
+    cookies.removeUserId();
     router.push("/auth");
   };
 
-  if (!user || !isAuthenticated) {
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const userId = cookies.get("user_id");
+
+        if (!userId) {
+          router.push("/auth");
+          return;
+        }
+
+        const profile = await authApi.getProfile(userId);
+        setUser(profile);
+      } catch (error) {
+        console.error("Ошибка загрузки пользователя", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [router]);
+
+  if (!user) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <h2 className="h2">Загрузка...</h2>
@@ -42,12 +66,13 @@ export default function ProfilePage() {
             <p className="text_p">{user.phone}</p>
           </div>
         </div>
-        <Button
+        <div
+          className="desktop:gap-12 flex cursor-pointer flex-row items-center gap-9"
           onClick={() => handleLogout()}
-          className="bg-red desktop:w-234 desktop:h-66 w-156 h-33"
         >
-          Выйти
-        </Button>
+          <ExitIcon />
+          <p className="text-red text_p">Выйти</p>
+        </div>
       </div>
     </div>
   );

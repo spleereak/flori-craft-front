@@ -1,0 +1,25 @@
+export const cookies = {
+  set: (name: string, value: string): void => {
+    const date = new Date();
+    date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * 7);
+    const expires = `expires=${date.toUTCString()}`;
+    document.cookie = `${name}=${value};${expires};path=/`;
+  },
+
+  get: (name: string): string | null => {
+    const cookies = document.cookie.split(";");
+    const cookie = cookies.find(c => c.trim().startsWith(`${name}=`));
+    return cookie ? cookie.split("=")[1] : null;
+  },
+  remove: (name: string): void => {
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+  },
+
+  setUserId: (userId: string): void => {
+    cookies.set("user_id", userId);
+  },
+
+  removeUserId: (): void => {
+    cookies.remove("user_id");
+  },
+};

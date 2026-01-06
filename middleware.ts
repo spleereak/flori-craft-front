@@ -2,14 +2,15 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const isAuthenticated = request.cookies.get("isAuthenticated")?.value;
+  console.log(request);
+  const isAuthenticated = request.cookies.get("user_id")?.value;
   const { pathname } = request.nextUrl;
 
-  if (isAuthenticated === "true" && pathname.startsWith("/auth")) {
+  if (isAuthenticated && pathname.startsWith("/auth")) {
     return NextResponse.redirect(new URL("/profile", request.url));
   }
 
-  if (isAuthenticated !== "true" && pathname.startsWith("/profile")) {
+  if (!isAuthenticated && pathname.startsWith("/profile")) {
     return NextResponse.redirect(new URL("/auth", request.url));
   }
 

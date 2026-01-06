@@ -1,8 +1,9 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 
-import { useRouter } from "next/navigation";
-
-import { useAuthStore } from "@/src/shared/lib/stores/authStore";
+import { authApi } from "@/src/entities/user/api";
+import { cookies } from "@/src/shared/lib/utils/cookies";
 
 import { SmsCodeFormProps } from "../types";
 
@@ -16,8 +17,6 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const setAuth = useAuthStore(state => state.setAuth);
-  const router = useRouter();
   const hasAutoSubmitted = useRef(false);
   const codeInputRef = useRef<CodeInputRef>(null);
 
@@ -46,26 +45,25 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
 
     setIsSubmitting(true);
 
-    // Имитация проверки кода
-    if (codeToVerify === "1234") {
-      const userToSave =
-        mode === "register"
-          ? {
-              name: userData.name,
-              phone: userData.phone,
-              gender: userData.gender,
-            }
-          : {
-              // При login эти данные должны прийти с бэкенда
-              name: "Пользователь", // Заглушка
-              phone: userData.phone,
-              gender: "male" as const, // Заглушка
-            };
-
-      setAuth(true, userToSave);
-      router.push("/profile");
-    } else {
-      setError("Неверный код. Попробуйте 1234");
+    try {
+      let response;
+      if (mode === "login") {
+        response = await authApi.verifyLogin({
+          phone: userData.phone,
+          code: codeToVerify,
+        });
+      } else {
+        response = await authApi.verifyRegister({
+          phone: userData.phone,
+          name: userData.name,
+          gender: userData.gender,
+          code: codeToVerify,
+        });
+      }
+      cookies.setUserId(response.id);
+      window.location.href = "/profile";
+    } catch (error) {
+      console.error("Ошибка при проверке: ", error);
       setCode("");
       setIsSubmitting(false);
       hasAutoSubmitted.current = false;
@@ -98,15 +96,17 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
     verifyCode(code);
   };
 
-  const handleResendCode = () => {
-    console.log("Повторная отправка SMS на номер:", userData.phone);
-    console.log("Режим:", mode);
+  const handleResendCode = async () => {
     setCode("");
     setError("");
     setTimeLeft(60);
     setCanResend(false);
     hasAutoSubmitted.current = false;
-    // Здесь будет запрос на повторную отправку
+    try {
+      await authApi.sendSms({ phone: userData.phone });
+    } catch (error) {
+      console.error("Ошибка повторной отправки SMS: ", error);
+    }
   };
 
   return {

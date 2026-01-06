@@ -7,7 +7,7 @@ export interface FormData {
 
 export interface FormErrors {
   name?: boolean;
-  phone?: boolean;
+  phone?: string;
   agreedToPolicy?: boolean;
 }
 

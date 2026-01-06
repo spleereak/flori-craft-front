@@ -2,6 +2,14 @@ import { api } from "@/src/shared/api";
 
 const authBase = "custom_auth";
 
+export interface CheckPhoneRequest {
+  phone: string;
+}
+
+export interface CheckPhoneResponse {
+  exists: boolean;
+}
+
 export interface SendSmsRequest {
   phone: string;
 }
@@ -34,6 +42,8 @@ export interface ProfileResponse {
 }
 
 export const authApi = {
+  checkPhone: (data: CheckPhoneRequest) =>
+    api.post<CheckPhoneResponse>(`/${authBase}/check_phone/`, data),
   sendSms: (data: SendSmsRequest) =>
     api.post<SendSmsResponse>(`/${authBase}/send_sms/`, data),
   verifyRegister: (data: VerifyRegisterRequest) =>

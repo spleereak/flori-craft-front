@@ -33,16 +33,19 @@ export const Form: React.FC<FormProps> = ({ mode, onSuccess }) => {
       </h3>
       <div className="desktop:gap-20 desktop:mb-24 mb-14 flex flex-col gap-8">
         <p className="caption text-grey-for-text">Введите ваши данные</p>
-        <IMaskInput
-          mask="+{7} (000) 000-00-00"
-          value={formData.phone}
-          onAccept={(value: string) => handlePhoneChange(value)}
-          className={cn(
-            "desktop:rounded-2xl caption py-13 desktop:py-20 desktop:px-22 ring-none w-full rounded-md bg-white px-16 transition-all duration-300 ease-in-out focus:border-2 focus:border-black focus:outline-none",
-            errors.phone && "placeholder:text-red border-red border-2"
-          )}
-          placeholder="Номер телефона"
-        />
+        <div className="flex flex-col gap-10">
+          <IMaskInput
+            mask="+{7} (000) 000-00-00"
+            value={formData.phone}
+            onAccept={(value: string) => handlePhoneChange(value)}
+            className={cn(
+              "desktop:rounded-2xl caption py-13 desktop:py-20 desktop:px-22 ring-none w-full rounded-md bg-white px-16 transition-all duration-300 ease-in-out focus:border-2 focus:border-black focus:outline-none",
+              errors.phone && "placeholder:text-red border-red border-2"
+            )}
+            placeholder="Номер телефона"
+          />
+          {errors.phone && <p className="text-red caption">{errors.phone}</p>}
+        </div>
       </div>
       {mode === "register" && (
         <div className="gap-26 desktop:gap-40 desktop:mb-40 mb-16 flex flex-col">

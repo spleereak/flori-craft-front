@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
+import { authApi } from "@/src/entities/user/api";
+
 import { FormData, FormErrors, FormProps } from "../types";
 
 export const useForm = ({ mode, onSuccess }: FormProps) => {
@@ -70,7 +72,7 @@ export const useForm = ({ mode, onSuccess }: FormProps) => {
 
     const phoneDigits = formData.phone.replace(/\D/g, "").slice(1);
     if (phoneDigits.length !== 10) {
-      newErrors.phone = true;
+      newErrors.phone = "Неправильно введен номер телефона";
     }
 
     if (!formData.agreedToPolicy) {
@@ -81,10 +83,28 @@ export const useForm = ({ mode, onSuccess }: FormProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validateForm()) {
+      return;
+    }
+
+    const response = await authApi.checkPhone({ phone: formData.phone });
+
+    const errorText =
+      mode === "login"
+        ? "Пользователя с таким номером телефона не существует"
+        : "Пользователь с таким номером телефона уже существует";
+
+    if (
+      (response.exists && mode === "register") ||
+      (!response.exists && mode === "login")
+    ) {
+      setErrors({
+        ...errors,
+        phone: errorText,
+      });
       return;
     }
 

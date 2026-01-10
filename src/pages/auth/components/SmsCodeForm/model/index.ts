@@ -64,6 +64,7 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
       window.location.href = "/profile";
     } catch (error) {
       console.error("Ошибка при проверке: ", error);
+      setError("Неверный код");
       setCode("");
       setIsSubmitting(false);
       hasAutoSubmitted.current = false;

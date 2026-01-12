@@ -1,9 +1,13 @@
 import apiClient from "./api-client";
 
-export { apiClient };
-
 export const api = {
-  get: <T = any>(url: string, config?: any) => apiClient.get<T, T>(url, config),
-  post: <T = any>(url: string, data?: any, config?: any) =>
-    apiClient.post<T, T>(url, data, config),
+  get: <T>(
+    url: string,
+    options?: Omit<Parameters<typeof apiClient>[1], "method">
+  ) => apiClient<T>(url, { ...options, method: "GET" }),
+  post: <T, B = unknown>(
+    url: string,
+    body?: B,
+    options?: Omit<Parameters<typeof apiClient>[1], "method" | "body">
+  ) => apiClient<T, B>(url, { ...options, body, method: "POST" }),
 };

@@ -1,39 +1,55 @@
-import axios from "axios";
+import { RequestOptions } from "./types";
 
-const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-apiClient.interceptors.response.use(
-  response => {
-    return response.data;
-  },
-  error => {
-    if (error.response) {
-      const { status } = error.response;
+function buildUrl(url: string, params?: RequestOptions["params"]) {
+  if (!params) return url;
 
-      switch (status) {
-        case 401:
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) query.append(key, String(value));
+  });
+
+  return `${url}?${query.toString()}`;
+}
+
+async function apiClient<TResponse, TBody = unknown>(
+  url: string,
+  options: RequestOptions<TBody> = {}
+): Promise<TResponse> {
+  const {
+    method = "GET",
+    body,
+    params,
+    headers,
+    cache = "no-store",
+    next,
+  } = options;
+
+  const fullUrl = buildUrl(`${BASE_URL}${url}`, params);
+
+  const res = await fetch(fullUrl, {
+    method,
+    body: body ? JSON.stringify(body) : undefined,
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    },
+    cache,
+    next,
+  });
+
+  if (!res.ok) {
+    switch (res.status) {
+      case 401:
+        if (typeof window !== "undefined") {
           window.location.href = "/auth";
-          break;
-        case 403:
-          console.error("Forbidden");
-          break;
-        case 404:
-          console.error("Not found");
-          break;
-        case 500:
-          console.error("Server error");
-          break;
-      }
+        }
+        break;
     }
-
-    return Promise.reject(error); // ✅ ВАЖНО
   }
-);
+
+  return res.json() as Promise<TResponse>;
+}
 
 export default apiClient;

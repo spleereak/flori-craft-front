@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import React from "react";
 
@@ -7,6 +7,13 @@ import { Header } from "@/src/widgets/header/ui";
 
 import ClientLayout from "./(main)/ClientLayout";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata: Metadata = {
   title: "FloriCraft",
   description: "Цветочный магазин FloriCraft",
@@ -14,12 +21,6 @@ export const metadata: Metadata = {
     icon: "/icons/logo-shortcut.png",
     shortcut: "/icons/logo-shortcut.png",
     apple: "/icons/logo-shortcut.png",
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
   },
 };
 

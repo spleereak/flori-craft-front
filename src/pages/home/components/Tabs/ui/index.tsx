@@ -13,6 +13,11 @@ export const Tabs: React.FC<TabsProps> = ({
   categories,
   activeTab,
   onSelect,
+  minPrice,
+  maxPrice,
+  prices,
+  updatePrice,
+  updatePrices,
 }) => {
   const handleClick = (id: string) => {
     onSelect?.(id);
@@ -25,13 +30,19 @@ export const Tabs: React.FC<TabsProps> = ({
         className
       )}
     >
-      <FilterPrice />
+      <FilterPrice
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+        prices={prices}
+        updatePrice={updatePrice}
+        updatePrices={updatePrices}
+      />
       {categories.map(category => (
         <TabButton
-          key={category.id}
+          key={category.name}
           tab={category.name}
-          active={activeTab === category.id}
-          onClick={() => handleClick(category.id)}
+          active={activeTab === category.name}
+          onClick={() => handleClick(category.name)}
         />
       ))}
     </div>

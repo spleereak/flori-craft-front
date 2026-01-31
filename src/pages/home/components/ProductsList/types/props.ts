@@ -1,7 +1,7 @@
-import { ProductCardProps } from "../../ProductCard/types";
+import { Bouquet } from "@/src/entities/products/api";
 
 export interface ProductsListProps {
   className?: string;
   category: string;
-  products: Omit<ProductCardProps, "className">[];
+  products: Bouquet[];
 }

@@ -8,7 +8,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "placehold.co",
-        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.posiflora.online",
       },
     ],
   },

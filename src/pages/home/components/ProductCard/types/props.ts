@@ -1,10 +1,11 @@
 export interface ProductCardProps {
-  className?: string;
-  name: string;
-  images: string[];
-  priceList: {
-    size: string;
+  id: string;
+  title: string;
+  image_urls: string[];
+  description: string;
+  price?: number | null;
+  variants?: {
+    size: "S" | "M" | "L";
     price: number;
   }[];
-  productId: string;
 }

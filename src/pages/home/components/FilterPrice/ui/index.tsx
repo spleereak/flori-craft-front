@@ -13,29 +13,26 @@ import { useMedia } from "@/src/shared/hooks/use-media";
 import { ArrowDown } from "@/src/shared/icons/ArrowDown";
 
 interface PriceProps {
-  priceFrom?: number;
-  priceTo?: number;
+  priceFrom: number;
+  priceTo: number;
 }
 
-export const FilterPrice = () => {
-  const [prices, setPrices] = React.useState<PriceProps>({
-    priceFrom: undefined,
-    priceTo: undefined,
-  });
+interface FilterPriceProps {
+  minPrice: number;
+  maxPrice: number;
+  prices: PriceProps;
+  updatePrice: (name: keyof PriceProps, value: number) => void;
+  updatePrices: (newPrices: [number, number]) => void;
+}
 
+export const FilterPrice: React.FC<FilterPriceProps> = ({
+  minPrice,
+  maxPrice,
+  prices,
+  updatePrice,
+  updatePrices,
+}) => {
   const { isDesktop } = useMedia();
-
-  const updatePrice = (name: keyof PriceProps, value: number) => {
-    setPrices(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const updatePrices = (prices: [number, number]) => {
-    updatePrice("priceFrom", prices[0]);
-    updatePrice("priceTo", prices[1]);
-  };
 
   return (
     <Popover>
@@ -58,27 +55,27 @@ export const FilterPrice = () => {
           <div className="desktop:gap-16 flex gap-7">
             <Input
               type="number"
-              placeholder="от 0"
-              min={0}
-              max={60000}
-              value={String(prices.priceFrom) || 0}
+              placeholder={`от ${minPrice}`}
+              min={minPrice}
+              max={maxPrice}
+              value={String(prices.priceFrom)}
               onChange={e => updatePrice("priceFrom", Number(e.target.value))}
             />
             <Input
               type="number"
-              placeholder="до 60000"
-              min={1000}
-              max={60000}
-              value={String(prices.priceTo) || 60000}
+              placeholder={`до ${maxPrice}`}
+              min={minPrice}
+              max={maxPrice}
+              value={String(prices.priceTo)}
               onChange={e => updatePrice("priceTo", Number(e.target.value))}
             />
           </div>
 
           <RangeSlider
-            min={0}
-            max={60000}
+            min={minPrice}
+            max={maxPrice}
             step={100}
-            value={[prices.priceFrom || 0, prices.priceTo || 60000]}
+            value={[prices.priceFrom, prices.priceTo]}
             onValueChange={([from, to]) => updatePrices([from, to])}
           />
         </div>

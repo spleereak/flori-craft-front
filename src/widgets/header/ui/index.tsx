@@ -65,7 +65,7 @@ export const Header = ({ className }: { className?: string }) => {
             <div className="relative flex items-center justify-center">
               {items.length > 0 && (
                 <div className="desktop:size-27 size-18 bg-brown desktop:-right-6 desktop:-top-6 absolute -right-4 -top-4 z-50 flex items-center justify-center rounded-full">
-                  <p className="desktop:!text-[0.875rem] caption max-h-max !text-[0.6rem] text-white">
+                  <p className="desktop:text-[0.875rem]! caption text-[0.6rem]! max-h-max text-white">
                     {items.length}
                   </p>
                 </div>

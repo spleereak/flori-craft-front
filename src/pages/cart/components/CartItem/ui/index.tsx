@@ -13,6 +13,7 @@ import { CartItemProps } from "../types";
 
 export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
   const { removeItem } = useCartStore();
+  console.log(product);
 
   return (
     <div
@@ -32,14 +33,18 @@ export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
       ) : (
         <div className="desktop:w-213 desktop:h-244 w-109 h-125 bg-light-grey desktop:rounded-2xl rounded-md" />
       )}
-      <div className="desktop:flex-col flex flex-row justify-between">
-        <div className="desktop:flex-row desktop:gap-188 desktop:justify-start desktop:w-max flex w-full flex-col justify-between">
+      <div className="desktop:flex-col flex w-full flex-row justify-between">
+        <div className="desktop:flex-row desktop:gap-188 flex w-full flex-col justify-between">
           <p className="text_p desktop:w-381 w-222 max-desktop:leading-[1.32]">
-            {product.name}
+            {product.title}
           </p>
           <div className="desktop:contents max-desktop:flex-row max-desktop:w-full max-desktop:justify-between max-desktop:items-end flex">
             <div className="desktop:gap-238 max-desktop:gap-51 flex flex-row">
-              <p className="text_p text-grey-for-text">Размер {product.size}</p>
+              {product.size && (
+                <p className="text_p text-grey-for-text">
+                  Размер {product.size}
+                </p>
+              )}
               <p className="text_p desktop:text-black text-grey-for-text">
                 {formatPrice(product.price)} ₽
               </p>

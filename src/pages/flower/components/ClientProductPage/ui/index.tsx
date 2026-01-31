@@ -7,6 +7,7 @@ import React from "react";
 import Link from "next/link";
 
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
+import { Bouquet } from "@/src/entities/products/api";
 import { CloseIcon } from "@/src/shared/icons/CloseIcon";
 import { generateId } from "@/src/shared/lib/utils/generate-id";
 import { formatPrice } from "@/src/shared/lib/utils/helpers";
@@ -15,48 +16,43 @@ import { useToastStore } from "@/src/shared/ui/Toast";
 
 import { ImagesBlock } from "../../ImagesBlock/ui";
 import { SizeBlock } from "../../SizeBlock/ui";
-import { ProductProps } from "../types/props";
 
-export default function ClientProductPage({
-  product,
-}: {
-  product: ProductProps;
-}) {
+export default function ClientProductPage({ product }: { product: Bouquet }) {
   const [activeSize, setActiveSize] = React.useState<string>(
-    product.priceList[0].size
+    product.variants?.[0]?.size ?? ""
   );
 
-  const sizes = product.priceList.map(item => item.size);
+  const sizes = product.variants?.map((item: any) => item.size) ?? [];
 
   const { items, addItem, removeItem } = useCartStore();
   const openToast = useToastStore(state => state.open);
 
-  const activePrice = product.priceList.find(
-    item => item.size === activeSize
-  )?.price;
+  const activePrice = product.variants
+    ? product.variants.find(item => item.size === activeSize)!.price
+    : product.price;
 
   const isInCart = items.some(
     item =>
       item.id ===
       generateId({
-        productId: product.productId,
+        productId: product.id,
         size: activeSize,
       })
   );
 
   const handleClick = () => {
     const cartItemId = generateId({
-      productId: product.productId,
+      productId: product.id,
       size: activeSize,
     });
     if (!isInCart) {
       addItem({
         id: cartItemId,
-        productId: product.productId,
-        name: product.name,
-        size: activeSize,
-        price: activePrice!,
-        images: product.images,
+        productId: product.id,
+        title: product.title,
+        size: activeSize as "S" | "M" | "L",
+        price: activePrice,
+        image_urls: product.image_urls,
       });
 
       openToast();
@@ -81,9 +77,13 @@ export default function ClientProductPage({
         >
           <CloseIcon />
         </Link>
-        <ImagesBlock images={product.images} />
+        {product.image_urls && product.image_urls.length > 0 ? (
+          <ImagesBlock images={product.image_urls} />
+        ) : (
+          <div className="desktop:size-539 desktop:rounded-2xl h-440 w-full bg-[#D9D9D9] object-cover" />
+        )}
         <div className="desktop:pt-50 desktop:max-w-491 desktop:px-0 flex flex-col px-16 pt-12">
-          <h3 className="h3 desktop:mb-46 mb-22">{product.name}</h3>
+          <h3 className="h3 desktop:mb-46 mb-22">{product.title}</h3>
           <div className="desktop:flex-col desktop:gap-24 desktop:justify-start desktop:mb-51 mb-22 flex flex-row-reverse justify-between">
             <h3 className="h3">{formatPrice(activePrice!)} ₽</h3>
             <SizeBlock
@@ -98,13 +98,9 @@ export default function ClientProductPage({
             </Button>
             <Button appearance="outline">Купить сейчас</Button>
           </div>
-          <div className="text-grey-for-text flex flex-col gap-24">
-            {product.info.map((text, i) => (
-              <p key={i} className="caption">
-                {text}
-              </p>
-            ))}
-          </div>
+          {product.description && (
+            <p className="caption text-grey-for-text">{product.description}</p>
+          )}
         </div>
       </div>
     </div>

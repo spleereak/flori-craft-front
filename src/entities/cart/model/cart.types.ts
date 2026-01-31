@@ -1,8 +1,7 @@
-export interface CartItem {
-  id: string;
+import { Bouquet } from "../../products/api";
+
+export type CartItem = Omit<Bouquet, "description" | "variants" | "price"> & {
   productId: string;
-  name: string;
-  size: string;
+  size: "S" | "M" | "L";
   price: number;
-  images: string[];
-}
+};

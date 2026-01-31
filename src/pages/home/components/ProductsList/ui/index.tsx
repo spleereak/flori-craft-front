@@ -12,7 +12,7 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
     return (
       <div
         className={cn(
-          "gap-30 scroll-mt-180 desktop:scroll-mt-300 flex flex-col",
+          "gap-30 scroll-mt-180 desktop:scroll-mt-300 flex w-full flex-col",
           className
         )}
         ref={ref}
@@ -20,15 +20,14 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
         <h1 className="h1">{category}</h1>
         <div className="desktop:grid-cols-3 desktop:gap-x-135 desktop:gap-y-80 gap-y-18 grid grid-cols-2 gap-x-7">
           {products.map(product => (
-            <Link
-              href={`/flowers/${product.productId}`}
-              key={product.productId}
-            >
+            <Link href={`/flowers/${product.id}`} key={product.id}>
               <ProductCard
-                productId={product.productId}
-                images={product.images}
-                name={product.name}
-                priceList={product.priceList}
+                id={product.id}
+                image_urls={product.image_urls}
+                title={product.title}
+                variants={product.variants}
+                price={product.price ?? null}
+                description={product.description}
               />
             </Link>
           ))}

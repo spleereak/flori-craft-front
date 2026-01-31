@@ -9,10 +9,10 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
   const specifications = specificationsResponse.categories;
 
   return [
-    ...specifications,
     {
       name: "Готовые букеты",
       products: bouquets,
     },
+    ...specifications,
   ];
 };

@@ -96,7 +96,6 @@ export function HomeClient({ catalog }: { catalog: CategoriesProducts[] }) {
     return () => observer.disconnect();
   }, []);
 
-  // Используем useMemo для фильтрации с debouncedPrices
   const filteredCatalog = useMemo(() => {
     return catalog
       .map(category => {

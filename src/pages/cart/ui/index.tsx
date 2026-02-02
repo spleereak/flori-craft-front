@@ -16,7 +16,6 @@ export default function CartPage() {
 
   const totalPrice = items.reduce((acc, product) => product.price + acc, 0);
   const [checked, setChecked] = useState(false);
-  console.log(items);
   return (
     <div className="desktop:pb-160 desktop:px-90 pb-100 px-16 pt-40">
       <div className="desktop:gap-20 desktop:mb-47 mb-25 flex flex-row items-center gap-10">

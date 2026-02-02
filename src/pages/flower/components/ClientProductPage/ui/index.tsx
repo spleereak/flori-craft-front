@@ -17,6 +17,7 @@ import { useToastStore } from "@/src/shared/ui/Toast";
 import { ImagesBlock } from "../../ImagesBlock/ui";
 import { SizeBlock } from "../../SizeBlock/ui";
 
+const careDescription = "Букет будет подобным, в случае с живыми цветами копию собрать невозможно. Для вас создадим авторский букет, ориентируясь на фото-пример и свежие цветы в наличии.";
 export default function ClientProductPage({ product }: { product: Bouquet }) {
   const [activeSize, setActiveSize] = React.useState<string>(
     product.variants?.[0]?.size ?? ""
@@ -98,9 +99,14 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
             </Button>
             <Button appearance="outline">Купить сейчас</Button>
           </div>
-          {product.description && (
-            <p className="caption text-grey-for-text">{product.description}</p>
-          )}
+          <div className="desktop:gap-24 flex flex-col gap-12">
+            {product.description && (
+              <p className="caption text-grey-for-text">
+                {product.description}
+              </p>
+            )}
+            <p className="caption text-grey-for-text">{careDescription}</p>
+          </div>
         </div>
       </div>
     </div>

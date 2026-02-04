@@ -34,6 +34,7 @@ export interface VerifyResponse {
   id: string;
   phone: string;
   name: string;
+  cookie_id: string;
 }
 
 export interface ProfileResponse {

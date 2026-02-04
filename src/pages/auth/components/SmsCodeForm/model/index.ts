@@ -60,7 +60,7 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
           code: codeToVerify,
         });
       }
-      cookies.setUserId(response.id);
+      cookies.setUserId(response.cookie_id);
       window.location.href = "/profile";
     } catch (error) {
       console.error("Ошибка при проверке: ", error);

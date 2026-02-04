@@ -3,7 +3,7 @@ export const cookies = {
     const date = new Date();
     date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * 7);
     const expires = `expires=${date.toUTCString()}`;
-    document.cookie = `${name}=${value};${expires};path=/`;
+    document.cookie = `${name}=${value};${expires};path=/;SameSite=None;Secure`;
   },
 
   get: (name: string): string | null => {
@@ -12,7 +12,7 @@ export const cookies = {
     return cookie ? cookie.split("=")[1] : null;
   },
   remove: (name: string): void => {
-    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=None;Secure`;
   },
 
   setUserId: (userId: string): void => {

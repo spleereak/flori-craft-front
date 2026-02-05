@@ -47,9 +47,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {image_urls[0] ? (
         <Image
           src={image_urls[0]}
-          alt=""
+          alt={title}
           width={490}
           height={490}
+          loading="lazy"
+          sizes="(max-width: 768px) 168px, 490px"
           className="desktop:h-490 h-168 desktop:rounded-t-2xl w-full rounded-t-md object-cover"
         />
       ) : (

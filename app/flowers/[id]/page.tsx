@@ -1,1 +1,1 @@
-export { ProductPage as default } from "@/src/pages/flower";
+export { ProductPage as default, generateStaticParams } from "@/src/pages/flower";

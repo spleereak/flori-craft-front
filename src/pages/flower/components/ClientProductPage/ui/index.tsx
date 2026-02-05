@@ -1,20 +1,50 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
-
-import React from "react";
+import React, { memo } from "react";
 
 import Link from "next/link";
 
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { Bouquet } from "@/src/entities/products/api";
-import { CloseIcon } from "@/src/shared/icons/CloseIcon";
 import { formatPrice } from "@/src/shared/lib/utils/helpers";
 import { Button } from "@/src/shared/ui";
 import { useToastStore } from "@/src/shared/ui/Toast";
 
 import { ImagesBlock } from "../../ImagesBlock/ui";
 import { SizeBlock } from "../../SizeBlock/ui";
+
+const ArrowLeftIcon = memo(() => (
+  <svg
+    width="24"
+    height="33"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m12 19-7-7 7-7" />
+    <path d="M19 12H5" />
+  </svg>
+));
+ArrowLeftIcon.displayName = "ArrowLeftIcon";
+
+const CloseIcon = memo(() => (
+  <svg
+    className="desktop:size-20 size-12"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+));
+CloseIcon.displayName = "CloseIcon";
 
 const careDescription = "Букет будет подобным, в случае с живыми цветами копию собрать невозможно. Для вас создадим авторский букет, ориентируясь на фото-пример и свежие цветы в наличии.";
 export default function ClientProductPage({ product }: { product: Bouquet }) {
@@ -63,7 +93,7 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
         href="/"
         className="desktop:flex hidden max-h-max flex-row items-center gap-12"
       >
-        <ArrowLeft className="h-33 w-24" />
+        <ArrowLeftIcon />
         <p className="text_p max-h-max">На главную</p>
       </Link>
       <div className="desktop:max-w-1054 desktop:flex-row desktop:gap-24 relative flex w-full flex-col">

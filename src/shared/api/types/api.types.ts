@@ -8,4 +8,5 @@ export interface RequestOptions<TBody = unknown> {
   headers?: HeadersInit;
   cache?: RequestCache;
   next?: NextFetchRequestConfig;
+  revalidate?: number | false;
 }

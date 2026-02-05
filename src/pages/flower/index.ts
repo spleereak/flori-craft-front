@@ -1,1 +1,1 @@
-export { default as ProductPage } from "./ui";
+export { default as ProductPage, generateStaticParams } from "./ui";

@@ -22,9 +22,15 @@ async function apiClient<TResponse, TBody = unknown>(
     body,
     params,
     headers,
-    cache = "no-store",
+    cache,
     next,
+    revalidate,
   } = options;
+
+  // Для GET запросов по умолчанию кэшируем на 60 секунд
+  const fetchCache = cache ?? (method === "GET" ? undefined : "no-store");
+  const fetchNext =
+    next ?? (method === "GET" && !cache ? { revalidate: revalidate ?? 60 } : undefined);
 
   const fullUrl = buildUrl(`${BASE_URL}${url}`, params);
 
@@ -36,8 +42,8 @@ async function apiClient<TResponse, TBody = unknown>(
       "Content-Type": "application/json",
       ...headers,
     },
-    cache,
-    next,
+    cache: fetchCache,
+    next: fetchNext,
   });
 
   if (!res.ok) {

@@ -34,9 +34,14 @@ export interface specificationsResponse {
 }
 
 export const productsApi = {
-  getAllBouquets: () => api.get<Bouquet[]>(`/${posifloraBase}/bouquets/`),
+  getAllBouquets: () =>
+    api.get<Bouquet[]>(`/${posifloraBase}/bouquets/`, { revalidate: 300 }),
   getProductById: (productId: string) =>
-    api.get<Bouquet>(`/${posifloraBase}/products/${productId}/`),
+    api.get<Bouquet>(`/${posifloraBase}/products/${productId}/`, {
+      revalidate: 300,
+    }),
   getCategories: () =>
-    api.get<specificationsResponse>(`/${posifloraBase}/specifications/`),
+    api.get<specificationsResponse>(`/${posifloraBase}/specifications/`, {
+      revalidate: 600,
+    }),
 };

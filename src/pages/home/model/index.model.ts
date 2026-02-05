@@ -8,8 +8,6 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
 
   const specifications = specificationsResponse.categories;
 
-  console.log(specifications);
-
   return [
     {
       name: "Готовые букеты",

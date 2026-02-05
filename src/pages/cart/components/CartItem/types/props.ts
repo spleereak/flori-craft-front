@@ -1,10 +1,10 @@
 export interface CartItemProps {
   className?: string;
   product: {
-    id: string;
+    product_id: string;
     title: string;
-    size: string;
+    size: "S" | "M" | "L";
     price: number;
-    imageSrc: string;
+    image: string;
   };
 }

@@ -10,4 +10,9 @@ export const api = {
     body?: B,
     options?: Omit<Parameters<typeof apiClient>[1], "method" | "body">
   ) => apiClient<T, B>(url, { ...options, body, method: "POST" }),
+  delete: <T, B = unknown>(
+    url: string,
+    body?: B,
+    options?: Omit<Parameters<typeof apiClient>[1], "method">
+  ) => apiClient<T, B>(url, { ...options, body, method: "DELETE" }),
 };

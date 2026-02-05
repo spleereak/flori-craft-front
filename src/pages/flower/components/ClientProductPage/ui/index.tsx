@@ -9,7 +9,6 @@ import Link from "next/link";
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { Bouquet } from "@/src/entities/products/api";
 import { CloseIcon } from "@/src/shared/icons/CloseIcon";
-import { generateId } from "@/src/shared/lib/utils/generate-id";
 import { formatPrice } from "@/src/shared/lib/utils/helpers";
 import { Button } from "@/src/shared/ui";
 import { useToastStore } from "@/src/shared/ui/Toast";
@@ -25,7 +24,7 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
 
   const sizes = product.variants?.map((item: any) => item.size) ?? [];
 
-  const { items, addItem, removeItem } = useCartStore();
+  const { items, addItem, removeItem, isHydrated, isLoading } = useCartStore();
   const openToast = useToastStore(state => state.open);
 
   const activePrice = product.variants
@@ -33,32 +32,28 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
     : product.price;
 
   const isInCart = items.some(
-    item =>
-      item.id ===
-      generateId({
-        productId: product.id,
-        size: activeSize,
-      })
+    item => item.product_id === product.id && item.size === activeSize
   );
 
   const handleClick = () => {
-    const cartItemId = generateId({
-      productId: product.id,
-      size: activeSize,
-    });
     if (!isInCart) {
       addItem({
-        id: cartItemId,
-        productId: product.id,
+        product_id: product.id,
         title: product.title,
         size: activeSize as "S" | "M" | "L",
         price: activePrice,
-        image_urls: product.image_urls,
+        image: product.image_urls[0],
       });
 
       openToast();
     } else {
-      removeItem(cartItemId);
+      removeItem({
+        product_id: product.id,
+        title: product.title,
+        size: activeSize as "S" | "M" | "L",
+        price: activePrice,
+        image: product.image_urls[0],
+      });
     }
   };
 
@@ -94,8 +89,12 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
             />
           </div>
           <div className="desktop:mb-30 desktop:flex-col max-desktop:fixed desktop:p-0 bottom-0 left-0 flex w-full flex-row-reverse gap-10 bg-white p-16">
-            <Button onClick={handleClick}>
-              {isInCart ? "Убрать из корзины" : "Добавить в корзину"}
+            <Button onClick={handleClick} disabled={!isHydrated || isLoading}>
+              {!isHydrated
+                ? "Загрузка..."
+                : isInCart
+                  ? "Убрать из корзины"
+                  : "Добавить в корзину"}
             </Button>
             <Button appearance="outline">Купить сейчас</Button>
           </div>

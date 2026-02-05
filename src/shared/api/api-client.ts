@@ -48,6 +48,7 @@ async function apiClient<TResponse, TBody = unknown>(
         }
         break;
     }
+    throw new Error(`HTTP error: ${res.status}`);
   }
 
   return res.json() as Promise<TResponse>;

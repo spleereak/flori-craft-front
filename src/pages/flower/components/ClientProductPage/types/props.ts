@@ -1,5 +1,5 @@
 export interface ProductProps {
-  productId: string;
+  product_id: string;
   images: string[];
   name: string;
   priceList: {

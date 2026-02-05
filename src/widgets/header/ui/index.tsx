@@ -20,6 +20,7 @@ export const Header = ({ className }: { className?: string }) => {
   const [shouldRender, setShouldRender] = useState(false);
 
   const items = useCartStore(state => state.items);
+  const isHydrated = useCartStore(state => state.isHydrated);
 
   const router = useRouter();
 
@@ -63,12 +64,16 @@ export const Header = ({ className }: { className?: string }) => {
         <div className="flex flex-row gap-10">
           <Link href="/cart">
             <div className="relative flex items-center justify-center">
-              {items.length > 0 && (
-                <div className="desktop:size-27 size-18 bg-brown desktop:-right-6 desktop:-top-6 absolute -right-4 -top-4 z-50 flex items-center justify-center rounded-full">
-                  <p className="desktop:text-[0.875rem]! caption text-[0.6rem]! max-h-max text-white">
-                    {items.length}
-                  </p>
-                </div>
+              {!isHydrated ? (
+                <div className="desktop:size-27 size-18 desktop:-right-6 desktop:-top-6 absolute -right-4 -top-4 z-50 animate-pulse rounded-full bg-gray-200" />
+              ) : (
+                items.length > 0 && (
+                  <div className="desktop:size-27 size-18 bg-brown desktop:-right-6 desktop:-top-6 absolute -right-4 -top-4 z-50 flex items-center justify-center rounded-full">
+                    <p className="desktop:text-[0.875rem]! caption text-[0.6rem]! max-h-max text-white">
+                      {items.length}
+                    </p>
+                  </div>
+                )
               )}
               <CartIcon />
             </div>

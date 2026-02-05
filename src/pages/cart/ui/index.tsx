@@ -38,9 +38,9 @@ export default function CartPage() {
           <div className="desktop:gap-30 flex w-full flex-col gap-20">
             {items.map(item => {
               const product = {
-                id: item.id,
+                product_id: item.product_id,
                 title: item.title,
-                imageSrc: item.image_urls[0],
+                image: item.image,
                 size: item.size,
                 price: item.price,
               };
@@ -48,7 +48,7 @@ export default function CartPage() {
                 <CartItem
                   product={product}
                   className="desktop:pb-30 border-b border-[#80808080] pb-20"
-                  key={item.id}
+                  key={item.product_id + item.size}
                 />
               );
             })}

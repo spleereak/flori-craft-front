@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
+import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { authApi } from "@/src/entities/user/api";
 import { cookies } from "@/src/shared/lib/utils/cookies";
 
@@ -19,6 +20,7 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const hasAutoSubmitted = useRef(false);
   const codeInputRef = useRef<CodeInputRef>(null);
+  const syncWithServer = useCartStore(state => state.syncWithServer);
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -61,6 +63,7 @@ export const useSmsForm = ({ mode, userData }: SmsCodeFormProps) => {
         });
       }
       cookies.setUserId(response.cookie_id);
+      await syncWithServer();
       window.location.href = "/profile";
     } catch (error) {
       console.error("Ошибка при проверке: ", error);

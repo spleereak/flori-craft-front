@@ -13,7 +13,6 @@ import { CartItemProps } from "../types";
 
 export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
   const { removeItem } = useCartStore();
-  console.log(product);
 
   return (
     <div
@@ -22,9 +21,9 @@ export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
         className
       )}
     >
-      {product.imageSrc ? (
+      {product.image ? (
         <Image
-          src={product.imageSrc}
+          src={product.image}
           alt=""
           width={213}
           height={244}
@@ -49,18 +48,12 @@ export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
                 {formatPrice(product.price)} ₽
               </p>
             </div>
-            <div
-              className="desktop:hidden"
-              onClick={() => removeItem(product.id)}
-            >
+            <div className="desktop:hidden" onClick={() => removeItem(product)}>
               <TrashIcon />
             </div>
           </div>
         </div>
-        <div
-          className="max-desktop:hidden"
-          onClick={() => removeItem(product.id)}
-        >
+        <div className="max-desktop:hidden" onClick={() => removeItem(product)}>
           <TrashIcon />
         </div>
       </div>

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { authApi } from "@/src/entities/user/api";
 import { ProfileResponse } from "@/src/entities/user/api/authApi";
 import { ExitIcon } from "@/src/shared/icons/ExitIcon";
@@ -14,8 +15,11 @@ export default function ProfilePage() {
   const [user, setUser] = useState<ProfileResponse | null>();
   const router = useRouter();
 
+  const resetCart = useCartStore(state => state.reset);
+
   const handleLogout = () => {
     cookies.removeUserId();
+    resetCart();
     router.push("/auth");
   };
 

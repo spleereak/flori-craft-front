@@ -1,8 +1,11 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+
 import { useState } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { formatPrice, formatProduct } from "@/src/shared/lib/utils/helpers";
@@ -13,9 +16,26 @@ import { CartItem } from "../components/CartItem/ui";
 
 export default function CartPage() {
   const { items, isHydrated } = useCartStore();
+  const router = useRouter();
 
-  const totalPrice = items.reduce((acc, product) => product.price + acc, 0);
+  const totalPrice = items.reduce(
+    (acc, product) => Number(product.price) + acc,
+    0
+  );
+
   const [checked, setChecked] = useState(false);
+  const [checkboxError, setCheckboxError] = useState(false);
+
+  const handleProceedToOrder = () => {
+    if (!checked) {
+      setCheckboxError(true);
+      return;
+    }
+
+    // Устанавливаем флаг доступа к странице заказа
+    sessionStorage.setItem("canAccessOrder", "true");
+    router.push("/cart/order");
+  };
   return (
     <div className="desktop:pb-160 desktop:px-90 pb-100 px-16 pt-40">
       <div className="desktop:gap-20 desktop:mb-47 mb-25 flex flex-row items-center gap-10">
@@ -32,7 +52,9 @@ export default function CartPage() {
         </p>
       </div>
       {!isHydrated ? (
-        <h1 className="h1">Загрузка</h1>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
+          <Loader2 className="text-brown h-48 w-48 animate-spin" />
+        </div>
       ) : items.length > 0 ? (
         <div className="desktop:flex-row desktop:gap-43 gap-25 relative flex flex-col">
           <div className="desktop:gap-30 flex w-full flex-col gap-20">
@@ -61,28 +83,37 @@ export default function CartPage() {
                 </p>
                 <p className="text_p">{formatPrice(totalPrice)} ₽</p>
               </div>
-              <div className="flex flex-row justify-between">
-                <p className="caption text-grey-for-text">Сумма со скидкой:</p>
-                <p className="text_p">{formatPrice(totalPrice)} ₽</p>
-              </div>
             </div>
             <div className="desktop:gap-22 desktop:mb-22 mb-15 flex flex-col gap-10">
               <h3 className="h3">Итого:</h3>
               <h3 className="h3">{formatPrice(totalPrice)} ₽</h3>
             </div>
             <div className="desktop:gap-26 flex flex-col gap-16">
-              <Button className="desktop:w-391 max-desktop:w-full">
+              <Button
+                className="desktop:w-391 max-desktop:w-full"
+                onClick={handleProceedToOrder}
+              >
                 Оформить заказ
               </Button>
-              <div className="desktop:gap-13 flex flex-row gap-11">
-                <Checkbox
-                  checked={checked}
-                  onChange={() => setChecked(!checked)}
-                />
-                <p className="caption text-grey-for-text">
-                  Нажимая на кнопку «Оформить заказ», вы соглашаетесь на
-                  обработку персональных данных
-                </p>
+              <div className="flex flex-col gap-4">
+                <div className="desktop:gap-13 flex flex-row gap-11">
+                  <Checkbox
+                    checked={checked}
+                    onChange={() => {
+                      setChecked(!checked);
+                      setCheckboxError(false);
+                    }}
+                  />
+                  <p className="caption text-grey-for-text">
+                    Нажимая на кнопку «Оформить заказ», вы соглашаетесь на
+                    обработку персональных данных
+                  </p>
+                </div>
+                {checkboxError && (
+                  <p className="caption text-red-500">
+                    Подтвердите согласие на обработку данных
+                  </p>
+                )}
               </div>
             </div>
           </div>

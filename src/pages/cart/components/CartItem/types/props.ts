@@ -3,8 +3,9 @@ export interface CartItemProps {
   product: {
     product_id: string;
     title: string;
-    size: "S" | "M" | "L";
+    size: "S" | "M" | "L" | "";
     price: number;
     image: string;
   };
+  type?: "order" | "cart";
 }

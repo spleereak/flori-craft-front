@@ -31,7 +31,7 @@ const links = [
   },
   {
     text: "Публичная оферта",
-    link: "#",
+    link: "/public-offer",
   },
 ];
 

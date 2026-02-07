@@ -64,7 +64,7 @@ export const Form: React.FC<FormProps> = ({ mode, onSuccess }) => {
       )}
       <div className="desktop:flex-col desktop:gap-25 flex flex-col-reverse gap-20">
         <div className="flex flex-col gap-10">
-          <Button type="submit" className="desktop:h-66 !w-full max-w-none">
+          <Button type="submit" className="desktop:h-66 w-full! max-w-none">
             Получить смс с кодом
           </Button>
           {errors.agreedToPolicy && (

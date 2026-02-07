@@ -11,7 +11,11 @@ import { formatPrice } from "@/src/shared/lib/utils/helpers";
 
 import { CartItemProps } from "../types";
 
-export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
+export const CartItem: React.FC<CartItemProps> = ({
+  className,
+  product,
+  type = "cart",
+}) => {
   const { removeItem } = useCartStore();
 
   return (
@@ -27,7 +31,7 @@ export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
           alt=""
           width={213}
           height={244}
-          className="desktop:w-213 desktop:h-244 w-109 h-125 desktop:rounded-2xl rounded-md object-cover"
+          className="desktop:max-w-213 desktop:max-h-244 desktop:min-w-213 desktop:min-h-244 max-w-109 max-h-125 min-w-109 min-h-125 desktop:rounded-2xl rounded-md object-cover"
         />
       ) : (
         <div className="desktop:w-213 desktop:h-244 w-109 h-125 bg-light-grey desktop:rounded-2xl rounded-md" />
@@ -44,18 +48,28 @@ export const CartItem: React.FC<CartItemProps> = ({ className, product }) => {
                   Размер {product.size}
                 </p>
               )}
-              <p className="text_p desktop:text-black text-grey-for-text">
+              <p className="text_p text-black">
                 {formatPrice(product.price)} ₽
               </p>
             </div>
-            <div className="desktop:hidden" onClick={() => removeItem(product)}>
-              <TrashIcon />
-            </div>
+            {type === "cart" && (
+              <div
+                className="desktop:hidden"
+                onClick={() => removeItem(product)}
+              >
+                <TrashIcon />
+              </div>
+            )}
           </div>
         </div>
-        <div className="max-desktop:hidden" onClick={() => removeItem(product)}>
-          <TrashIcon />
-        </div>
+        {type === "cart" && (
+          <div
+            className="max-desktop:hidden"
+            onClick={() => removeItem(product)}
+          >
+            <TrashIcon />
+          </div>
+        )}
       </div>
     </div>
   );

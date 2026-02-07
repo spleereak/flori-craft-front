@@ -3,6 +3,7 @@
 import React, { memo } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { Bouquet } from "@/src/entities/products/api";
@@ -46,11 +47,13 @@ const CloseIcon = memo(() => (
 ));
 CloseIcon.displayName = "CloseIcon";
 
-const careDescription = "Букет будет подобным, в случае с живыми цветами копию собрать невозможно. Для вас создадим авторский букет, ориентируясь на фото-пример и свежие цветы в наличии.";
+const careDescription =
+  "Букет будет подобным, в случае с живыми цветами копию собрать невозможно. Для вас создадим авторский букет, ориентируясь на фото-пример и свежие цветы в наличии.";
 export default function ClientProductPage({ product }: { product: Bouquet }) {
   const [activeSize, setActiveSize] = React.useState<string>(
     product.variants?.[0]?.size ?? ""
   );
+  const router = useRouter();
 
   const sizes = product.variants?.map((item: any) => item.size) ?? [];
 
@@ -87,6 +90,19 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
     }
   };
 
+  const handleBuyRightNow = () => {
+    if (!isInCart) {
+      addItem({
+        product_id: product.id,
+        title: product.title,
+        size: activeSize as "S" | "M" | "L",
+        price: activePrice,
+        image: product.image_urls[0],
+      });
+    }
+    router.push("/cart");
+  };
+
   return (
     <div className="desktop:flex-row desktop:gap-184 desktop:flex desktop:items-start w-full">
       <Link
@@ -110,7 +126,7 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
         )}
         <div className="desktop:pt-50 desktop:max-w-491 desktop:px-0 flex flex-col px-16 pt-12">
           <h3 className="h3 desktop:mb-46 mb-22">{product.title}</h3>
-          <div className="desktop:flex-col desktop:gap-24 desktop:justify-start desktop:mb-51 mb-22 flex flex-row-reverse justify-between">
+          <div className="desktop:flex-col desktop:gap-24 desktop:justify-start desktop:mb-51 mb-22 flex flex-row justify-between">
             <h3 className="h3">{formatPrice(activePrice!)} ₽</h3>
             <SizeBlock
               sizes={sizes}
@@ -126,7 +142,9 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
                   ? "Убрать из корзины"
                   : "Добавить в корзину"}
             </Button>
-            <Button appearance="outline">Купить сейчас</Button>
+            <Button appearance="outline" onClick={handleBuyRightNow}>
+              {!isHydrated ? "Загрузка..." : "Купить сейчас"}
+            </Button>
           </div>
           <div className="desktop:gap-24 flex flex-col gap-12">
             {product.description && (

@@ -20,7 +20,7 @@ function ProductSkeleton() {
 
 export async function generateStaticParams() {
   const bouquets = await productsApi.getAllBouquets();
-  return bouquets.slice(0, 20).map((bouquet) => ({
+  return bouquets.slice(0, 20).map(bouquet => ({
     id: bouquet.id,
   }));
 }

@@ -21,13 +21,10 @@ export const Footer = ({ className }: { className?: string }) => {
         <div className="desktop:gap-43 gap-15 max-w-95 desktop:max-w-none flex flex-col">
           <h3 className="h3">Информация</h3>
           <div className="desktop:gap-18 flex flex-col gap-7">
-            <Link href="#" className="caption">
+            <Link href="/delivery" className="caption">
               Доставка и оплата
             </Link>
-            <Link href="#" className="caption">
-              Программа лояльности
-            </Link>
-            <Link href="#" className="caption">
+            <Link href="/flower-care" className="caption">
               Уход за цветами
             </Link>
           </div>
@@ -35,13 +32,13 @@ export const Footer = ({ className }: { className?: string }) => {
         <div className="desktop:gap-43 gap-15 max-w-95 desktop:max-w-none flex flex-col">
           <h3 className="h3">Документы</h3>
           <div className="desktop:gap-18 flex flex-col gap-7">
-            <Link href="#" className="caption">
+            <Link href="/public-offer" className="caption">
               Оферта
             </Link>
-            <Link href="#" className="caption">
+            <Link href="/policy" className="caption">
               Политика конфиденциальности
             </Link>
-            <Link href="#" className="caption">
+            <Link href="/money-back" className="caption">
               Возврат
             </Link>
           </div>

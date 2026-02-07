@@ -5,7 +5,7 @@ export type CartItem = Omit<
   "description" | "variants" | "price" | "image_urls" | "id"
 > & {
   product_id: string;
-  size: "S" | "M" | "L";
+  size: "S" | "M" | "L" | "";
   price: number;
   image: string;
 };

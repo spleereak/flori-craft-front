@@ -9,7 +9,7 @@ export const TrashIcon = ({ className }: { className?: string }) => {
       alt=""
       width={30}
       height={30}
-      className={cn("size-30 cursor-pointer", className)}
+      className={cn("desktop:size-30 size-26 cursor-pointer", className)}
     />
   );
 };

@@ -2,8 +2,11 @@ import dynamic from "next/dynamic";
 
 import { fetchData } from "../model/index.model";
 
-const HomeClient = dynamic(() =>
-  import("../components/HomeClient/ui").then((mod) => ({ default: mod.HomeClient })),
+const HomeClient = dynamic(
+  () =>
+    import("../components/HomeClient/ui").then(mod => ({
+      default: mod.HomeClient,
+    })),
   {
     loading: () => (
       <div className="desktop:gap-106 gap-50 desktop:pb-160 desktop:pt-28 pb-100 flex min-h-screen w-full flex-col pt-40">

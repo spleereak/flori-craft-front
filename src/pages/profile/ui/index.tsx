@@ -1,5 +1,7 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
@@ -46,7 +48,7 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <h2 className="h2">Загрузка...</h2>
+        <Loader2 className="text-brown h-48 w-48 animate-spin" />
       </div>
     );
   }

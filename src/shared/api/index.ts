@@ -1,5 +1,11 @@
 import apiClient from "./api-client";
 
+export {
+  strapiApi,
+  type StrapiResponse,
+  type StrapiImage,
+} from "./strapi-client";
+
 export const api = {
   get: <T>(
     url: string,

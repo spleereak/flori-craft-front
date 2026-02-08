@@ -42,7 +42,7 @@ export default function DeliveryPage() {
         <div className="desktop:grid-cols-2 desktop:gap-x-74 desktop:gap-y-78 gap-25 grid grid-cols-1">
           {data.info.map((inf, i) => (
             <div key={i}>
-              <div className="desktop:flex gap-45 flex hidden flex-row">
+              <div className="desktop:flex gap-45 hidden flex-row">
                 <Image
                   src={inf.image}
                   alt=""

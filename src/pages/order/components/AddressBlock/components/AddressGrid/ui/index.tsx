@@ -65,6 +65,7 @@ interface AddressGridProps {
     date?: string;
     time?: string;
   };
+  // eslint-disable-next-line no-unused-vars
   onFieldChange?: (field: "date" | "time") => void;
 }
 
@@ -161,9 +162,7 @@ export const AddressGrid = ({
             />
           </PopoverContent>
         </Popover>
-        {errors?.date && (
-          <p className="caption text-red-500">{errors.date}</p>
-        )}
+        {errors?.date && <p className="caption text-red-500">{errors.date}</p>}
       </div>
       <div className="flex flex-col gap-2">
         <Popover open={isTimeOpen} onOpenChange={setIsTimeOpen}>
@@ -208,16 +207,14 @@ export const AddressGrid = ({
                   </button>
                 ))
               ) : (
-                <p className="caption px-16 py-12 text-grey-for-text">
+                <p className="caption text-grey-for-text px-16 py-12">
                   На сегодня нет доступных слотов
                 </p>
               )}
             </div>
           </PopoverContent>
         </Popover>
-        {errors?.time && (
-          <p className="caption text-red-500">{errors.time}</p>
-        )}
+        {errors?.time && <p className="caption text-red-500">{errors.time}</p>}
       </div>
     </div>
   );

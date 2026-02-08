@@ -15,6 +15,7 @@ export const AuthTabs = ({
     <div className={cn("flex w-full flex-row", className)}>
       <div
         className={cn(
+          "w-130 h-25 desktop:w-366 desktop:h-44 desktop:pb-11 flex cursor-pointer justify-center border-b border-[#80808080] pb-6 transition-all duration-300 ease-in-out",
           "w-130 h-25 desktop:w-366 desktop:h-44 desktop:pb-11 flex justify-center border-b border-[#80808080] pb-6 transition-all duration-500 ease-in-out",
           activeAuth === "login" && "border-brown"
         )}
@@ -24,7 +25,7 @@ export const AuthTabs = ({
       </div>
       <div
         className={cn(
-          "w-130 h-25 desktop:w-366 desktop:h-44 desktop:pb-11 flex justify-center border-b border-[#80808080] pb-6 transition-all duration-300 ease-in-out",
+          "w-130 h-25 desktop:w-366 desktop:h-44 desktop:pb-11 flex cursor-pointer justify-center border-b border-[#80808080] pb-6 transition-all duration-300 ease-in-out",
           activeAuth === "register" && "border-brown"
         )}
         onClick={registerClick}

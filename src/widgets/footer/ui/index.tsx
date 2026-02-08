@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { TelegramIcon } from "@/src/shared/icons/TelegramIcon";
-import { WhatsappIcon } from "@/src/shared/icons/WhatsappIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
 
 export const Footer = ({ className }: { className?: string }) => {
@@ -50,16 +49,13 @@ export const Footer = ({ className }: { className?: string }) => {
               г. Москва, Береговой проезд, д.5А, к.1 ТЦ Фили Град, -1 этаж
             </p>
             <div className="desktop:gap-103 gap-76 flex flex-row items-end">
-              <Link href="#" className="caption">
+              <a href="tel:+79013320034" className="caption">
                 +7 (901) 332-00-34
-              </Link>
+              </a>
               <div className="gap-22 desktop:gap-30 flex flex-row">
-                <Link href="#">
+                <a href="https://t.me/floricraftlab">
                   <TelegramIcon />
-                </Link>
-                <Link href="#">
-                  <WhatsappIcon />
-                </Link>
+                </a>
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function FlowCare() {
@@ -16,7 +17,7 @@ export default function FlowCare() {
             <h1 className="h1 desktop:after:-bottom-11 max-w-587 desktop:after:h-4 after:w-76 desktop:after:w-94 relative after:absolute after:-bottom-6 after:left-0 after:h-2 after:bg-black">
               Как ухаживать за цветами в букете
             </h1>
-            <ul className="desktop:ml-25 max-w-767 ml-16 flex list-decimal flex-col">
+            <ul className="desktop:ml-25 max-w-767 ml-16 flex list-decimal flex-col gap-12">
               <li className="text_p">
                 Подберите подходящую вазу. Размер вазы должен быть равен 2/3
                 высоты букета
@@ -50,10 +51,17 @@ export default function FlowCare() {
               </li>
             </ul>
           </div>
-          <div className="desktop:w-675 desktop:h-739 w-343 h-376 rounded-2xl bg-[#D9D9D9]" />
+          {/* <div className="desktop:w-675 desktop:h-739 w-343 h-376 rounded-2xl bg-[#D9D9D9]" /> */}
+          <Image
+            src="/images/image-2.png"
+            alt=""
+            width={675}
+            height={739}
+            className="desktop:w-675 desktop:h-739 w-343 h-376 rounded-2xl bg-[#D9D9D9] object-cover"
+          />
         </div>
         <div className="desktop:flex-row-reverse desktop:justify-between gap-25 flex flex-col">
-          <div className="desktop:gap-73 gap-25 max-w-767 flex flex-col">
+          <div className="desktop:gap-73 gap-25 max-w-767 desktop:pt-33 flex flex-col">
             <h1 className="h1 desktop:after:-bottom-11 max-w-587 desktop:after:h-4 after:w-76 desktop:after:w-94 relative after:absolute after:-bottom-6 after:left-0 after:h-2 after:bg-black">
               Как ухаживать за цветочными композициями
             </h1>
@@ -68,10 +76,16 @@ export default function FlowCare() {
               </p>
             </div>
           </div>
-          <div className="desktop:w-675 desktop:h-739 w-343 h-376 rounded-2xl bg-[#D9D9D9]" />
+          <Image
+            src="/images/image-4.png"
+            alt=""
+            width={563}
+            height={616}
+            className="desktop:w-563 desktop:h-616 w-343 h-376 rounded-2xl object-cover"
+          />
         </div>
         <div className="desktop:flex-row desktop:justify-between gap-25 flex flex-col">
-          <div className="desktop:gap-73 gap-25 flex flex-col">
+          <div className="desktop:gap-73 gap-25 desktop:pt-96 flex flex-col">
             <h1 className="h1 desktop:after:-bottom-11 desktop:after:h-4 after:w-76 desktop:after:w-94 relative after:absolute after:-bottom-6 after:left-0 after:h-2 after:bg-black">
               Как ухаживать за цветами в букете
             </h1>
@@ -89,7 +103,13 @@ export default function FlowCare() {
               </li>
             </ul>
           </div>
-          <div className="desktop:w-675 desktop:h-739 w-343 h-376 rounded-2xl bg-[#D9D9D9]" />
+          <Image
+            src="/images/image-1.png"
+            alt="Image"
+            width={448}
+            height={490}
+            className="desktop:w-md desktop:h-490 w-343 h-376 rounded-2xl object-cover"
+          />
         </div>
         <div className="desktop:flex-row-reverse desktop:justify-between gap-25 flex flex-col">
           <div className="desktop:gap-73 gap-25 max-w-812 flex flex-col">
@@ -115,7 +135,13 @@ export default function FlowCare() {
               </li>
             </ul>
           </div>
-          <div className="desktop:w-675 desktop:h-739 w-343 h-376 rounded-2xl bg-[#D9D9D9]" />
+          <Image
+            src="/images/image-3.png"
+            alt="Image"
+            width={563}
+            height={616}
+            className="desktop:w-563 desktop:h-616 w-343 h-376 rounded-2xl object-cover"
+          />
         </div>
       </div>
     </div>

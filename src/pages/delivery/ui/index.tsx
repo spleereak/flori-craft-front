@@ -7,7 +7,7 @@ const data = {
     {
       image: "/images/delivery.png",
       subTitle: "Доставка по Москве",
-      text: "Москва в пределах МКАД - 950 р. ‌ЖК Фили Град, ЖК Онли, ЖК Береговой - 250 р",
+      text: "Москва в пределах МКАД - 950 р.\nЖК Фили Град, ЖК Онли,\nЖК Береговой - 250 р",
     },
     {
       image: "/images/express-delivery.png",
@@ -17,7 +17,7 @@ const data = {
     {
       image: "/images/time-left.png",
       subTitle: "Время доставки",
-      text: "Доставка осуществляется ежедневно с 9:00 до 21:00 ‌Другое время доставки согласовывается индивидуально.",
+      text: "Доставка осуществляется ежедневно с 9:00 до 21:00.\nДругое время доставки согласовывается индивидуально.",
     },
     {
       image: "/images/bouquet.png",
@@ -65,7 +65,7 @@ export default function DeliveryPage() {
                     height={70}
                     className="size-70 object-cover"
                   />
-                  <p className="text_p pt-15">{inf.text}</p>
+                  <p className="text_p pt-15 whitespace-pre-wrap">{inf.text}</p>
                 </div>
               </div>
             </div>

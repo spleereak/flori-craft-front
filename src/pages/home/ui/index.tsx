@@ -23,12 +23,6 @@ const HomeClient = dynamic(
 
 export default async function HomePage() {
   const categories = await fetchData();
-  const data = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/feature?populate=image`
-  );
-
-  const feature = await data.json();
-  console.log(feature);
 
   return <HomeClient catalog={categories} />;
 }

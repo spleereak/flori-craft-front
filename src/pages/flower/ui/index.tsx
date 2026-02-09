@@ -4,6 +4,8 @@ import { productsApi } from "@/src/entities/products/api";
 
 import ClientProductPage from "../components/ClientProductPage/ui";
 
+export const dynamic = "force-dynamic";
+
 function ProductSkeleton() {
   return (
     <div className="desktop:flex-row desktop:gap-184 desktop:flex desktop:items-start w-full animate-pulse">

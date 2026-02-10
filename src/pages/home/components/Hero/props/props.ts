@@ -5,5 +5,8 @@ export interface I_Hero {
   image: {
     url: string;
   };
+  mobile_image: {
+    url: string;
+  };
   color: string;
 }

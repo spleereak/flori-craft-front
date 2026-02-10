@@ -5,6 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Bouquet, CategoriesProducts } from "@/src/entities/products/api";
 
 import { usePrice } from "../../FilterPrice/model/index.model";
+import { Hero } from "../../Hero";
+import { I_Hero } from "../../Hero/props";
 import { ProductsList } from "../../ProductsList/ui";
 import { Tabs } from "../../Tabs/ui";
 
@@ -52,7 +54,13 @@ function getMinPrice(product: Bouquet): number | null {
   return null;
 }
 
-export function HomeClient({ catalog }: { catalog: CategoriesProducts[] }) {
+export function HomeClient({
+  catalog,
+  hero_data,
+}: {
+  catalog: CategoriesProducts[];
+  hero_data?: Omit<I_Hero, "className">;
+}) {
   const minMax = useMemo(() => getMinMaxPrices(catalog), [catalog]);
   const { prices, debouncedPrices, updatePrice, updatePrices } = usePrice({
     priceMin: minMax.minPrice,
@@ -119,8 +127,18 @@ export function HomeClient({ catalog }: { catalog: CategoriesProducts[] }) {
 
   return (
     <div className="desktop:gap-106 gap-50 desktop:pb-160 desktop:pt-28 pb-100 flex min-h-screen w-full flex-col pt-40">
-      <div className="desktop:px-90 px-16">
-        <div className="desktop:h-335 h-145 desktop:rounded-2xl desktop:px-90 w-full rounded-md bg-[#D9D9D9] px-16" />
+      <div className="desktop:px-90 desktop:rounded-2xl rounded-md px-16">
+        {hero_data ? (
+          <Hero
+            title={hero_data.title}
+            text={hero_data.text}
+            color={hero_data.color}
+            image={hero_data.image}
+            mobile_image={hero_data.mobile_image}
+          />
+        ) : (
+          <div className="desktop:h-335 h-145 desktop:rounded-2xl desktop:px-90 w-full rounded-md bg-[#D9D9D9] px-16" />
+        )}
       </div>
       <div className="relative flex flex-col items-center">
         <h1 className="h1 desktop:pb-50 pb-14">Витрина</h1>

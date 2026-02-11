@@ -53,7 +53,7 @@ export default function FlowCare() {
           </div>
           {/* <div className="desktop:w-675 desktop:h-739 w-343 h-376 rounded-2xl bg-[#D9D9D9]" /> */}
           <Image
-            src="/images/image-2.png"
+            src="/images/image-1.png"
             alt=""
             width={675}
             height={739}
@@ -87,7 +87,7 @@ export default function FlowCare() {
         <div className="desktop:flex-row desktop:justify-between gap-25 flex flex-col">
           <div className="desktop:gap-73 gap-25 desktop:pt-96 flex flex-col">
             <h1 className="h1 desktop:after:-bottom-11 desktop:after:h-4 after:w-76 desktop:after:w-94 relative after:absolute after:-bottom-6 after:left-0 after:h-2 after:bg-black">
-              Как ухаживать за цветами в букете
+              Как ухаживать за розами в букете
             </h1>
             <ul className="max-w-767 desktop:ml-25 ml-16 flex list-decimal flex-col">
               <li className="text_p">
@@ -104,7 +104,7 @@ export default function FlowCare() {
             </ul>
           </div>
           <Image
-            src="/images/image-1.png"
+            src="/images/image-2.png"
             alt="Image"
             width={448}
             height={490}

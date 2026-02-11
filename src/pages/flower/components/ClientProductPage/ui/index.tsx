@@ -1,5 +1,7 @@
 "use client";
 
+import Markdown from "react-markdown";
+
 import React, { memo } from "react";
 
 import Link from "next/link";
@@ -47,8 +49,6 @@ const CloseIcon = memo(() => (
 ));
 CloseIcon.displayName = "CloseIcon";
 
-const careDescription =
-  "Букет будет подобным, в случае с живыми цветами копию собрать невозможно. Для вас создадим авторский букет, ориентируясь на фото-пример и свежие цветы в наличии.";
 export default function ClientProductPage({ product }: { product: Bouquet }) {
   const [activeSize, setActiveSize] = React.useState<string>(
     product.variants?.[0]?.size ?? ""
@@ -146,14 +146,11 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
               {!isHydrated ? "Загрузка..." : "Купить сейчас"}
             </Button>
           </div>
-          <div className="desktop:gap-24 flex flex-col gap-12">
-            {product.description && (
-              <p className="caption text-grey-for-text">
-                {product.description}
-              </p>
-            )}
-            <p className="caption text-grey-for-text">{careDescription}</p>
-          </div>
+          {product.description && (
+            <div className="caption text-grey-for-text flex flex-col gap-12">
+              <Markdown>{product.description}</Markdown>
+            </div>
+          )}
         </div>
       </div>
     </div>

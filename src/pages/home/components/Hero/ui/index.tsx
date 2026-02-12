@@ -13,14 +13,17 @@ export const Hero = ({
   text,
   image,
   color,
+  text_color,
+  bg_color,
   mobile_image,
 }: I_Hero) => {
   return (
     <div
       className={cn(
-        "desktop:h-335 h-145 desktop:px-90 max-desktop:items-center desktop:rounded-2xl relative flex w-full rounded-md bg-[#FFF5F5] px-10",
+        "desktop:h-335 h-145 desktop:px-90 max-desktop:items-center desktop:rounded-2xl relative flex w-full rounded-md px-10",
         className
       )}
+      style={{ backgroundColor: bg_color }}
     >
       <div className="desktop:gap-25 desktop:pt-60 flex flex-col gap-10">
         <h1
@@ -29,7 +32,10 @@ export const Hero = ({
         >
           {title}
         </h1>
-        <div className="text_p--switch max-desktop:max-w-185 desktop:max-w-661 text-grey-for-text">
+        <div
+          className="text_p--switch max-desktop:max-w-185 desktop:max-w-661"
+          style={{ color: text_color }}
+        >
           <Markdown>{text}</Markdown>
         </div>
       </div>

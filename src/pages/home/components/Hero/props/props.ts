@@ -9,4 +9,6 @@ export interface I_Hero {
     url: string;
   };
   color: string;
+  text_color: string;
+  bg_color: string;
 }

@@ -87,7 +87,7 @@ export default function FlowCare() {
         <div className="desktop:flex-row desktop:justify-between gap-25 flex flex-col">
           <div className="desktop:gap-73 gap-25 desktop:pt-96 flex flex-col">
             <h1 className="h1 desktop:after:-bottom-11 desktop:after:h-4 after:w-76 desktop:after:w-94 relative after:absolute after:-bottom-6 after:left-0 after:h-2 after:bg-black">
-              Как ухаживать за розами в букете
+              Как ухаживать за розами
             </h1>
             <ul className="max-w-767 desktop:ml-25 ml-16 flex list-decimal flex-col">
               <li className="text_p">

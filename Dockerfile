@@ -1,3 +1,7 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
 # Копируем package files
 COPY package*.json ./
 

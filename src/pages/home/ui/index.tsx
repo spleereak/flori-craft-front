@@ -28,8 +28,17 @@ export default async function HomePage() {
   );
 
   const feature = await data.json();
-  const { text, title, image, color, mobile_image } = feature.data.block;
-  const hero_data = { text, title, image, color, mobile_image };
+  const { text, title, image, color, mobile_image, text_color, bg_color } =
+    feature.data.block;
+  const hero_data = {
+    text,
+    title,
+    image,
+    color,
+    mobile_image,
+    text_color,
+    bg_color,
+  };
 
   return <HomeClient catalog={categories} hero_data={hero_data} />;
 }

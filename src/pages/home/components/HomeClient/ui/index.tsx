@@ -135,6 +135,8 @@ export function HomeClient({
             color={hero_data.color}
             image={hero_data.image}
             mobile_image={hero_data.mobile_image}
+            bg_color={hero_data.bg_color}
+            text_color={hero_data.text_color}
           />
         ) : (
           <div className="desktop:h-335 h-145 desktop:rounded-2xl desktop:px-90 w-full rounded-md bg-[#D9D9D9] px-16" />

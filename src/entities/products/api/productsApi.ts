@@ -35,13 +35,13 @@ export interface specificationsResponse {
 
 export const productsApi = {
   getAllBouquets: () =>
-    api.get<Bouquet[]>(`/${posifloraBase}/bouquets/`, { revalidate: 300 }),
+    api.get<Bouquet[]>(`/${posifloraBase}/bouquets/`, { cache: "no-store" }),
   getProductById: (productId: string) =>
     api.get<Bouquet>(`/${posifloraBase}/products/${productId}/`, {
-      revalidate: 300,
+      revalidate: 60,
     }),
   getCategories: () =>
     api.get<specificationsResponse>(`/${posifloraBase}/specifications/`, {
-      revalidate: 600,
+      cache: "no-store",
     }),
 };

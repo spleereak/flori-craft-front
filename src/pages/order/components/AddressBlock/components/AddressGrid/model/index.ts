@@ -27,18 +27,15 @@ export const getAvailableTimeSlots = (
   const now = new Date();
   const currentHour = now.getHours();
 
-  // Проверка для завтрашнего дня или любого будущего дня при заказе после 21:00
   const isNextDayAfterCutoff =
     !isToday(selectedDate) &&
     currentHour >= CUTOFF_HOUR_FOR_NEXT_DAY &&
     selectedDate >= startOfDay(addDays(now, 1));
 
   if (isNextDayAfterCutoff) {
-    // Исключаем первый слот "10:00 - 12:00"
     return TIME_SLOTS.slice(1);
   }
 
-  // Проверка для сегодняшнего дня
   if (isToday(selectedDate)) {
     const minDeliveryTime = new Date(
       now.getTime() + MIN_HOURS_BEFORE_DELIVERY * 60 * 60 * 1000
@@ -47,9 +44,7 @@ export const getAvailableTimeSlots = (
     const minMinutes = minDeliveryTime.getMinutes();
 
     return TIME_SLOTS.filter(slot => {
-      // Извлекаем начальный час слота (например, "10:00 - 12:00" -> 10)
       const slotStartHour = parseInt(slot.split(":")[0], 10);
-      // Слот доступен, если начинается после минимального времени
       return (
         slotStartHour > minHour ||
         (slotStartHour === minHour && minMinutes === 0)
@@ -86,7 +81,6 @@ export const useAddressGrid = () => {
     time: delivery.time,
   };
 
-  // Получаем доступные слоты для выбранной даты
   const availableTimeSlots = getAvailableTimeSlots(delivery.date);
 
   const handleFieldChange = (
@@ -97,11 +91,9 @@ export const useAddressGrid = () => {
   };
 
   const handleDateSelect = (date: Date | undefined) => {
-    // Проверяем, доступен ли текущий выбранный слот для новой даты
     const currentTime = delivery.time;
     const newAvailableSlots = getAvailableTimeSlots(date);
 
-    // Если текущий слот недоступен для новой даты - сбрасываем время
     if (currentTime && !newAvailableSlots.includes(currentTime)) {
       setDelivery({ date, time: "" });
     } else {

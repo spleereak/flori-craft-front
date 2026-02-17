@@ -1,5 +1,7 @@
 import dynamic from "next/dynamic";
 
+import { CategoriesProducts } from "@/src/entities/products/api";
+
 import { fetchData } from "../model/index.model";
 
 const HomeClient = dynamic(
@@ -21,24 +23,39 @@ const HomeClient = dynamic(
   }
 );
 
-export default async function HomePage() {
-  const categories = await fetchData();
-  const data = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/feature?populate[block][populate]=*`
-  );
+async function fetchHeroData() {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/feature?populate[block][populate]=*`;
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    if (!res.ok) return undefined;
+    const feature = await res.json();
+    const block = feature?.data?.block;
+    if (!block) return undefined;
+    const { text, title, image, color, mobile_image, text_color, bg_color } =
+      block;
+    return {
+      text,
+      title,
+      image,
+      color,
+      mobile_image,
+      text_color,
+      bg_color,
+    };
+  } catch {
+    return undefined;
+  }
+}
 
-  const feature = await data.json();
-  const { text, title, image, color, mobile_image, text_color, bg_color } =
-    feature.data.block;
-  const hero_data = {
-    text,
-    title,
-    image,
-    color,
-    mobile_image,
-    text_color,
-    bg_color,
-  };
+export default async function HomePage() {
+  let categories: CategoriesProducts[] = [];
+  try {
+    categories = await fetchData();
+  } catch {
+    // Каталог с основного API недоступен — показываем страницу без товаров
+  }
+
+  const hero_data = await fetchHeroData();
 
   return <HomeClient catalog={categories} hero_data={hero_data} />;
 }

@@ -10,7 +10,7 @@ type BouquetBase = {
 };
 
 type BouquetWithPrice = BouquetBase & {
-  price: number; // предполагаем > 0
+  price: number;
   variants?: never;
 };
 

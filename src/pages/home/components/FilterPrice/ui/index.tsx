@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import { Input } from "@/src/shared/components/ui/input";
 import {
@@ -21,8 +22,8 @@ interface FilterPriceProps {
   minPrice: number;
   maxPrice: number;
   prices: PriceProps;
-  updatePrice: (name: keyof PriceProps, value: number) => void;
-  updatePrices: (newPrices: [number, number]) => void;
+  updatePrice: (field: keyof PriceProps, value: number) => void;
+  updatePrices: (range: [number, number]) => void;
 }
 
 export const FilterPrice: React.FC<FilterPriceProps> = ({
@@ -33,6 +34,47 @@ export const FilterPrice: React.FC<FilterPriceProps> = ({
   updatePrices,
 }) => {
   const { isDesktop } = useMedia();
+  const [priceFromInput, setPriceFromInput] = useState("");
+  const [priceToInput, setPriceToInput] = useState("");
+  const [focusedField, setFocusedField] = useState<"from" | "to" | null>(null);
+
+  const fromValue =
+    focusedField === "from" ? priceFromInput : String(prices.priceFrom);
+  const toValue = focusedField === "to" ? priceToInput : String(prices.priceTo);
+
+  const handleFromFocus = () => {
+    setFocusedField("from");
+    setPriceFromInput(String(prices.priceFrom));
+  };
+
+  const handleToFocus = () => {
+    setFocusedField("to");
+    setPriceToInput(String(prices.priceTo));
+  };
+
+  const commitFrom = () => {
+    setFocusedField(null);
+    const num = Number(priceFromInput);
+    if (Number.isFinite(num)) {
+      updatePrice("priceFrom", num);
+    }
+  };
+
+  const commitTo = () => {
+    setFocusedField(null);
+    const num = Number(priceToInput);
+    if (Number.isFinite(num)) {
+      updatePrice("priceTo", num);
+    }
+  };
+
+  const handleFromKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") e.currentTarget.blur();
+  };
+
+  const handleToKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") e.currentTarget.blur();
+  };
 
   return (
     <Popover>
@@ -58,16 +100,22 @@ export const FilterPrice: React.FC<FilterPriceProps> = ({
               placeholder={`от ${minPrice}`}
               min={minPrice}
               max={maxPrice}
-              value={String(prices.priceFrom)}
-              onChange={e => updatePrice("priceFrom", Number(e.target.value))}
+              value={fromValue}
+              onChange={e => setPriceFromInput(e.target.value)}
+              onFocus={handleFromFocus}
+              onBlur={commitFrom}
+              onKeyDown={handleFromKeyDown}
             />
             <Input
               type="number"
               placeholder={`до ${maxPrice}`}
               min={minPrice}
               max={maxPrice}
-              value={String(prices.priceTo)}
-              onChange={e => updatePrice("priceTo", Number(e.target.value))}
+              value={toValue}
+              onChange={e => setPriceToInput(e.target.value)}
+              onFocus={handleToFocus}
+              onBlur={commitTo}
+              onKeyDown={handleToKeyDown}
             />
           </div>
 

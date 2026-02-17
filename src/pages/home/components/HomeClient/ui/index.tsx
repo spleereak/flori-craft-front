@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Bouquet, CategoriesProducts } from "@/src/entities/products/api";
+import { Button } from "@/src/shared/ui";
 
 import { usePrice } from "../../FilterPrice/model/index.model";
 import { Hero } from "../../Hero";
@@ -125,6 +126,11 @@ export function HomeClient({
       .filter(category => category.products.length > 0);
   }, [catalog, debouncedPrices]);
 
+  const effectiveActiveTab = useMemo(() => {
+    const names = new Set(filteredCatalog.map(c => c.name));
+    return names.has(activeTab) ? activeTab : (filteredCatalog[0]?.name ?? "");
+  }, [filteredCatalog, activeTab]);
+
   return (
     <div className="desktop:gap-106 gap-50 desktop:pb-160 desktop:pt-28 pb-100 flex min-h-screen w-full flex-col pt-40">
       <div className="desktop:px-90 desktop:rounded-2xl rounded-md px-16">
@@ -143,22 +149,24 @@ export function HomeClient({
         )}
       </div>
       <div className="relative flex flex-col items-center">
-        <h1 className="h1 desktop:pb-50 pb-14">Витрина</h1>
         {Array.isArray(catalog) && catalog.length > 0 && (
-          <Tabs
-            categories={catalog}
-            onSelect={scrollToCategory}
-            activeTab={activeTab}
-            minPrice={minMax.minPrice}
-            maxPrice={minMax.maxPrice}
-            prices={prices}
-            updatePrice={updatePrice}
-            updatePrices={updatePrices}
-          />
+          <>
+            <h1 className="h1 desktop:pb-50 pb-14">Витрина</h1>
+            <Tabs
+              categories={filteredCatalog}
+              onSelect={scrollToCategory}
+              activeTab={effectiveActiveTab}
+              minPrice={minMax.minPrice}
+              maxPrice={minMax.maxPrice}
+              prices={prices}
+              updatePrice={updatePrice}
+              updatePrices={updatePrices}
+            />
+          </>
         )}
         <div className="gap-90 desktop:pt-50 pt-13 flex w-full flex-col">
-          {filteredCatalog.map(category => {
-            return (
+          {filteredCatalog.length > 0 ? (
+            filteredCatalog.map(category => (
               <ProductsList
                 key={category.name}
                 ref={el => {
@@ -168,8 +176,30 @@ export function HomeClient({
                 products={category.products}
                 className="desktop:px-90 px-16"
               />
-            );
-          })}
+            ))
+          ) : (
+            <div className="desktop:pt-81 pt-146 flex min-h-[40vh] w-full flex-col items-center justify-center">
+              <h2 className="empty desktop:pb-5 pb-6">
+                Нет товаров в каталоге
+              </h2>
+              <p className="caption desktop:pb-41 pb-29">
+                {catalog.length > 0
+                  ? "Измените диапазон цен, чтобы увидеть товары"
+                  : "Товары появятся позже"}
+              </p>
+              {catalog.length > 0 && (
+                <Button
+                  appearance="outline"
+                  className="desktop:w-235 desktop:h-65 w-98 h-34"
+                  onClick={() =>
+                    updatePrices([minMax.minPrice, minMax.maxPrice])
+                  }
+                >
+                  Сбросить
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

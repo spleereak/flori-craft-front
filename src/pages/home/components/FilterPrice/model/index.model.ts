@@ -43,44 +43,60 @@ export const usePrice = ({
     priceTo: priceMax,
   });
 
-  // Debounced версия обновления цен
   const debouncedSetPrices = useMemo(
     () =>
       debounce((newPrices: PriceProps) => {
         setDebouncedPrices(newPrices);
-      }, 300), // 300ms задержка
+      }, 300),
     []
   );
 
   const updatePrice = useCallback(
     (name: keyof PriceProps, value: number) => {
+      const num = Number.isFinite(value)
+        ? value
+        : name === "priceFrom"
+          ? priceMin
+          : priceMax;
       setPrices(prev => {
-        const updated = {
-          ...prev,
-          [name]: value,
-        };
+        let from = prev.priceFrom;
+        let to = prev.priceTo;
+        if (name === "priceFrom") {
+          from = Math.max(
+            priceMin,
+            Math.min(prev.priceTo, Math.min(priceMax, num))
+          );
+        } else {
+          to = Math.min(
+            priceMax,
+            Math.max(prev.priceFrom, Math.max(priceMin, num))
+          );
+        }
+        const updated = { priceFrom: from, priceTo: to };
         debouncedSetPrices(updated);
         return updated;
       });
     },
-    [debouncedSetPrices]
+    [debouncedSetPrices, priceMin, priceMax]
   );
 
   const updatePrices = useCallback(
     (newPrices: [number, number]) => {
+      const a = Math.max(priceMin, Math.min(priceMax, newPrices[0]));
+      const b = Math.max(priceMin, Math.min(priceMax, newPrices[1]));
       const updated = {
-        priceFrom: newPrices[0],
-        priceTo: newPrices[1],
+        priceFrom: Math.min(a, b),
+        priceTo: Math.max(a, b),
       };
       setPrices(updated);
       debouncedSetPrices(updated);
     },
-    [debouncedSetPrices]
+    [debouncedSetPrices, priceMin, priceMax]
   );
 
   return {
-    prices, // Мгновенные значения для UI (слайдер)
-    debouncedPrices, // Debounced значения для фильтрации
+    prices,
+    debouncedPrices,
     updatePrices,
     updatePrice,
   };

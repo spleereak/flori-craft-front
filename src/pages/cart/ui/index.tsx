@@ -32,7 +32,6 @@ export default function CartPage() {
       return;
     }
 
-    // Устанавливаем флаг доступа к странице заказа
     sessionStorage.setItem("canAccessOrder", "true");
     router.push("/cart/order");
   };
@@ -120,7 +119,9 @@ export default function CartPage() {
         </div>
       ) : (
         <div className="desktop:pt-81 pt-146 flex h-full w-full flex-col items-center justify-center">
-          <h1 className="empty desktop:pb-5 pb-6">Нет товаров в корзине</h1>
+          <h1 className="empty desktop:pb-5 max-w-max pb-6 text-center">
+            Нет товаров в корзине
+          </h1>
           <p className="caption desktop:pb-41 pb-29">
             Но вы можете их сюда добавить на главной странице
           </p>

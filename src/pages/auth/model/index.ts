@@ -22,7 +22,6 @@ export const useAuth = () => {
   }) => {
     setUserData(data);
     setAuthStep("sms");
-    // Здесь будет запрос на отправку SMS когда backend готов
     try {
       await authApi.sendSms({ phone: data.phone });
     } catch (error) {

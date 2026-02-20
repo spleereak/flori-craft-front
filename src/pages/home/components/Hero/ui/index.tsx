@@ -25,13 +25,13 @@ export const Hero = ({
       )}
       style={{ backgroundColor: bg_color }}
     >
-      <div className="desktop:gap-25 desktop:pt-60 flex flex-col gap-10">
-        <h1
+      <div className="desktop:gap-25 desktop:pt-60 z-1000 flex flex-col gap-10">
+        <div
           className="h1 text-[1.0625rem]! desktop:text-[4.875rem]!"
           style={{ color: color }}
         >
-          {title}
-        </h1>
+          <Markdown>{title}</Markdown>
+        </div>
         <div
           className="text_p--switch max-desktop:max-w-185 desktop:max-w-661"
           style={{ color: text_color }}

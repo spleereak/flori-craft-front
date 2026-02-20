@@ -6,7 +6,11 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
     productsApi.getCategories(),
   ]);
 
-  const specifications = specificationsResponse.categories;
+  const specifications = [...specificationsResponse.categories].sort((a, b) => {
+    if (a.name === "Авторские букеты") return -1;
+    if (b.name === "Авторские букеты") return 1;
+    return 0;
+  });
 
   return [
     {

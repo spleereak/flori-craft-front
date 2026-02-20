@@ -15,6 +15,7 @@ export const SizeBlock = ({
   setActiveSize: Dispatch<SetStateAction<string>>;
   className?: string;
 }) => {
+  console.log(sizes);
   return (
     <div className={cn("desktop:gap-10 flex flex-row gap-16", className)}>
       {sizes.map((size, i) => (

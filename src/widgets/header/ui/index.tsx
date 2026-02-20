@@ -50,7 +50,7 @@ export const Header = ({ className }: { className?: string }) => {
   return (
     <header
       className={cn(
-        "desktop:py-5 py-15 desktop:px-90 fixed z-50 w-full overflow-hidden bg-white px-16 shadow-[0_4px_4px_rgba(0,0,0,0.2)]",
+        "desktop:py-5 py-15 desktop:px-90 z-2000 fixed w-full overflow-hidden bg-white px-16 shadow-[0_4px_4px_rgba(0,0,0,0.2)]",
         className
       )}
     >

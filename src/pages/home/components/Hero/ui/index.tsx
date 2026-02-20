@@ -25,9 +25,9 @@ export const Hero = ({
       )}
       style={{ backgroundColor: bg_color }}
     >
-      <div className="desktop:gap-25 desktop:pt-60 z-1000 flex flex-col gap-10">
+      <div className="desktop:gap-25 desktop:pt-60 flex flex-col gap-10">
         <div
-          className="h1 text-[1.0625rem]! desktop:text-[4.875rem]!"
+          className="h1 text-[1.0625rem]! desktop:text-[4.875rem]! z-100"
           style={{ color: color }}
         >
           <Markdown>{title}</Markdown>

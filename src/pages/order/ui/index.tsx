@@ -288,6 +288,8 @@ export default function OrderPage() {
       if (response.payment_url) {
         // Очищаем флаг доступа после успешного оформления
         sessionStorage.removeItem("canAccessOrder");
+        // Флаг для доступа на страницу «Спасибо» только после редиректа из ЮKassa
+        sessionStorage.setItem("from_yookassa_ok", "1");
         window.location.href = response.payment_url;
       }
     } catch (error) {

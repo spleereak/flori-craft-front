@@ -30,7 +30,7 @@ export default function ThankYouPage() {
 
   if (allowed === null) {
     return (
-      <div className="flex min-h-[50vh] w-full items-center justify-center px-16">
+      <div className="desktop:h-815 h-600 flex w-full items-center justify-center px-16">
         <div className="border-brown h-32 w-32 animate-spin rounded-full border-2 border-t-transparent" />
       </div>
     );

@@ -132,7 +132,7 @@ export const Modal = ({
               if (link.text === "Контакты") {
                 return (
                   <div
-                    className="desktop:gap-15 desktop:mb-3 relative flex w-full flex-col gap-4"
+                    className="desktop:gap-15 desktop:mb-3 relative flex w-full max-w-max cursor-pointer flex-col gap-4"
                     key={i}
                     onMouseEnter={() => setContactsHovered(true)}
                     onMouseLeave={() => setContactsHovered(false)}

@@ -24,7 +24,7 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
   });
 
   const expressDelivery = {
-    name: "Экспресс-доставка",
+    name: "экспресс-доставка",
     products: bouquets,
   };
 

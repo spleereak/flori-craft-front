@@ -132,7 +132,7 @@ export const Modal = ({
               if (link.text === "Контакты") {
                 return (
                   <div
-                    className="desktop:gap-15 desktop:mb-3 relative flex w-full max-w-max cursor-pointer flex-col gap-4"
+                    className="desktop:gap-15 desktop:mb-3 relative mb-10 flex w-full max-w-max cursor-pointer flex-col gap-4"
                     key={i}
                     onMouseEnter={() => setContactsHovered(true)}
                     onMouseLeave={() => setContactsHovered(false)}
@@ -162,7 +162,7 @@ export const Modal = ({
                         "grid w-full transition-[grid-template-rows] duration-300 ease-in-out",
                         contactsExpanded
                           ? "desktop:mt-5 grid-rows-[1fr]"
-                          : "-mt-15 desktop:-mt-20 grid-rows-[0fr]"
+                          : "desktop:-mt-20 grid-rows-[0fr]"
                       )}
                     >
                       <div

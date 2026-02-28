@@ -132,7 +132,7 @@ export const Modal = ({
               if (link.text === "Контакты") {
                 return (
                   <div
-                    className="desktop:gap-15 desktop:mb-3 relative mb-10 flex w-full max-w-max cursor-pointer flex-col gap-4"
+                    className="desktop:gap-15 desktop:mb-3 relative -mb-7 flex w-full max-w-max cursor-pointer flex-col gap-4"
                     key={i}
                     onMouseEnter={() => setContactsHovered(true)}
                     onMouseLeave={() => setContactsHovered(false)}
@@ -171,8 +171,12 @@ export const Modal = ({
                           !contactsExpanded && "pointer-events-none opacity-0"
                         )}
                       >
-                        <p className="text_p pl-15">+7(901)332-00-34</p>
-                        <TelegramBlackIcon />
+                        <a href="tel:+79013320034">
+                          <p className="text_p pl-15">+7(901)332-00-34</p>
+                        </a>
+                        <a href="https://t.me/floricraftlab">
+                          <TelegramBlackIcon />
+                        </a>
                       </div>
                     </div>
                   </div>

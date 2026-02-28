@@ -3,15 +3,14 @@
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { BurgerIcon } from "@/src/shared/icons/BurgerIcon";
 import { CartIcon } from "@/src/shared/icons/CartIcon";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
-import { UserIcon } from "@/src/shared/icons/UserIcon";
+import { PhoneIcon } from "@/src/shared/icons/PhoneIcon";
+import { TelegramSecondaryIcon } from "@/src/shared/icons/TelegramSecondaryIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
-import { cookies } from "@/src/shared/lib/utils/cookies";
 
 import { Modal } from "../../modal";
 
@@ -21,17 +20,6 @@ export const Header = ({ className }: { className?: string }) => {
 
   const items = useCartStore(state => state.items);
   const isHydrated = useCartStore(state => state.isHydrated);
-
-  const router = useRouter();
-
-  const handleUserIconClick = () => {
-    const userId = cookies.get("user_id");
-    if (userId) {
-      router.push("/profile");
-    } else {
-      router.push("/auth");
-    }
-  };
 
   useEffect(() => {
     if (isOpen) {
@@ -78,9 +66,12 @@ export const Header = ({ className }: { className?: string }) => {
               <CartIcon />
             </div>
           </Link>
-          <button onClick={handleUserIconClick}>
-            <UserIcon />
-          </button>
+          <a href="tel:+79013320034">
+            <PhoneIcon />
+          </a>
+          <a href="https://t.me/floricraftlab">
+            <TelegramSecondaryIcon />
+          </a>
           <div onClick={() => setIsOpen(true)} className="cursor-pointer">
             <BurgerIcon />
           </div>

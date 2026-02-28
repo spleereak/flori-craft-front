@@ -6,17 +6,31 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
     productsApi.getCategories(),
   ]);
 
+  const priorityNames = [
+    "8 марта",
+    "1 сентября",
+    "День мамы",
+    "Новый год",
+    "14 февраля",
+  ];
+
   const specifications = [...specificationsResponse.categories].sort((a, b) => {
-    if (a.name === "Авторские букеты") return -1;
-    if (b.name === "Авторские букеты") return 1;
-    return 0;
+    const indexA = priorityNames.indexOf(a.name);
+    const indexB = priorityNames.indexOf(b.name);
+    if (indexA === -1 && indexB === -1) return 0;
+    if (indexA === -1) return 1;
+    if (indexB === -1) return -1;
+    return indexA - indexB;
   });
 
-  return [
-    {
-      name: "Готовые букеты",
-      products: bouquets,
-    },
-    ...specifications,
-  ];
+  const expressDelivery = {
+    name: "Экспресс-доставка",
+    products: bouquets,
+  };
+
+  if (specifications.length === 0) {
+    return [expressDelivery];
+  }
+
+  return [specifications[0], expressDelivery, ...specifications.slice(1)];
 };

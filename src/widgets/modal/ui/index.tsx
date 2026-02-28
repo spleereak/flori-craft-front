@@ -6,7 +6,11 @@ import Link from "next/link";
 
 import { CloseIcon } from "@/src/shared/icons/CloseIcon";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
+import { TelegramBlackIcon } from "@/src/shared/icons/TelegramBlackIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
+
+// import { useRouter } from "next/navigation";
+// import { cookies } from "@/src/shared/lib/utils/cookies";
 
 const links = [
   {
@@ -14,8 +18,12 @@ const links = [
     link: "/",
   },
   {
-    text: "Политика конфиденциальности",
-    link: "/policy",
+    text: "Контакты",
+    link: "",
+  },
+  {
+    text: "Войти в аккаунт",
+    link: "/auth",
   },
   {
     text: "Возврат",
@@ -33,6 +41,10 @@ const links = [
     text: "Публичная оферта",
     link: "/public-offer",
   },
+  {
+    text: "Политика конфиденциальности",
+    link: "/policy",
+  },
 ];
 
 export const Modal = ({
@@ -43,6 +55,9 @@ export const Modal = ({
   onClose?: () => void;
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
+  const [contactsHovered, setContactsHovered] = useState(false);
+  const [contactsClicked, setContactsClicked] = useState(false);
+  const contactsExpanded = contactsHovered || contactsClicked;
 
   useEffect(() => {
     if (isOpen) {
@@ -56,6 +71,17 @@ export const Modal = ({
       setIsAnimating(false);
     }
   }, [isOpen]);
+
+  // const router = useRouter();
+
+  // const handleUserClick = () => {
+  //   const userId = cookies.get("user_id");
+  //   if (userId) {
+  //     router.push("/profile");
+  //   } else {
+  //     router.push("/auth");
+  //   }
+  // };
 
   return (
     <>
@@ -102,21 +128,73 @@ export const Modal = ({
           </div>
 
           <div className="desktop:gap-20 gap-15 desktop:ml-9 ml-4 flex flex-col">
-            {links.map((link, i) => (
-              <Link
-                key={i}
-                className={cn(
-                  "h3 text-grey-for-text max-w-max transition-all duration-300 ease-in-out hover:translate-x-2 hover:text-black active:text-black",
-                  isAnimating
-                    ? "translate-x-0 opacity-100"
-                    : "-translate-x-8 opacity-0"
-                )}
-                href={link.link}
-                onClick={onClose}
-              >
-                {link.text}
-              </Link>
-            ))}
+            {links.map((link, i) => {
+              if (link.text === "Контакты") {
+                return (
+                  <div
+                    className="desktop:gap-15 desktop:mb-3 relative flex w-full flex-col gap-4"
+                    key={i}
+                    onMouseEnter={() => setContactsHovered(true)}
+                    onMouseLeave={() => setContactsHovered(false)}
+                  >
+                    <h3
+                      role="button"
+                      tabIndex={0}
+                      className={cn(
+                        "h3 text-grey-for-text max-w-max cursor-pointer transition-all duration-300 ease-in-out hover:translate-x-2 hover:text-black active:text-black",
+                        isAnimating
+                          ? "translate-x-0 opacity-100"
+                          : "-translate-x-8 opacity-0",
+                        contactsExpanded && "translate-x-2 text-black"
+                      )}
+                      onClick={() => setContactsClicked(prev => !prev)}
+                      onKeyDown={e => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setContactsClicked(prev => !prev);
+                        }
+                      }}
+                    >
+                      {link.text}
+                    </h3>
+                    <div
+                      className={cn(
+                        "grid w-full transition-[grid-template-rows] duration-300 ease-in-out",
+                        contactsExpanded
+                          ? "desktop:mt-5 grid-rows-[1fr]"
+                          : "-mt-15 desktop:-mt-20 grid-rows-[0fr]"
+                      )}
+                    >
+                      <div
+                        className={cn(
+                          "desktop:gap-23 gap-27 flex min-h-0 items-center overflow-hidden transition-opacity duration-300",
+                          !contactsExpanded && "pointer-events-none opacity-0"
+                        )}
+                      >
+                        <p className="text_p pl-15">+7(901)332-00-34</p>
+                        <TelegramBlackIcon />
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <Link
+                  key={i}
+                  className={cn(
+                    "h3 text-grey-for-text max-w-max transition-all duration-300 ease-in-out hover:translate-x-2 hover:text-black active:text-black",
+                    isAnimating
+                      ? "translate-x-0 opacity-100"
+                      : "-translate-x-8 opacity-0"
+                  )}
+                  href={link.link}
+                  onClick={onClose}
+                >
+                  {link.text}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

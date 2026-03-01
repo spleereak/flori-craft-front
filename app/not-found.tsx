@@ -18,7 +18,7 @@ export default function NotFound() {
           <p className="caption">Но есть много других — начните с главной</p>
         </div>
         <Link href="/">
-          <Button appearance="outline" className="desktop:max-w-235 max-w-98">
+          <Button appearance="secondary" className="desktop:max-w-235 max-w-98">
             Главная
           </Button>
         </Link>

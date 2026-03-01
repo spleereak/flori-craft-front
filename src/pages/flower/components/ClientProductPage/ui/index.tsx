@@ -142,7 +142,7 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
                   ? "Убрать из корзины"
                   : "Добавить в корзину"}
             </Button>
-            <Button appearance="outline" onClick={handleBuyRightNow}>
+            <Button appearance="secondary" onClick={handleBuyRightNow}>
               {!isHydrated ? "Загрузка..." : "Купить сейчас"}
             </Button>
           </div>

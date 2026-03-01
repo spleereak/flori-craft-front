@@ -25,21 +25,16 @@ const HomeClient = dynamic(
 
 async function fetchHeroData() {
   try {
-    const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/feature?[populate]=*`;
+    const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/feature?populate[firstTemplate][populate]=*&populate[secondTemplate][populate]=*`;
     const res = await fetch(url, { next: { revalidate: 60 } });
     if (!res.ok) return undefined;
     const feature = await res.json();
     const block = feature?.data;
-    const { text, title, image, color, mobile_image, text_color, bg_color } =
-      block;
+    const { activeTemplate, firstTemplate, secondTemplate } = block;
     return {
-      text,
-      title,
-      image,
-      color,
-      mobile_image,
-      text_color,
-      bg_color,
+      activeTemplate,
+      firstTemplate,
+      secondTemplate,
     };
   } catch {
     return undefined;

@@ -1,4 +1,4 @@
-export type ButtonAppearance = "primary" | "outline" | "accent";
+export type ButtonAppearance = "primary" | "secondary" | "accent";
 
 export interface ButtonProps {
   className?: string;

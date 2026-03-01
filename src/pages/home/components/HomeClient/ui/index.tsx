@@ -136,13 +136,13 @@ export function HomeClient({
       <div className="desktop:px-90 desktop:rounded-2xl rounded-md px-16">
         {hero_data ? (
           <Hero
-            title={hero_data.title}
-            text={hero_data.text}
-            color={hero_data.color}
-            image={hero_data.image}
-            mobile_image={hero_data.mobile_image}
-            bg_color={hero_data.bg_color}
-            text_color={hero_data.text_color}
+            activeTemplate={hero_data.activeTemplate}
+            firstTemplate={hero_data.firstTemplate}
+            secondTemplate={hero_data.secondTemplate}
+            onOrderClick={() => {
+              setActiveTab("8 марта");
+              scrollToCategory("8 марта");
+            }}
           />
         ) : (
           <div className="desktop:h-335 h-145 desktop:rounded-2xl desktop:px-90 w-full rounded-md bg-[#D9D9D9] px-16" />
@@ -189,7 +189,7 @@ export function HomeClient({
               </p>
               {catalog.length > 0 && (
                 <Button
-                  appearance="outline"
+                  appearance="secondary"
                   className="desktop:w-235 desktop:h-65 w-98 h-34"
                   onClick={() =>
                     updatePrices([minMax.minPrice, minMax.maxPrice])

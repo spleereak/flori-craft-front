@@ -127,7 +127,7 @@ export default function CartPage() {
           </p>
           <Link className="desktop:pb-285 pb-235" href="/">
             <Button
-              appearance="outline"
+              appearance="secondary"
               className="desktop:w-235 desktop:h-65 w-98 h-34"
             >
               Главная

@@ -15,7 +15,15 @@ export const Hero = ({
   firstTemplate,
   secondTemplate,
 }: I_Hero) => {
-  const { title_first, typeofButton, image_first, title_color } = firstTemplate;
+  const {
+    title_first,
+    typeofButton,
+    image_first,
+    image_mobile_first,
+    title_color,
+  } = firstTemplate;
+
+  console.log(firstTemplate);
 
   const { bg_color, text_color, color, title, text, mobile_image, image } =
     secondTemplate;
@@ -30,8 +38,13 @@ export const Hero = ({
         )}
       >
         <img
-          className="desktop:rounded-2xl max-desktop:object-cover absolute left-0 top-0 z-10 h-full w-full rounded-md"
+          className="max-desktop:hidden desktop:rounded-2xl max-desktop:object-cover absolute left-0 top-0 z-10 h-full w-full rounded-md"
           src={strapiImageLoader({ src: image_first.url, quality: 100 })}
+          alt="Image"
+        />
+        <img
+          className="desktop:hidden absolute left-0 top-0 z-10 h-full w-full rounded-md"
+          src={strapiImageLoader({ src: image_mobile_first.url, quality: 100 })}
           alt="Image"
         />
         <div className="desktop:gap-50 z-30 flex flex-col items-center gap-20">

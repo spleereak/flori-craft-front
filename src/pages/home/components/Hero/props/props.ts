@@ -10,6 +10,9 @@ export interface I_Hero {
     image_first: {
       url: string;
     };
+    image_mobile_first: {
+      url: string;
+    };
     title_color: string;
   };
   secondTemplate: {

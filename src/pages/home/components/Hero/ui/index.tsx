@@ -23,8 +23,6 @@ export const Hero = ({
     title_color,
   } = firstTemplate;
 
-  console.log(firstTemplate);
-
   const { bg_color, text_color, color, title, text, mobile_image, image } =
     secondTemplate;
 

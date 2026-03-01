@@ -32,6 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const YANDEX_METRIKA_ID = 106881811;
+  const MAIL_RU_COUNTER_ID = "3746023";
 
   return (
     <html lang="en">
@@ -57,6 +58,32 @@ export default function RootLayout({
               src={`https://mc.yandex.ru/watch/${YANDEX_METRIKA_ID}`}
               style={{ position: "absolute", left: -9999 }}
               alt=""
+            />
+          </div>
+        </noscript>
+        <Script
+          id="mail-ru-counter"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              var _tmr = window._tmr || (window._tmr = []);
+              _tmr.push({id: "${MAIL_RU_COUNTER_ID}", type: "pageView", start: (new Date()).getTime()});
+              (function (d, w, id) {
+                if (d.getElementById(id)) return;
+                var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+                ts.src = "https://top-fwz1.mail.ru/js/code.js";
+                var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+                if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+              })(document, window, "tmr-code");
+            `,
+          }}
+        />
+        <noscript>
+          <div>
+            <img
+              src={`https://top-fwz1.mail.ru/counter?id=${MAIL_RU_COUNTER_ID};js=na`}
+              style={{ position: "absolute", left: -9999 }}
+              alt="Top.Mail.Ru"
             />
           </div>
         </noscript>

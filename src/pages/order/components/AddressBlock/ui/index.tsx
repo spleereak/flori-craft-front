@@ -52,8 +52,8 @@ export const AddressBlock = ({
   if (mode === "pickup") {
     return (
       <div className="gap-18 flex w-full flex-col">
-        <p className="caption">
-          Самовывоз по адресу г. Москва, Береговой проезд, д.5А, к.1 ТЦ Фили
+        <p className="caption desktop:max-w-533">
+          Самовывоз по адресу: г. Москва, Береговой проезд, д.5А, к.1 ТЦ Фили
           Град, -1 этаж
         </p>
         <div className="desktop:flex-row desktop:gap-65 pb-30 flex w-full flex-col gap-16 border-b border-[#80808080]">

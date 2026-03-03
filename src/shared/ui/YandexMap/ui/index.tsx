@@ -13,11 +13,11 @@ export default function YandexMap({
   zoomLvl,
 }: I_YandexMap) {
   return (
-    <div className={cn("lg:h-600 h-206 w-full", className)}>
+    <div className={cn("desktop:h-374 h-206 w-full", className)}>
       <YMaps query={{ apikey: process.env.NEXT_PUBLIC_YMAPS_API_KEY }}>
         <Map
           state={{ center: [coordsX, coordsY], zoom: zoomLvl }}
-          className="lg:h-600 h-206 desktop:max-w-624 w-full"
+          className="desktop:h-374 h-206 desktop:max-w-624 w-full"
         >
           <Placemark
             geometry={[coordsX, coordsY]}
@@ -27,9 +27,9 @@ export default function YandexMap({
               iconImageSize: [34, 41],
             }}
             properties={{
-              hintContent: "Корлаб",
+              hintContent: "FloriCraft",
               balloonContent:
-                "<strong>Спартаковская улица, 2А, Казань</strong>",
+                "<strong>Фили Град Береговой проезд 5Ак1</strong>",
             }}
           />
         </Map>

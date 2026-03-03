@@ -58,7 +58,7 @@ export const AddressBlock = ({
               Самовывоз по адресу: г. Москва, Береговой проезд, д.5А, к.1 ТЦ
               Фили Град, -1 этаж
             </p>
-            <div className="desktop:gap-18 flex flex-col">
+            <div className="desktop:gap-18 desktop:flex desktop:flex-col contents">
               <p className="caption desktop:max-w-533 max-desktop:hidden text-grey-for-text">
                 Данные получателя
               </p>

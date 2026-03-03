@@ -52,28 +52,33 @@ export const AddressBlock = ({
   if (mode === "pickup") {
     return (
       <div className="gap-18 flex w-full flex-col">
-        <p className="caption desktop:max-w-533">
-          Самовывоз по адресу: г. Москва, Береговой проезд, д.5А, к.1 ТЦ Фили
-          Град, -1 этаж
-        </p>
         <div className="desktop:flex-row desktop:gap-65 pb-30 flex w-full flex-col gap-16 border-b border-[#80808080]">
-          <div className="desktop:flex desktop:flex-col desktop:min-w-553 desktop:max-w-553 desktop:gap-13 contents w-full">
-            <PickupFields
-              className="max-desktop:order-2"
-              errors={{
-                name: errors?.name,
-                phone: errors?.phone,
-                date: errors?.date,
-                time: errors?.time,
-              }}
-              onFieldChange={onFieldChange}
-            />
+          <div className="desktop:flex desktop:flex-col desktop:min-w-553 desktop:max-w-553 desktop:justify-between contents w-full">
+            <p className="caption desktop:max-w-533 max-desktop:order-1">
+              Самовывоз по адресу: г. Москва, Береговой проезд, д.5А, к.1 ТЦ
+              Фили Град, -1 этаж
+            </p>
+            <div className="desktop:gap-18 flex flex-col">
+              <p className="caption desktop:max-w-533 max-desktop:hidden text-grey-for-text">
+                Данные получателя
+              </p>
+              <PickupFields
+                className="max-desktop:order-3"
+                errors={{
+                  name: errors?.name,
+                  phone: errors?.phone,
+                  date: errors?.date,
+                  time: errors?.time,
+                }}
+                onFieldChange={onFieldChange}
+              />
+            </div>
           </div>
           <YandexMap
             coordsX={mapCoords.coordX}
             coordsY={mapCoords.coordY}
             zoomLvl={16}
-            className="max-desktop:order-1"
+            className="max-desktop:order-2"
           />
         </div>
       </div>

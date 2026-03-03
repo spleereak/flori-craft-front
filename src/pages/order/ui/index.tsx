@@ -18,10 +18,13 @@ import { Checkbox } from "@/src/shared/ui/Checkbox";
 
 import { AddressBlock } from "../components/AddressBlock";
 import { isTimeSlotAvailable } from "../components/AddressBlock/components/AddressGrid/model";
+import type { AddressBlockField } from "../components/AddressBlock/ui";
 import { CartBlock } from "../components/CartBlock";
+import { DeliveryTypeTabs } from "../components/DeliveryTypeTabs";
 import { PostCardBlock } from "../components/PostCardBlock/ui";
 import { RecipientBlock } from "../components/RecipientBlock";
 import { SenderBlock } from "../components/SenderBlock/ui";
+import type { DeliveryType } from "../model/order.store";
 import { TIME_SLOT_TO_API, useOrderStore } from "../model/order.store";
 
 interface OrderErrors {
@@ -52,9 +55,10 @@ const useOrderBlocks = (
   items: CartItem[],
   isAuth: boolean,
   errors: OrderErrors,
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars -- type-only param for clearError signature
   clearError: (key: keyof OrderErrors) => void,
-  userData?: UserData
+  userData: UserData | undefined,
+  deliveryType: DeliveryType
 ): OrderBlock[] => {
   return useMemo(
     () => [
@@ -66,23 +70,30 @@ const useOrderBlocks = (
       },
       {
         key: "address",
-        name: "Доставка",
+        name: deliveryType === "pickup" ? "Самовывоз" : "Доставка",
         visible: true,
         render: () => (
           <AddressBlock
+            mode={deliveryType}
             errors={{
               address: errors.address,
               date: errors.date,
               time: errors.time,
+              name: errors.recipientName,
+              phone: errors.recipientPhone,
             }}
-            onFieldChange={field => clearError(field)}
+            onFieldChange={(field: AddressBlockField) => {
+              if (field === "name") clearError("recipientName");
+              else if (field === "phone") clearError("recipientPhone");
+              else clearError(field);
+            }}
           />
         ),
       },
       {
         key: "sender",
         name: "Отправитель",
-        visible: !isAuth,
+        visible: !isAuth && deliveryType === "delivery",
         render: () => (
           <SenderBlock
             errors={{
@@ -98,7 +109,7 @@ const useOrderBlocks = (
       {
         key: "recipient",
         name: "Получатель",
-        visible: true,
+        visible: deliveryType === "delivery",
         render: () => (
           <RecipientBlock
             isAuth={isAuth}
@@ -120,7 +131,7 @@ const useOrderBlocks = (
         render: () => <PostCardBlock />,
       },
     ],
-    [items, isAuth, errors, clearError, userData]
+    [items, isAuth, errors, clearError, userData, deliveryType]
   );
 };
 
@@ -131,6 +142,8 @@ export default function OrderPage() {
     recipient,
     delivery,
     deliveryZone,
+    deliveryType,
+    setDeliveryType,
     postcard,
     getDeliveryPrice,
   } = useOrderStore();
@@ -170,7 +183,14 @@ export default function OrderPage() {
     });
   };
 
-  const blocks = useOrderBlocks(items, isAuth, errors, clearError, userData);
+  const blocks = useOrderBlocks(
+    items,
+    isAuth,
+    errors,
+    clearError,
+    userData,
+    deliveryType
+  );
 
   const productsPrice = items.reduce(
     (acc, product) => Number(product.price) + acc,
@@ -186,35 +206,46 @@ export default function OrderPage() {
       validationErrors.cart = "Корзина пуста";
     }
 
-    // Валидация доставки (обязательно: адрес, дата, время)
-    if (!delivery.fullAddress.trim()) {
-      validationErrors.address = "Укажите адрес доставки";
+    const isPickup = deliveryType === "pickup";
+
+    // Валидация доставки / самовывоза
+    if (!isPickup) {
+      if (!delivery.fullAddress.trim()) {
+        validationErrors.address = "Укажите адрес доставки";
+      }
     }
     if (!delivery.date) {
-      validationErrors.date = "Выберите дату доставки";
+      validationErrors.date = isPickup
+        ? "Выберите дату самовывоза"
+        : "Выберите дату доставки";
     }
     if (!delivery.time) {
-      validationErrors.time = "Выберите время доставки";
+      validationErrors.time = isPickup
+        ? "Выберите время самовывоза"
+        : "Выберите время доставки";
     } else if (
       delivery.date &&
       !isTimeSlotAvailable(delivery.date, delivery.time)
     ) {
-      // Проверка: для сегодняшнего дня слот должен начинаться минимум через 2 часа
       validationErrors.time =
         "Выбранное время недоступно. Минимум 2 часа до доставки";
     }
 
-    // Валидация получателя (обязательно: имя, телефон)
+    // Валидация получателя (обязательно: имя, телефон) — и при доставке, и при самовывозе
     if (!recipient.name.trim()) {
-      validationErrors.recipientName = "Укажите имя получателя";
+      validationErrors.recipientName = isPickup
+        ? "Укажите имя"
+        : "Укажите имя получателя";
     }
     const recipientPhone = recipient.phone.replace(/\D/g, "");
     if (recipientPhone.length < 11) {
-      validationErrors.recipientPhone = "Укажите корректный телефон получателя";
+      validationErrors.recipientPhone = isPickup
+        ? "Укажите корректный номер телефона"
+        : "Укажите корректный телефон получателя";
     }
 
-    // Валидация отправителя (обязательно если не авторизован)
-    if (!isAuth) {
+    // Валидация отправителя (обязательно если не авторизован, только при доставке)
+    if (!isAuth && !isPickup) {
       if (!sender.name.trim()) {
         validationErrors.senderName = "Укажите имя отправителя";
       }
@@ -243,52 +274,79 @@ export default function OrderPage() {
     setErrors({});
     setIsLoading(true);
 
-    const orderData = {
-      sender: {
-        name: isAuth && userData ? userData.name : sender.name,
-        phoneNumber:
-          isAuth && userData
-            ? userData.phone.replace(/\D/g, "")
-            : sender.phone.replace(/\D/g, ""),
-      },
-      recipient: {
-        name: recipient.name,
-        phoneNumber: recipient.phone.replace(/\D/g, ""),
-      },
-      delivery: {
-        fullAddress: delivery.fullAddress,
-        apartment: delivery.apartment || "",
-        entrance: delivery.entrance || "",
-        floor: delivery.floor || "",
-        intercom: delivery.intercom || "",
-        date: delivery.date
-          ? new Intl.DateTimeFormat("ru", {
-              day: "numeric",
-              month: "long",
-            }).format(delivery.date)
-          : "",
-        time: TIME_SLOT_TO_API[delivery.time] || "",
-        district: deliveryZone,
-      },
-      cartItems: items.map(item => ({
-        productId: item.product_id,
-        title: item.title,
-        size: item.size,
-        price: String(item.price),
-        image: item.image,
-      })),
-      deliveryPrice: String(deliveryPrice ?? 0),
-      postcard: postcard || "",
-      cartPrice: String(productsPrice),
-      fullPrice: String(productsPrice + (deliveryPrice ?? 0)),
+    const cartItems = items.map(item => ({
+      productId: item.product_id,
+      title: item.title,
+      size: item.size,
+      price: String(item.price),
+      image: item.image,
+    }));
+    const deliveryPriceStr = (deliveryPrice ?? 0).toFixed(2);
+    const cartPriceStr = productsPrice.toFixed(2);
+    const fullPriceStr = (productsPrice + (deliveryPrice ?? 0)).toFixed(2);
+
+    const formatPhone = (phone: string) => {
+      const digits = phone.replace(/\D/g, "");
+      return digits.length >= 10 ? `+7${digits.slice(-10)}` : digits;
     };
+
+    const orderData =
+      deliveryType === "pickup"
+        ? {
+            cartItems,
+            deliveryType: "pickup" as const,
+            pickup: {
+              recipientName: recipient.name,
+              recipientPhone: formatPhone(recipient.phone),
+              date: delivery.date
+                ? `${delivery.date.getFullYear()}-${String(delivery.date.getMonth() + 1).padStart(2, "0")}-${String(delivery.date.getDate()).padStart(2, "0")}`
+                : "",
+              time: TIME_SLOT_TO_API[delivery.time] || "",
+            },
+            sender: {
+              name: recipient.name,
+              phoneNumber: formatPhone(recipient.phone),
+            },
+            postcard: postcard || "",
+            deliveryPrice: deliveryPriceStr,
+            cartPrice: cartPriceStr,
+            fullPrice: fullPriceStr,
+          }
+        : {
+            cartItems,
+            deliveryType: "delivery" as const,
+            delivery: {
+              fullAddress: delivery.fullAddress,
+              apartment: delivery.apartment || "",
+              entrance: delivery.entrance || "",
+              floor: delivery.floor || "",
+              intercom: delivery.intercom || "",
+              date: delivery.date
+                ? `${delivery.date.getFullYear()}-${String(delivery.date.getMonth() + 1).padStart(2, "0")}-${String(delivery.date.getDate()).padStart(2, "0")}`
+                : "",
+              time: TIME_SLOT_TO_API[delivery.time] || "",
+              district: deliveryZone,
+            },
+            recipient: {
+              name: recipient.name,
+              phoneNumber: formatPhone(recipient.phone),
+            },
+            sender: {
+              name: isAuth && userData ? userData.name : sender.name,
+              phoneNumber: formatPhone(
+                isAuth && userData ? userData.phone : sender.phone
+              ),
+            },
+            postcard: postcard || "",
+            deliveryPrice: deliveryPriceStr,
+            cartPrice: cartPriceStr,
+            fullPrice: fullPriceStr,
+          };
 
     try {
       const response = await orderApi.createOrder(userId!, orderData);
       if (response.payment_url) {
-        // Очищаем флаг доступа после успешного оформления
         sessionStorage.removeItem("canAccessOrder");
-        // Флаг для доступа на страницу «Спасибо» только после редиректа из ЮKassa
         sessionStorage.setItem("from_yookassa_ok", "1");
         window.location.href = response.payment_url;
       }
@@ -332,6 +390,13 @@ export default function OrderPage() {
                   key={block.key}
                   className="desktop:gap-30 flex flex-col gap-20"
                 >
+                  {block.key === "address" && (
+                    <DeliveryTypeTabs
+                      activeType={deliveryType}
+                      onDeliveryClick={() => setDeliveryType("delivery")}
+                      onPickupClick={() => setDeliveryType("pickup")}
+                    />
+                  )}
                   <div className="bg-light-grey py-10.5 max-desktop:-mx-16 desktop:p-16 desktop:rounded-2xl flex flex-row gap-14 px-16">
                     <p className="text_p border-r border-black pr-14">
                       {index + 1}

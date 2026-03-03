@@ -8,6 +8,8 @@ interface PersonData {
 
 export type DeliveryZoneType = "JK" | "FILI" | "MKAD" | "NMKAD";
 
+export type DeliveryType = "delivery" | "pickup";
+
 export const DELIVERY_PRICES: Record<DeliveryZoneType, number | null> = {
   JK: 350,
   FILI: 750,
@@ -50,6 +52,7 @@ interface OrderState {
   postcard: string;
   isSameAsSource: boolean;
   deliveryZone: DeliveryZoneType;
+  deliveryType: DeliveryType;
 
   setSender: (data: Partial<PersonData>) => void;
   setRecipient: (data: Partial<PersonData>) => void;
@@ -57,6 +60,7 @@ interface OrderState {
   setPostcard: (value: string) => void;
   setIsSameAsSource: (value: boolean) => void;
   setDeliveryZone: (zone: DeliveryZoneType) => void;
+  setDeliveryType: (type: DeliveryType) => void;
   getDeliveryPrice: () => number | null;
   fillRecipientFromSender: () => void;
   fillRecipientFromUser: (userData: PersonData) => void;
@@ -83,6 +87,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   postcard: "",
   isSameAsSource: false,
   deliveryZone: "JK",
+  deliveryType: "delivery",
 
   setSender: data =>
     set(state => ({
@@ -104,9 +109,11 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   setIsSameAsSource: value => set({ isSameAsSource: value }),
 
   setDeliveryZone: zone => set({ deliveryZone: zone }),
+  setDeliveryType: type => set({ deliveryType: type }),
 
   getDeliveryPrice: () => {
-    const { deliveryZone } = get();
+    const { deliveryZone, deliveryType } = get();
+    if (deliveryType === "pickup") return 0;
     return DELIVERY_PRICES[deliveryZone];
   },
 

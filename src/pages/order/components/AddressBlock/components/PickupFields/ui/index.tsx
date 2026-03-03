@@ -1,0 +1,228 @@
+"use client";
+
+import {
+  addYears,
+  format,
+  isSunday,
+  lastDayOfMonth,
+  previousSunday,
+  startOfDay,
+} from "date-fns";
+import { ru } from "date-fns/locale";
+import { IMaskInput } from "react-imask";
+
+import { FormInput } from "@/src/pages/auth/components/Form/components";
+import { Calendar } from "@/src/shared/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/src/shared/components/ui/popover";
+import { ArrowDown } from "@/src/shared/icons/ArrowDown";
+import { CalendarIcon } from "@/src/shared/icons/CalendarIcon";
+import { cn } from "@/src/shared/lib/utils/cn";
+
+import { useOrderStore } from "../../../../../model/order.store";
+import { useAddressGrid } from "../../AddressGrid/model";
+
+const inputStyles =
+  "desktop:rounded-2xl caption py-13 desktop:py-20 desktop:px-22 ring-none w-full rounded-md bg-light-grey px-16 transition-all duration-300 ease-in-out focus:border-2 focus:border-black focus:outline-none";
+
+const getLastSundayOfNovember = (year: number): Date => {
+  const lastDayOfNov = lastDayOfMonth(new Date(year, 10));
+  if (isSunday(lastDayOfNov)) {
+    return lastDayOfNov;
+  }
+  return previousSunday(lastDayOfNov);
+};
+
+const isDisabledDate = (date: Date, today: Date, maxDate: Date): boolean => {
+  if (date < today || date > maxDate) return true;
+  const month = date.getMonth();
+  const day = date.getDate();
+  const year = date.getFullYear();
+  if (month === 1 && (day === 13 || day === 14)) return true;
+  if (month === 2 && (day === 7 || day === 8)) {
+    const march7SameYear = new Date(year, 2, 7);
+    if (today >= march7SameYear) return true;
+    return false;
+  }
+  const lastSundayNov = getLastSundayOfNovember(year);
+  if (
+    month === 10 &&
+    day === lastSundayNov.getDate() &&
+    year === lastSundayNov.getFullYear()
+  )
+    return true;
+  if (
+    month === 10 &&
+    day === lastSundayNov.getDate() - 1 &&
+    year === lastSundayNov.getFullYear()
+  )
+    return true;
+  return false;
+};
+
+interface PickupFieldsProps {
+  className?: string;
+  errors?: {
+    name?: string;
+    phone?: string;
+    date?: string;
+    time?: string;
+  };
+  // eslint-disable-next-line no-unused-vars -- callback signature
+  onFieldChange?: (field: "name" | "phone" | "date" | "time") => void;
+}
+
+export const PickupFields = ({
+  className,
+  errors,
+  onFieldChange,
+}: PickupFieldsProps) => {
+  const { recipient, setRecipient } = useOrderStore();
+  const {
+    fields,
+    isCalendarOpen,
+    isTimeOpen,
+    availableTimeSlots,
+    setIsCalendarOpen,
+    setIsTimeOpen,
+    handleDateSelect,
+    handleTimeSelect,
+    formatDate,
+  } = useAddressGrid();
+
+  const today = startOfDay(new Date());
+  const maxDate = addYears(today, 1);
+
+  return (
+    <div
+      className={cn(
+        "desktop:gap-13 grid grid-cols-2 grid-rows-2 gap-7",
+        className
+      )}
+    >
+      <div className="col-span-2 flex flex-col gap-2">
+        <FormInput
+          className="bg-light-grey"
+          placeholder="Имя"
+          type="text"
+          name="pickupName"
+          value={recipient.name}
+          onChange={e => {
+            setRecipient({ name: e.target.value });
+            onFieldChange?.("name");
+          }}
+        />
+        {errors?.name && <p className="caption text-red-500">{errors.name}</p>}
+      </div>
+      <div className="col-span-2 flex flex-col gap-2">
+        <IMaskInput
+          mask="+{7} (000) 000-00-00"
+          value={recipient.phone}
+          onAccept={(value: string) => {
+            setRecipient({ phone: value });
+            onFieldChange?.("phone");
+          }}
+          className={cn(inputStyles)}
+          placeholder="Номер телефона"
+        />
+        {errors?.phone && (
+          <p className="caption text-red-500">{errors.phone}</p>
+        )}
+      </div>
+      <div className="flex flex-col gap-2">
+        <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className={cn(
+                inputStyles,
+                "flex cursor-pointer items-center justify-between text-left"
+              )}
+            >
+              <span
+                className={fields.date ? "text-black" : "text-grey-for-text"}
+              >
+                {fields.date ? formatDate(fields.date) : "Выберите дату"}
+              </span>
+              <CalendarIcon />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={fields.date}
+              onSelect={date => {
+                handleDateSelect(date);
+                onFieldChange?.("date");
+              }}
+              disabled={date => isDisabledDate(date, today, maxDate)}
+              defaultMonth={today}
+              formatters={{
+                formatCaption: date => {
+                  const formatted = format(date, "LLLL yyyy", { locale: ru });
+                  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+                },
+              }}
+            />
+          </PopoverContent>
+        </Popover>
+        {errors?.date && <p className="caption text-red-500">{errors.date}</p>}
+      </div>
+      <div className="flex flex-col gap-2">
+        <Popover open={isTimeOpen} onOpenChange={setIsTimeOpen}>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className={cn(
+                inputStyles,
+                "flex cursor-pointer items-center justify-between text-left"
+              )}
+            >
+              <span
+                className={fields.time ? "text-black" : "text-grey-for-text"}
+              >
+                {fields.time || "Выберите время"}
+              </span>
+              <ArrowDown
+                className={cn(
+                  "transition-transform duration-200",
+                  isTimeOpen && "rotate-180"
+                )}
+              />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-200 p-0" align="start">
+            <div className="flex flex-col">
+              {availableTimeSlots.length > 0 ? (
+                availableTimeSlots.map(slot => (
+                  <button
+                    key={slot}
+                    type="button"
+                    onClick={() => {
+                      handleTimeSelect(slot);
+                      onFieldChange?.("time");
+                    }}
+                    className={cn(
+                      "caption hover:bg-light-grey px-16 py-12 text-left transition-colors",
+                      fields.time === slot && "bg-light-grey font-medium"
+                    )}
+                  >
+                    {slot}
+                  </button>
+                ))
+              ) : (
+                <p className="caption text-grey-for-text px-16 py-12">
+                  На сегодня нет доступных слотов
+                </p>
+              )}
+            </div>
+          </PopoverContent>
+        </Popover>
+        {errors?.time && <p className="caption text-red-500">{errors.time}</p>}
+      </div>
+    </div>
+  );
+};

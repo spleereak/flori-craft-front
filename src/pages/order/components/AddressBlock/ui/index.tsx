@@ -4,27 +4,40 @@ import { SearchIcon } from "@/src/shared/icons/SearchIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
 import YandexMap from "@/src/shared/ui/YandexMap/ui";
 
+import type { DeliveryType } from "../../../model/order.store";
 import { AddressGrid } from "../components/AddressGrid/ui";
 import { DeliveryZoneSelect } from "../components/DeliveryZoneSelect";
+import { PickupFields } from "../components/PickupFields";
 import { useAddressBlock } from "../model";
 
-// Береговой проезд 5с1
+// Береговой проезд 5Ак1
 const DEFAULT_COORDS = {
-  coordX: 55.756928,
-  coordY: 37.507403,
+  coordX: 55.755023,
+  coordY: 37.509245,
 };
 
-interface AddressBlockProps {
-  errors?: {
-    address?: string;
-    date?: string;
-    time?: string;
-  };
-  // eslint-disable-next-line no-unused-vars
-  onFieldChange?: (field: "address" | "date" | "time") => void;
+export type AddressBlockField = "address" | "date" | "time" | "name" | "phone";
+
+interface AddressBlockErrors {
+  address?: string;
+  date?: string;
+  time?: string;
+  name?: string;
+  phone?: string;
 }
 
-export const AddressBlock = ({ errors, onFieldChange }: AddressBlockProps) => {
+interface AddressBlockProps {
+  mode?: DeliveryType;
+  errors?: AddressBlockErrors;
+  // eslint-disable-next-line no-unused-vars
+  onFieldChange?: (field: AddressBlockField) => void;
+}
+
+export const AddressBlock = ({
+  mode = "delivery",
+  errors,
+  onFieldChange,
+}: AddressBlockProps) => {
   const {
     address,
     coords,
@@ -35,6 +48,37 @@ export const AddressBlock = ({ errors, onFieldChange }: AddressBlockProps) => {
   } = useAddressBlock();
 
   const mapCoords = coords ?? DEFAULT_COORDS;
+
+  if (mode === "pickup") {
+    return (
+      <div className="gap-18 flex w-full flex-col">
+        <p className="caption">
+          Самовывоз по адресу г. Москва, Береговой проезд, д.5А, к.1 ТЦ Фили
+          Град, -1 этаж
+        </p>
+        <div className="desktop:flex-row desktop:gap-65 pb-30 flex w-full flex-col gap-16 border-b border-[#80808080]">
+          <div className="desktop:flex desktop:flex-col desktop:min-w-553 desktop:max-w-553 desktop:gap-13 contents w-full">
+            <PickupFields
+              className="max-desktop:order-2"
+              errors={{
+                name: errors?.name,
+                phone: errors?.phone,
+                date: errors?.date,
+                time: errors?.time,
+              }}
+              onFieldChange={onFieldChange}
+            />
+          </div>
+          <YandexMap
+            coordsX={mapCoords.coordX}
+            coordsY={mapCoords.coordY}
+            zoomLvl={16}
+            className="max-desktop:order-1"
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="gap-18 flex w-full flex-col">
@@ -82,21 +126,6 @@ export const AddressBlock = ({ errors, onFieldChange }: AddressBlockProps) => {
           className="max-desktop:order-2"
         />
       </div>
-      {/* <h3 className="h3">Адрес доставки</h3>
-      <div className="flex flex-col gap-10">
-        <input
-          type="text"
-          value={address}
-          onChange={handleAddressChange}
-          placeholder="Введите адрес"
-          className={cn(
-            "desktop:rounded-2xl caption py-13 desktop:py-20 desktop:px-22 ring-none w-full rounded-md bg-white px-16 transition-all duration-300 ease-in-out focus:border-2 focus:border-black focus:outline-none"
-          )}
-        />
-        {isLoading && (
-          <p className="caption text-grey-for-text">Поиск адреса...</p>
-        )}
-      </div> */}
     </div>
   );
 };

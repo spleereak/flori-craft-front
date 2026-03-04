@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/src/shared/ui";
 
-const YANDEX_METRIKA_ID = 106881811;
 const STORAGE_KEY = "from_yookassa_ok";
 
 export default function ThankYouPage() {
@@ -24,7 +23,7 @@ export default function ThankYouPage() {
   }, [router]);
 
   const handleReturnHome = () => {
-    ym(YANDEX_METRIKA_ID, "reachGoal", "purchase_click");
+    ym(106881811, "reachGoal", "purchase_click");
     router.push("/");
   };
 
@@ -57,5 +56,5 @@ export default function ThankYouPage() {
 }
 // eslint-disable-next-line no-unused-vars
 function ym(YANDEX_METRIKA_ID: number, arg1: string, arg2: string) {
-  throw new Error("Function not implemented.");
+  console.log();
 }

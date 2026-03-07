@@ -14,6 +14,8 @@ export interface I_Hero {
       url: string;
     };
     title_color: string;
+    click: "скролл" | "ссылка";
+    link?: string;
   };
   secondTemplate: {
     title: string;

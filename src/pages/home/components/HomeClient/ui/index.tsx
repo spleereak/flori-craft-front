@@ -140,8 +140,14 @@ export function HomeClient({
             firstTemplate={hero_data.firstTemplate}
             secondTemplate={hero_data.secondTemplate}
             onOrderClick={() => {
-              setActiveTab("8 марта");
-              scrollToCategory("8 марта");
+              const { click, link } = hero_data.firstTemplate;
+              if (click === "ссылка") {
+                window.open(link ?? "https://t.me/floricraftlab", "_blank");
+              } else if (click === "скролл") {
+                const firstCategoryName = filteredCatalog[0]?.name ?? "";
+                setActiveTab(firstCategoryName);
+                scrollToCategory(firstCategoryName);
+              }
             }}
           />
         ) : (

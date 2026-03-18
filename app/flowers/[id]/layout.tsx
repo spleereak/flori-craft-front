@@ -11,9 +11,9 @@ import { Header } from "@/src/widgets/header/ui";
 export const metadata: Metadata = {
   title: "FloriCraft",
   icons: {
-    icon: "/icons/logo-shortcut.png",
-    shortcut: "/icons/logo-shortcut.png",
-    apple: "/icons/logo-shortcut.png",
+    icon: "/logo.jpg",
+    shortcut: "/logo.jpg",
+    apple: "/logo.jpg",
   },
 };
 

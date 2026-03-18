@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   title: "FloriCraft",
   description: "Цветочный магазин FloriCraft",
   icons: {
-    icon: "/icons/logo-shortcut.png",
-    shortcut: "/icons/logo-shortcut.png",
-    apple: "/icons/logo-shortcut.png",
+    icon: "/logo.jpg",
+    shortcut: "/logo.jpg",
+    apple: "/logo.jpg",
   },
 };
 

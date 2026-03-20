@@ -61,7 +61,7 @@ export const ImagesBlock = memo(function ImagesBlock({
         height={539}
         priority
         sizes="(max-width: 768px) 100vw, 539px"
-        className="desktop:size-539 desktop:rounded-2xl h-440 w-full object-cover"
+        className="desktop:size-539 desktop:rounded-2xl h-440 w-full desktop:object-cover"
       />
       <div className="desktop:gap-14 desktop:px-0 flex flex-row gap-10 px-16">
         {images.map((image) => (

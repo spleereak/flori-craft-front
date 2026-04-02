@@ -11,11 +11,6 @@ import ClientLayout from "./ClientLayout";
 export const metadata: Metadata = {
   title: "FloriCraft",
   description: "Цветочный магазин FloriCraft",
-  icons: {
-    icon: "/logo.jpg",
-    shortcut: "/logo.jpg",
-    apple: "/logo.jpg",
-  },
 };
 
 export default function MainLayout({

@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import { Bouquet, CategoriesProducts } from "@/src/entities/products/api";
+import { consumeHomeScrollRestore } from "@/src/shared/lib/home-scroll-restore";
 import { Button } from "@/src/shared/ui";
 
 import { usePrice } from "../../FilterPrice/model/index.model";
 import { Hero } from "../../Hero";
 import { I_Hero } from "../../Hero/props";
 import { ProductsList } from "../../ProductsList/ui";
-import { Tabs } from "../../Tabs/ui";
+import { Tabs, type TabsRef } from "../../Tabs/ui";
 
 function getProductPrice(product: Bouquet): number | null {
   if ("variants" in product && product.variants?.length) {
@@ -43,6 +44,20 @@ export function getMinMaxPrices(catalog: CategoriesProducts[]) {
   };
 }
 
+function getCategoryAtViewportCenter(
+  sections: Record<string, HTMLDivElement | null>
+): string | null {
+  const mid = window.innerHeight / 2;
+  for (const [id, el] of Object.entries(sections)) {
+    if (!el) continue;
+    const r = el.getBoundingClientRect();
+    if (r.top <= mid && r.bottom >= mid) {
+      return id;
+    }
+  }
+  return null;
+}
+
 function getMinPrice(product: Bouquet): number | null {
   if ("variants" in product && product.variants?.length) {
     return Math.min(...product.variants.map(v => v.price));
@@ -70,6 +85,33 @@ export function HomeClient({
 
   const [activeTab, setActiveTab] = useState<string>(catalog[0]?.name || "");
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const tabsRef = useRef<TabsRef>(null);
+
+  useLayoutEffect(() => {
+    const result = consumeHomeScrollRestore();
+    if (result.kind === "none") {
+      return;
+    }
+    const top = result.kind === "position" ? result.y : 0;
+    window.scrollTo({ top, left: 0, behavior: "auto" });
+
+    if (result.kind !== "position") {
+      return;
+    }
+
+    const category =
+      result.categoryName ?? getCategoryAtViewportCenter(sectionRefs.current);
+
+    if (!category) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        tabsRef.current?.scrollCategoryTabIntoView(category);
+      });
+    });
+  }, []);
 
   const scrollToCategory = (id: string) => {
     sectionRefs.current[id]?.scrollIntoView({
@@ -159,6 +201,7 @@ export function HomeClient({
           <>
             <h1 className="h1 desktop:pb-50 pb-14">Витрина</h1>
             <Tabs
+              ref={tabsRef}
               categories={filteredCatalog}
               onSelect={scrollToCategory}
               activeTab={effectiveActiveTab}

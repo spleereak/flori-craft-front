@@ -5,9 +5,9 @@ import React from "react";
 import Script from "next/script";
 
 import "@/src/app/styles/globals.css";
-import { Header } from "@/src/widgets/header/ui";
 
 import ClientLayout from "./(main)/ClientLayout";
+import { ConditionalRootMobileHeader } from "./ConditionalRootMobileHeader";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -19,11 +19,6 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "FloriCraft",
   description: "Цветочный магазин FloriCraft",
-  icons: {
-    icon: "/logo.jpg",
-    shortcut: "/logo.jpg",
-    apple: "/logo.jpg",
-  },
 };
 
 export default function RootLayout({
@@ -88,7 +83,7 @@ export default function RootLayout({
           </div>
         </noscript>
         <ClientLayout>
-          <Header className="desktop:hidden" />
+          <ConditionalRootMobileHeader />
           {children}
         </ClientLayout>
       </body>

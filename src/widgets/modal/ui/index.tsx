@@ -9,12 +9,9 @@ import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { TelegramBlackIcon } from "@/src/shared/icons/TelegramBlackIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
 
-// import { useRouter } from "next/navigation";
-// import { cookies } from "@/src/shared/lib/utils/cookies";
-
 const links = [
   {
-    text: "Главная",
+    text: "Каталог",
     link: "/",
   },
   {
@@ -71,17 +68,6 @@ export const Modal = ({
       setIsAnimating(false);
     }
   }, [isOpen]);
-
-  // const router = useRouter();
-
-  // const handleUserClick = () => {
-  //   const userId = cookies.get("user_id");
-  //   if (userId) {
-  //     router.push("/profile");
-  //   } else {
-  //     router.push("/auth");
-  //   }
-  // };
 
   return (
     <>

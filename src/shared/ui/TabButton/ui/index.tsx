@@ -14,6 +14,8 @@ export const TabButton: React.FC<TabButtonProps> = ({
 }) => {
   return (
     <button
+      type="button"
+      data-floricraft-tab={tab}
       className={cn(
         "desktop:p-21 bg-light-grey desktop:rounded-2xl text_p flex cursor-pointer items-center justify-center rounded-md px-20 py-12 transition-all duration-300 ease-in-out",
         active && "bg-brown text-white",

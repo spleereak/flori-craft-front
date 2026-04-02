@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 
 import Link from "next/link";
 
+import { saveHomeScrollPosition } from "@/src/shared/lib/home-scroll-restore";
 import { cn } from "@/src/shared/lib/utils/cn";
 
 import { ProductCard } from "../../ProductCard/ui";
@@ -20,7 +21,11 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
         <h1 className="h1">{category}</h1>
         <div className="desktop:grid-cols-3 desktop:gap-x-135 desktop:gap-y-80 gap-y-18 grid grid-cols-2 gap-x-7">
           {products.map(product => (
-            <Link href={`/flowers/${product.id}`} key={product.id}>
+            <Link
+              href={`/flowers/${product.id}`}
+              key={product.id}
+              onClick={() => saveHomeScrollPosition(category)}
+            >
               <ProductCard
                 id={product.id}
                 image_urls={product.image_urls}

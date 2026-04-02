@@ -8,15 +8,8 @@ import { TIME_SLOTS, useOrderStore } from "../../../../../model/order.store";
 export { TIME_SLOTS };
 
 const MIN_HOURS_BEFORE_DELIVERY = 2;
-const CUTOFF_HOUR_FOR_NEXT_DAY = 21; // 21:00 - время после которого первый слот недоступен
+const CUTOFF_HOUR_FOR_NEXT_DAY = 21;
 
-/**
- * Получает доступные временные слоты для выбранной даты.
- * Если выбран сегодняшний день, фильтрует слоты так, чтобы
- * начало слота было минимум через 2 часа от текущего времени.
- * Если выбран завтрашний день и заказ делается после 21:00,
- * исключает первый слот "10:00 - 12:00".
- */
 export const getAvailableTimeSlots = (
   selectedDate: Date | undefined
 ): string[] => {
@@ -55,9 +48,6 @@ export const getAvailableTimeSlots = (
   return [...TIME_SLOTS];
 };
 
-/**
- * Проверяет, доступен ли выбранный временной слот для указанной даты.
- */
 export const isTimeSlotAvailable = (
   selectedDate: Date | undefined,
   timeSlot: string

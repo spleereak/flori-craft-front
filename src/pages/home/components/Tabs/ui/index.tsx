@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 import { cn } from "@/src/shared/lib/utils/cn";
 import { TabButton } from "@/src/shared/ui/TabButton";
@@ -9,22 +15,55 @@ import { FilterPrice } from "../../FilterPrice/ui";
 import { TabsProps } from "../types";
 
 const DRAG_THRESHOLD_PX = 5;
+const TAB_SCROLL_VIEWPORT_INSET_LEFT_PX = 16;
 
-export const Tabs: React.FC<TabsProps> = ({
-  className,
-  categories,
-  activeTab,
-  onSelect,
-  minPrice,
-  maxPrice,
-  prices,
-  updatePrice,
-  updatePrices,
-}) => {
+export type TabsRef = {
+  // eslint-disable-next-line no-unused-vars
+  scrollCategoryTabIntoView: (categoryName: string) => void;
+};
+
+export const Tabs = forwardRef<TabsRef, TabsProps>(function Tabs(
+  {
+    className,
+    categories,
+    activeTab,
+    onSelect,
+    minPrice,
+    maxPrice,
+    prices,
+    updatePrice,
+    updatePrices,
+  },
+  ref
+) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, scrollLeft: 0 });
   const didDragRef = useRef(false);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      scrollCategoryTabIntoView: (categoryName: string) => {
+        const root = scrollRef.current;
+        if (!root || !categoryName) return;
+        const el = root.querySelector(
+          `[data-floricraft-tab="${CSS.escape(categoryName)}"]`
+        );
+        if (!(el instanceof HTMLElement)) return;
+
+        const tabLeft = el.getBoundingClientRect().left;
+        const delta = tabLeft - TAB_SCROLL_VIEWPORT_INSET_LEFT_PX;
+        const maxScroll = Math.max(0, root.scrollWidth - root.clientWidth);
+        const nextScrollLeft = Math.min(
+          maxScroll,
+          Math.max(0, root.scrollLeft + delta)
+        );
+        root.scrollTo({ left: nextScrollLeft, behavior: "smooth" });
+      },
+    }),
+    []
+  );
 
   const handleClick = (id: string) => {
     if (didDragRef.current) return;
@@ -53,7 +92,7 @@ export const Tabs: React.FC<TabsProps> = ({
     setIsDragging(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isDragging) return;
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUpOrLeave);
@@ -65,7 +104,7 @@ export const Tabs: React.FC<TabsProps> = ({
     };
   }, [isDragging]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
@@ -114,4 +153,6 @@ export const Tabs: React.FC<TabsProps> = ({
       ))}
     </div>
   );
-};
+});
+
+Tabs.displayName = "Tabs";

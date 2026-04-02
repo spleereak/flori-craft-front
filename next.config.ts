@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      // Many crawlers request /favicon.ico; serve the same asset as file-based app/icon.png
+      { source: "/favicon.ico", destination: "/icon.png" },
+    ];
+  },
   images: {
     loader: "default",
     qualities: [75],

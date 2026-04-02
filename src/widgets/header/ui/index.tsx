@@ -10,6 +10,7 @@ import { CartIcon } from "@/src/shared/icons/CartIcon";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { PhoneIcon } from "@/src/shared/icons/PhoneIcon";
 import { TelegramSecondaryIcon } from "@/src/shared/icons/TelegramSecondaryIcon";
+import { clearHomeScrollRestore } from "@/src/shared/lib/home-scroll-restore";
 import { cn } from "@/src/shared/lib/utils/cn";
 
 import { Modal } from "../../modal";
@@ -46,6 +47,7 @@ export const Header = ({ className }: { className?: string }) => {
         <Link
           href="/"
           className="desktop:left-1/2 desktop:-translate-x-1/2 absolute left-0"
+          onClick={() => clearHomeScrollRestore()}
         >
           <LogoIcon />
         </Link>

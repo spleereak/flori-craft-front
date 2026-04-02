@@ -40,17 +40,14 @@ const isDisabledDate = (date: Date, today: Date, maxDate: Date): boolean => {
   const day = date.getDate();
   const year = date.getFullYear();
 
-  // 13 и 14 февраля
   if (month === 1 && (day === 13 || day === 14)) return true;
 
-  // 7 и 8 марта: доступны только если заказ до конца дня 6 марта
   if (month === 2 && (day === 7 || day === 8)) {
     const march7SameYear = new Date(year, 2, 7);
     if (today >= march7SameYear) return true;
     return false;
   }
 
-  // Последнее воскресенье ноября и день перед ним (суббота)
   const lastSundayNov = getLastSundayOfNovember(year);
   if (
     month === 10 &&

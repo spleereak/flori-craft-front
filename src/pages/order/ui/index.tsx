@@ -157,7 +157,6 @@ export default function OrderPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasAccess, setHasAccess] = useState(false);
 
-  // Проверка доступа к странице заказа
   useEffect(() => {
     const canAccess = sessionStorage.getItem("canAccessOrder");
     if (!canAccess) {
@@ -201,14 +200,12 @@ export default function OrderPage() {
   const validateOrder = (): OrderErrors => {
     const validationErrors: OrderErrors = {};
 
-    // Валидация корзины
     if (items.length === 0) {
       validationErrors.cart = "Корзина пуста";
     }
 
     const isPickup = deliveryType === "pickup";
 
-    // Валидация доставки / самовывоза
     if (!isPickup) {
       if (!delivery.fullAddress.trim()) {
         validationErrors.address = "Укажите адрес доставки";
@@ -231,7 +228,6 @@ export default function OrderPage() {
         "Выбранное время недоступно. Минимум 2 часа до доставки";
     }
 
-    // Валидация получателя (обязательно: имя, телефон) — и при доставке, и при самовывозе
     if (!recipient.name.trim()) {
       validationErrors.recipientName = isPickup
         ? "Укажите имя"
@@ -244,7 +240,6 @@ export default function OrderPage() {
         : "Укажите корректный телефон получателя";
     }
 
-    // Валидация отправителя (обязательно если не авторизован, только при доставке)
     if (!isAuth && !isPickup) {
       if (!sender.name.trim()) {
         validationErrors.senderName = "Укажите имя отправителя";
@@ -255,7 +250,6 @@ export default function OrderPage() {
       }
     }
 
-    // Валидация согласия
     if (!checked) {
       validationErrors.checkbox = "Подтвердите согласие на обработку данных";
     }
@@ -357,7 +351,6 @@ export default function OrderPage() {
     }
   };
 
-  // Показываем лоадер пока проверяется доступ или загружаются данные
   if (!isHydrated || !hasAccess) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">

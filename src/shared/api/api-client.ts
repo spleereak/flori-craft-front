@@ -27,10 +27,10 @@ async function apiClient<TResponse, TBody = unknown>(
     revalidate,
   } = options;
 
-  // Для GET запросов по умолчанию кэшируем на 60 секунд
   const fetchCache = cache ?? (method === "GET" ? undefined : "no-store");
   const fetchNext =
-    next ?? (method === "GET" && !cache ? { revalidate: revalidate ?? 60 } : undefined);
+    next ??
+    (method === "GET" && !cache ? { revalidate: revalidate ?? 60 } : undefined);
 
   const fullUrl = buildUrl(`${BASE_URL}${url}`, params);
 

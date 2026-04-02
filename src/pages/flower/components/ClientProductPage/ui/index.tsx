@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { Bouquet } from "@/src/entities/products/api";
+import { markRestoreHomeScroll } from "@/src/shared/lib/home-scroll-restore";
 import { formatPrice } from "@/src/shared/lib/utils/helpers";
 import { Button } from "@/src/shared/ui";
 import { useToastStore } from "@/src/shared/ui/Toast";
@@ -35,7 +36,7 @@ ArrowLeftIcon.displayName = "ArrowLeftIcon";
 
 const CloseIcon = memo(() => (
   <svg
-    className="desktop:size-20 size-12"
+    className="size-16"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -107,7 +108,9 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
     <div className="desktop:flex-row desktop:gap-184 desktop:flex desktop:items-start w-full">
       <Link
         href="/"
+        scroll={false}
         className="desktop:flex hidden max-h-max flex-row items-center gap-12"
+        onClick={() => markRestoreHomeScroll()}
       >
         <ArrowLeftIcon />
         <p className="text_p max-h-max">На главную</p>
@@ -115,7 +118,9 @@ export default function ClientProductPage({ product }: { product: Bouquet }) {
       <div className="desktop:max-w-1054 desktop:flex-row desktop:gap-24 relative flex w-full flex-col">
         <Link
           href="/"
-          className="desktop:hidden fixed left-16 top-16 flex size-28 items-center justify-center rounded-full bg-white transition-all duration-300 active:opacity-80"
+          scroll={false}
+          className="desktop:hidden z-100 fixed left-24 top-24 flex size-28 items-center justify-center rounded-full bg-white transition-all duration-300 active:opacity-80"
+          onClick={() => markRestoreHomeScroll()}
         >
           <CloseIcon />
         </Link>

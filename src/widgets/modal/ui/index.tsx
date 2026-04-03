@@ -15,14 +15,6 @@ const links = [
     link: "/",
   },
   {
-    text: "Контакты",
-    link: "",
-  },
-  {
-    text: "Войти в аккаунт",
-    link: "/auth",
-  },
-  {
     text: "Возврат",
     link: "/money-back",
   },
@@ -41,6 +33,14 @@ const links = [
   {
     text: "Политика конфиденциальности",
     link: "/policy",
+  },
+  {
+    text: "Войти в аккаунт",
+    link: "/auth",
+  },
+  {
+    text: "Контакты",
+    link: "",
   },
 ];
 

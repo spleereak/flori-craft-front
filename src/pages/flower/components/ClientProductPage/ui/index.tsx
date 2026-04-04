@@ -14,7 +14,7 @@ import { formatPrice } from "@/src/shared/lib/utils/helpers";
 import { Button } from "@/src/shared/ui";
 import { useToastStore } from "@/src/shared/ui/Toast";
 
-import { ImagesBlock } from "../../ImagesBlock/ui";
+import { ImagesBlock } from "../../ImagesBlock/ui/ImagesBlock";
 import { SizeBlock } from "../../SizeBlock/ui";
 
 const ArrowLeftIcon = memo(() => (

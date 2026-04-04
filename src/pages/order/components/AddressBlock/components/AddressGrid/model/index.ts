@@ -7,8 +7,30 @@ import { TIME_SLOTS, useOrderStore } from "../../../../../model/order.store";
 
 export { TIME_SLOTS };
 
-const MIN_HOURS_BEFORE_DELIVERY = 2;
 const CUTOFF_HOUR_FOR_NEXT_DAY = 21;
+
+/** Начало интервала вида «10:00 - 12:00» в локальной дате выбранного дня */
+function getSlotStartOnSelectedDay(
+  slot: string,
+  selectedDate: Date
+): Date | null {
+  const parts = slot.split(" - ");
+  if (parts.length < 2) return null;
+  const [sh, sm] = parts[0]!
+    .trim()
+    .split(":")
+    .map(s => parseInt(s, 10));
+  if (Number.isNaN(sh) || Number.isNaN(sm)) return null;
+  return new Date(
+    selectedDate.getFullYear(),
+    selectedDate.getMonth(),
+    selectedDate.getDate(),
+    sh,
+    sm,
+    0,
+    0
+  );
+}
 
 export const getAvailableTimeSlots = (
   selectedDate: Date | undefined
@@ -30,18 +52,10 @@ export const getAvailableTimeSlots = (
   }
 
   if (isToday(selectedDate)) {
-    const minDeliveryTime = new Date(
-      now.getTime() + MIN_HOURS_BEFORE_DELIVERY * 60 * 60 * 1000
-    );
-    const minHour = minDeliveryTime.getHours();
-    const minMinutes = minDeliveryTime.getMinutes();
-
     return TIME_SLOTS.filter(slot => {
-      const slotStartHour = parseInt(slot.split(":")[0], 10);
-      return (
-        slotStartHour > minHour ||
-        (slotStartHour === minHour && minMinutes === 0)
-      );
+      const slotStart = getSlotStartOnSelectedDay(slot, selectedDate);
+      if (!slotStart) return true;
+      return slotStart > now;
     });
   }
 

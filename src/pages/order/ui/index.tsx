@@ -224,8 +224,7 @@ export default function OrderPage() {
       delivery.date &&
       !isTimeSlotAvailable(delivery.date, delivery.time)
     ) {
-      validationErrors.time =
-        "Выбранное время недоступно. Минимум 2 часа до доставки";
+      validationErrors.time = "Выбранное время недоступно для выбранной даты";
     }
 
     if (!recipient.name.trim()) {

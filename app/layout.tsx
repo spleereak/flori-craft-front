@@ -19,6 +19,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "FloriCraft",
   description: "Цветочный магазин FloriCraft",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+    shortcut: "/icon.png",
+  },
 };
 
 export default function RootLayout({

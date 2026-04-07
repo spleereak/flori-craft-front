@@ -11,7 +11,6 @@ import React, {
 import { cn } from "@/src/shared/lib/utils/cn";
 import { TabButton } from "@/src/shared/ui/TabButton";
 
-import { FilterPrice } from "../../FilterPrice/ui";
 import { TabsProps } from "../types";
 
 const DRAG_THRESHOLD_PX = 5;
@@ -23,17 +22,7 @@ export type TabsRef = {
 };
 
 export const Tabs = forwardRef<TabsRef, TabsProps>(function Tabs(
-  {
-    className,
-    categories,
-    activeTab,
-    onSelect,
-    minPrice,
-    maxPrice,
-    prices,
-    updatePrice,
-    updatePrices,
-  },
+  { className, categories, activeTab, onSelect },
   ref
 ) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -136,13 +125,6 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(function Tabs(
       onClickCapture={onCaptureClick}
       style={{ scrollBehavior: isDragging ? "auto" : undefined }}
     >
-      <FilterPrice
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        prices={prices}
-        updatePrice={updatePrice}
-        updatePrices={updatePrices}
-      />
       {categories.map(category => (
         <TabButton
           key={category.name}

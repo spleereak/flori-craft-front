@@ -32,10 +32,14 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
     return [expressDelivery];
   }
 
-  const hasPriority = specifications.some(s => priorityNames.includes(s.name));
-  if (!hasPriority) {
-    return [expressDelivery, ...specifications];
+  if (specifications.length === 1) {
+    return [specifications[0], expressDelivery];
   }
 
-  return [specifications[0], expressDelivery, ...specifications.slice(1)];
+  return [
+    specifications[0],
+    specifications[1],
+    expressDelivery,
+    ...specifications.slice(2),
+  ];
 };

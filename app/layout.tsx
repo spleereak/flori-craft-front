@@ -37,6 +37,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <Script id="botfaqtor-ab-id" strategy="beforeInteractive">
+          {`window._ab_id_=170255;`}
+        </Script>
+        <Script
+          id="botfaqtor-one"
+          src="https://cdn.botfaqtor.ru/one.js"
+          strategy="beforeInteractive"
+        />
         <Script
           id="yandex-metrika"
           strategy="afterInteractive"

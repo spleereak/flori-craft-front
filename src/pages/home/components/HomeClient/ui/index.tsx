@@ -34,6 +34,8 @@ export function HomeClient({
   const [activeTab, setActiveTab] = useState<string>(catalog[0]?.name || "");
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const tabsRef = useRef<TabsRef>(null);
+  const activeTabLockRef = useRef<string | null>(null);
+  const activeTabLockTimeoutRef = useRef<number | null>(null);
 
   useLayoutEffect(() => {
     const result = consumeHomeScrollRestore();
@@ -62,10 +64,34 @@ export function HomeClient({
   }, []);
 
   const scrollToCategory = (id: string) => {
-    sectionRefs.current[id]?.scrollIntoView({
+    const target = sectionRefs.current[id];
+    if (!target) return;
+
+    const firstCategoryName = filteredCatalog[0]?.name;
+    if (id === firstCategoryName) {
+      const y = window.scrollY + target.getBoundingClientRect().top - 110;
+      window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+      return;
+    }
+
+    target.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
+  };
+
+  const handleTabSelect = (id: string) => {
+    activeTabLockRef.current = id;
+    if (activeTabLockTimeoutRef.current !== null) {
+      window.clearTimeout(activeTabLockTimeoutRef.current);
+    }
+    activeTabLockTimeoutRef.current = window.setTimeout(() => {
+      activeTabLockRef.current = null;
+      activeTabLockTimeoutRef.current = null;
+    }, 900);
+
+    setActiveTab(id);
+    scrollToCategory(id);
   };
 
   useEffect(() => {
@@ -76,6 +102,19 @@ export function HomeClient({
 
           const id = entry.target.getAttribute("data-id");
           if (!id) return;
+
+          if (activeTabLockRef.current && activeTabLockRef.current !== id) {
+            return;
+          }
+
+          if (activeTabLockRef.current === id) {
+            activeTabLockRef.current = null;
+            if (activeTabLockTimeoutRef.current !== null) {
+              window.clearTimeout(activeTabLockTimeoutRef.current);
+              activeTabLockTimeoutRef.current = null;
+            }
+          }
+
           setActiveTab(id);
         });
       },
@@ -92,9 +131,15 @@ export function HomeClient({
       observer.observe(el);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (activeTabLockTimeoutRef.current !== null) {
+        window.clearTimeout(activeTabLockTimeoutRef.current);
+      }
+    };
   }, []);
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const filteredCatalog = useMemo(
     () => catalog.filter(category => category.products.length > 0),
     [catalog]
@@ -135,14 +180,14 @@ export function HomeClient({
             <Tabs
               ref={tabsRef}
               categories={filteredCatalog}
-              onSelect={scrollToCategory}
+              onSelect={handleTabSelect}
               activeTab={effectiveActiveTab}
             />
           </>
         )}
         <div className="gap-90 desktop:pt-50 pt-13 flex w-full flex-col">
           {filteredCatalog.length > 0 ? (
-            filteredCatalog.map(category => (
+            filteredCatalog.map((category, index) => (
               <ProductsList
                 key={category.name}
                 ref={el => {
@@ -150,6 +195,7 @@ export function HomeClient({
                 }}
                 category={category.name}
                 products={category.products}
+                isFirstCategory={index === 0}
                 className="desktop:px-90 px-16"
               />
             ))

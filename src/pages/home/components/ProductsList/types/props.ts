@@ -4,4 +4,5 @@ export interface ProductsListProps {
   className?: string;
   category: string;
   products: Bouquet[];
+  isFirstCategory?: boolean;
 }

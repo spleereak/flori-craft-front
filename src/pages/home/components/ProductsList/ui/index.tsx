@@ -9,7 +9,7 @@ import { ProductCard } from "../../ProductCard/ui";
 import { ProductsListProps } from "../types";
 
 export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
-  ({ className, category, products }, ref) => {
+  ({ className, category, products, isFirstCategory = false }, ref) => {
     return (
       <div
         className={cn(
@@ -17,14 +17,23 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
           className
         )}
         ref={ref}
+        data-first-category={isFirstCategory ? "true" : undefined}
       >
-        <h1 className="h1">{category}</h1>
+        <h1
+          className="h1"
+          data-first-category-title={isFirstCategory ? "true" : undefined}
+        >
+          {category}
+        </h1>
         <div className="desktop:grid-cols-3 desktop:gap-x-135 desktop:gap-y-80 gap-y-18 grid grid-cols-2 gap-x-7">
-          {products.map(product => (
+          {products.map((product, index) => (
             <Link
               href={`/flowers/${product.id}`}
               key={product.id}
               onClick={() => saveHomeScrollPosition(category)}
+              data-first-product-card={
+                isFirstCategory && index === 0 ? "true" : undefined
+              }
             >
               <ProductCard
                 id={product.id}

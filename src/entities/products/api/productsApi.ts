@@ -25,7 +25,9 @@ type BouquetWithVariants = BouquetBase & {
 export type Bouquet = BouquetWithPrice | BouquetWithVariants;
 
 export interface CategoriesProducts {
+  id: string;
   name: string;
+  description?: string;
   products: Bouquet[];
 }
 

@@ -215,7 +215,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(function Tabs(
   return (
     <div
       className={cn(
-        "desktop:top-[142px] desktop:z-30 desktop:sticky desktop:self-stretch relative w-full",
+        "desktop:top-142 desktop:z-30 desktop:sticky desktop:self-stretch relative w-full",
         className
       )}
     >

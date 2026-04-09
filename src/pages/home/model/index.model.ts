@@ -1,10 +1,17 @@
+import { categoryApi } from "@/src/entities/category/api";
 import { CategoriesProducts, productsApi } from "@/src/entities/products/api";
 
 export const fetchData = async (): Promise<CategoriesProducts[]> => {
-  const [bouquets, specificationsResponse] = await Promise.all([
-    productsApi.getAllBouquets(),
-    productsApi.getCategories(),
-  ]);
+  const [bouquets, specificationsResponse, editableCategories] =
+    await Promise.all([
+      productsApi.getAllBouquets(),
+      productsApi.getCategories(),
+      categoryApi.getEditableCategories(),
+    ]);
+
+  const editableCategoriesById = new Map(
+    editableCategories.map(category => [category.id, category])
+  );
 
   const priorityNames = [
     "8 марта",
@@ -14,17 +21,30 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
     "14 февраля",
   ];
 
-  const specifications = [...specificationsResponse.categories].sort((a, b) => {
-    const indexA = priorityNames.indexOf(a.name);
-    const indexB = priorityNames.indexOf(b.name);
-    if (indexA === -1 && indexB === -1) return 0;
-    if (indexA === -1) return 1;
-    if (indexB === -1) return -1;
-    return indexA - indexB;
-  });
+  const specifications = specificationsResponse.categories
+    .map(category => {
+      const editableCategory = editableCategoriesById.get(category.id);
+
+      return {
+        ...category,
+        name: editableCategory?.name ?? category.name,
+        description: editableCategory?.description ?? "",
+      };
+    })
+    .sort((a, b) => {
+      const indexA = priorityNames.indexOf(a.name);
+      const indexB = priorityNames.indexOf(b.name);
+
+      if (indexA === -1 && indexB === -1) return 0;
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+      return indexA - indexB;
+    });
 
   const expressDelivery = {
     name: "экспресс-доставка",
+    id: "express-delivery",
+    description: "",
     products: bouquets,
   };
 

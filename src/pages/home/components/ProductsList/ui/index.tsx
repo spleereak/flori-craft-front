@@ -16,7 +16,7 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
     return (
       <div
         className={cn(
-          "scroll-mt-180 desktop:scroll-mt-300 flex w-full flex-col",
+          "scroll-mt-180 desktop:scroll-mt-300 desktop:gap-30 flex w-full flex-col gap-20",
           className
         )}
         ref={ref}
@@ -24,7 +24,7 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
       >
         <div>
           <h1
-            className={cn("h1", !description && "mb-30")}
+            className="h1"
             data-first-category-title={isFirstCategory ? "true" : undefined}
           >
             {category}

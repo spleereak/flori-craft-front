@@ -195,6 +195,22 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(function Tabs(
     });
   }, [isStickyRowVisibleOnMobile, scrollTabIntoView]);
 
+  const prevActiveTabRef = useRef(activeTab);
+  useEffect(() => {
+    const changed = prevActiveTabRef.current !== activeTab;
+    prevActiveTabRef.current = activeTab;
+
+    if (!changed) return;
+    if (window.innerWidth >= 1280) return;
+    if (!isStickyRowVisibleOnMobile) return;
+
+    scrollTabIntoView(
+      mobileStickyRowRef.current,
+      activeTab,
+      MOBILE_ACTIVE_TAB_INSET_LEFT_PX
+    );
+  }, [activeTab, isStickyRowVisibleOnMobile, scrollTabIntoView]);
+
   const onCaptureClick = (e: React.MouseEvent) => {
     if (didDragRef.current) {
       e.preventDefault();

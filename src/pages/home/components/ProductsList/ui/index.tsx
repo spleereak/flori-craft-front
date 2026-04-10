@@ -24,7 +24,7 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
       >
         <div>
           <h1
-            className="h1"
+            className={cn("h1", !description && "mb-30")}
             data-first-category-title={isFirstCategory ? "true" : undefined}
           >
             {category}

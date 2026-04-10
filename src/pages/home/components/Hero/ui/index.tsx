@@ -54,7 +54,7 @@ export const Hero = ({
           </h1>
           <Button
             appearance={typeofButton}
-            className="desktop:w-257 desktop:h-65 w-100 h-34 rounded-[5.625rem]! desktop:text-[1.5rem]! text-[0.625rem]! border-white text-white"
+            className="desktop:px-70 desktop:py-16 rounded-[5.625rem]! desktop:text-[1.5rem]! text-[0.625rem]! border-white px-24 py-11 text-white"
             onClick={onOrderClick}
           >
             ЗАКАЗАТЬ

@@ -6,6 +6,7 @@ export interface EditableCategory {
   id: string;
   name: string;
   description: string;
+  position: number;
 }
 
 export interface SyncableCategory {

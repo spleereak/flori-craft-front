@@ -9,22 +9,32 @@ import { ProductCard } from "../../ProductCard/ui";
 import { ProductsListProps } from "../types";
 
 export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
-  ({ className, category, products, isFirstCategory = false }, ref) => {
+  (
+    { className, category, description, products, isFirstCategory = false },
+    ref
+  ) => {
     return (
       <div
         className={cn(
-          "gap-30 scroll-mt-180 desktop:scroll-mt-300 flex w-full flex-col",
+          "scroll-mt-180 desktop:scroll-mt-300 flex w-full flex-col",
           className
         )}
         ref={ref}
         data-first-category={isFirstCategory ? "true" : undefined}
       >
-        <h1
-          className="h1"
-          data-first-category-title={isFirstCategory ? "true" : undefined}
-        >
-          {category}
-        </h1>
+        <div>
+          <h1
+            className="h1"
+            data-first-category-title={isFirstCategory ? "true" : undefined}
+          >
+            {category}
+          </h1>
+          {description && (
+            <p className="desktop:mb-30 text-grey-for-text caption desktop:max-w-625 mb-20">
+              {description}
+            </p>
+          )}
+        </div>
         <div className="desktop:grid-cols-3 desktop:gap-x-135 desktop:gap-y-80 gap-y-18 grid grid-cols-2 gap-x-7">
           {products.map((product, index) => (
             <Link

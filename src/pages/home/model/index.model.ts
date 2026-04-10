@@ -9,9 +9,18 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
       categoryApi.getEditableCategories(),
     ]);
 
+  const expressDelivery: CategoriesProducts = {
+    id: "express-delivery",
+    name: "экспресс-доставка",
+    description: "",
+    products: bouquets,
+  };
+
+  const allCategories = [...specificationsResponse.categories, expressDelivery];
+
   categoryApi
     .syncCategories(
-      specificationsResponse.categories.map(cat => ({
+      allCategories.map(cat => ({
         id: cat.id,
         name: cat.name,
         description: cat.description ?? "",
@@ -23,53 +32,16 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
     editableCategories.map(category => [category.id, category])
   );
 
-  const priorityNames = [
-    "8 марта",
-    "1 сентября",
-    "День мамы",
-    "Новый год",
-    "14 февраля",
-  ];
-
-  const specifications = specificationsResponse.categories
+  return allCategories
     .map(category => {
-      const editableCategory = editableCategoriesById.get(category.id);
+      const editable = editableCategoriesById.get(category.id);
 
       return {
         ...category,
-        name: editableCategory?.name ?? category.name,
-        description: editableCategory?.description ?? "",
+        name: editable?.name ?? category.name,
+        description: editable?.description ?? "",
+        position: editable?.position ?? Number.MAX_SAFE_INTEGER,
       };
     })
-    .sort((a, b) => {
-      const indexA = priorityNames.indexOf(a.name);
-      const indexB = priorityNames.indexOf(b.name);
-
-      if (indexA === -1 && indexB === -1) return 0;
-      if (indexA === -1) return 1;
-      if (indexB === -1) return -1;
-      return indexA - indexB;
-    });
-
-  const expressDelivery = {
-    name: "экспресс-доставка",
-    id: "express-delivery",
-    description: "",
-    products: bouquets,
-  };
-
-  if (specifications.length === 0) {
-    return [expressDelivery];
-  }
-
-  if (specifications.length === 1) {
-    return [specifications[0], expressDelivery];
-  }
-
-  return [
-    specifications[0],
-    specifications[1],
-    expressDelivery,
-    ...specifications.slice(2),
-  ];
+    .sort((a, b) => a.position - b.position);
 };

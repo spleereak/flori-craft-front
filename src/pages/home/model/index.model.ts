@@ -9,6 +9,16 @@ export const fetchData = async (): Promise<CategoriesProducts[]> => {
       categoryApi.getEditableCategories(),
     ]);
 
+  categoryApi
+    .syncCategories(
+      specificationsResponse.categories.map(cat => ({
+        id: cat.id,
+        name: cat.name,
+        description: cat.description ?? "",
+      }))
+    )
+    .catch(() => {});
+
   const editableCategoriesById = new Map(
     editableCategories.map(category => [category.id, category])
   );

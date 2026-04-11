@@ -5,6 +5,7 @@ export interface I_Hero {
   onOrderClick?: () => void;
   activeTemplate: "firstTemplate" | "secondTemplate";
   firstTemplate: {
+    buttonText: string;
     title_first: string;
     typeofButton: ButtonAppearance | undefined;
     image_first: {

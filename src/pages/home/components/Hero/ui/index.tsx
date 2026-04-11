@@ -21,6 +21,7 @@ export const Hero = ({
     image_first,
     image_mobile_first,
     title_color,
+    buttonText,
   } = firstTemplate;
 
   const { bg_color, text_color, color, title, text, mobile_image, image } =
@@ -57,7 +58,7 @@ export const Hero = ({
             className="desktop:h-auto desktop:w-auto rounded-[5.625rem]! desktop:px-70 desktop:py-16 desktop:text-[1.5rem]! text-[0.625rem]! h-auto w-auto border-white px-24 py-11 text-white"
             onClick={onOrderClick}
           >
-            ЗАКАЗАТЬ
+            {buttonText}
           </Button>
         </div>
       </div>

@@ -22,7 +22,7 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
         ref={ref}
         data-first-category={isFirstCategory ? "true" : undefined}
       >
-        <div>
+        <div className="flex flex-col gap-7">
           <h1
             className="h1"
             data-first-category-title={isFirstCategory ? "true" : undefined}

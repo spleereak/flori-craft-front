@@ -72,7 +72,7 @@ export const Header = ({ className }: { className?: string }) => {
           <a href="tel:+79013320034">
             <PhoneIcon />
           </a>
-          <a href="https://t.me/floricraftlab">
+          <a href="https://t.me/floricraftlab" className="hidden desktop:block">
             <TelegramSecondaryIcon />
           </a>
           <a href="https://max.ru/89013320034" className="hidden desktop:block">

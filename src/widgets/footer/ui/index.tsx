@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { TelegramIcon } from "@/src/shared/icons/TelegramIcon";
+import { MaxIcon } from "@/src/shared/icons/MaxIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
 
 export const Footer = ({ className }: { className?: string }) => {

@@ -53,7 +53,7 @@ export const Footer = ({ className }: { className?: string }) => {
               <a href="tel:+79013320034" className="caption">
                 +7 (901) 332-00-34
               </a>
-              <div className="gap-22 desktop:gap-30 flex flex-row">
+              <div className="gap-22 desktop:gap-30 flex flex-row items-center">
                 <a href="https://t.me/floricraftlab">
                   <TelegramIcon />
                 </a>

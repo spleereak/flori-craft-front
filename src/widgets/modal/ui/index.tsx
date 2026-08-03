@@ -55,7 +55,7 @@ export const Modal = ({
   const [isAnimating, setIsAnimating] = useState(false);
   const [contactsHovered, setContactsHovered] = useState(false);
   const [contactsClicked, setContactsClicked] = useState(false);
-  const contactsExpanded = contactsHovered || contactsClicked;
+  const contactsExpanded = true
 
   useEffect(() => {
     if (isOpen) {

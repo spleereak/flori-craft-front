@@ -75,7 +75,7 @@ export const Header = ({ className }: { className?: string }) => {
           <a href="https://t.me/floricraftlab">
             <TelegramSecondaryIcon />
           </a>
-          <a href="https://max.ru/89013320034">
+          <a href="https://max.ru/89013320034" className="hidden desktop:block">
             <MaxSecondaryIcon />
           </a>
           <div onClick={() => setIsOpen(true)} className="cursor-pointer">

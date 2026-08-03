@@ -14,6 +14,7 @@ import { clearHomeScrollRestore } from "@/src/shared/lib/home-scroll-restore";
 import { cn } from "@/src/shared/lib/utils/cn";
 
 import { Modal } from "../../modal";
+import { MaxSecondaryIcon } from "@/src/shared/icons/MaxSecondaryIcon";
 
 export const Header = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,6 +74,9 @@ export const Header = ({ className }: { className?: string }) => {
           </a>
           <a href="https://t.me/floricraftlab">
             <TelegramSecondaryIcon />
+          </a>
+          <a href="https://max.ru/89013320034">
+            <MaxSecondaryIcon />
           </a>
           <div onClick={() => setIsOpen(true)} className="cursor-pointer">
             <BurgerIcon />

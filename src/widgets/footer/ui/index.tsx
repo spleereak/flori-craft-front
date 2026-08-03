@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { TelegramIcon } from "@/src/shared/icons/TelegramIcon";
-import { MaxIcon } from "@/src/shared/icons/MaxIcon";
+import { WMaxIcon } from "@/src/shared/icons/WMaxIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
 
 export const Footer = ({ className }: { className?: string }) => {
@@ -58,7 +58,7 @@ export const Footer = ({ className }: { className?: string }) => {
                   <TelegramIcon />
                 </a>
                 <a href="https://max.ru/89013320034">
-                  <MaxIcon />
+                  <WMaxIcon />
                 </a>
               </div>
             </div>

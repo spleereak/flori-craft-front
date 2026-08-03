@@ -7,6 +7,7 @@ import Link from "next/link";
 import { CloseIcon } from "@/src/shared/icons/CloseIcon";
 import { LogoIcon } from "@/src/shared/icons/LogoIcon";
 import { TelegramBlackIcon } from "@/src/shared/icons/TelegramBlackIcon";
+import { MaxIcon } from "@/src/shared/icons/MaxIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
 
 const links = [
@@ -159,6 +160,9 @@ export const Modal = ({
                       >
                         <a href="tel:+79013320034">
                           <p className="text_p pl-15">+7(901)332-00-34</p>
+                        </a>
+                        <a href="https://max.ru/89013320034">
+                          <MaxIcon />
                         </a>
                         <a href="https://t.me/floricraftlab">
                           <TelegramBlackIcon />

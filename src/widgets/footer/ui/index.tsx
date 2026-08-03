@@ -56,6 +56,9 @@ export const Footer = ({ className }: { className?: string }) => {
                 <a href="https://t.me/floricraftlab">
                   <TelegramIcon />
                 </a>
+                <a href="https://max.ru/89013320034">
+                  <MaxIcon />
+                </a>
               </div>
             </div>
           </div>

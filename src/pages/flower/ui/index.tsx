@@ -4,9 +4,6 @@ import { productsApi } from "@/src/entities/products/api";
 
 import ClientProductPage from "../components/ClientProductPage/ui";
 
-export const dynamicParams = true;
-export const revalidate = 60;
-
 function ProductSkeleton() {
   return (
     <div className="desktop:flex-row desktop:gap-184 desktop:flex desktop:items-start w-full animate-pulse">

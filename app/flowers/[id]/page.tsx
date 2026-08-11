@@ -1,6 +1,1 @@
-export {
-  ProductPage as default,
-  dynamicParams,
-  generateStaticParams,
-  revalidate,
-} from "@/src/pages/flower";
+export { ProductPage as default, generateStaticParams } from "@/src/pages/flower";

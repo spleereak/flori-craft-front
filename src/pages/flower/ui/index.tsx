@@ -4,7 +4,8 @@ import { productsApi } from "@/src/entities/products/api";
 
 import ClientProductPage from "../components/ClientProductPage/ui";
 
-export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+export const revalidate = 60;
 
 function ProductSkeleton() {
   return (
@@ -21,10 +22,15 @@ function ProductSkeleton() {
 }
 
 export async function generateStaticParams() {
-  const bouquets = await productsApi.getAllBouquets();
-  return bouquets.slice(0, 20).map(bouquet => ({
-    id: bouquet.id,
-  }));
+  try {
+    const bouquets = await productsApi.getAllBouquets();
+    return bouquets.slice(0, 20).map(bouquet => ({
+      id: bouquet.id,
+    }));
+  } catch {
+    console.warn("Backend unavailable during build, skipping pre-rendering");
+    return [];
+  }
 }
 
 export default async function ProductPage({

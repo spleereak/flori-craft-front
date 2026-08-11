@@ -1,1 +1,6 @@
-export { default as ProductPage, generateStaticParams } from "./ui";
+export {
+  default as ProductPage,
+  dynamicParams,
+  generateStaticParams,
+  revalidate,
+} from "./ui";

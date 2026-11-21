@@ -1,17 +1,15 @@
 "use client";
 
-import {
-  addYears,
-  format,
-  isSunday,
-  lastDayOfMonth,
-  previousSunday,
-  startOfDay,
-} from "date-fns";
+import { addYears, format, startOfDay } from "date-fns";
 import { ru } from "date-fns/locale";
 import { IMaskInput } from "react-imask";
 
 import { FormInput } from "@/src/pages/auth/components/Form/components";
+import {
+  DateRestrictions,
+  isOrderDateDisabled,
+  MOTHERS_DAY_DATE_HINT,
+} from "@/src/pages/order/lib/deliveryDateRules";
 import { Calendar } from "@/src/shared/components/ui/calendar";
 import {
   Popover,
@@ -28,43 +26,9 @@ import { useAddressGrid } from "../../AddressGrid/model";
 const inputStyles =
   "desktop:rounded-2xl caption py-13 desktop:py-20 desktop:px-22 ring-none w-full rounded-md bg-light-grey px-16 transition-all duration-300 ease-in-out focus:border-2 focus:border-black focus:outline-none";
 
-const getLastSundayOfNovember = (year: number): Date => {
-  const lastDayOfNov = lastDayOfMonth(new Date(year, 10));
-  if (isSunday(lastDayOfNov)) {
-    return lastDayOfNov;
-  }
-  return previousSunday(lastDayOfNov);
-};
-
-const isDisabledDate = (date: Date, today: Date, maxDate: Date): boolean => {
-  if (date < today || date > maxDate) return true;
-  const month = date.getMonth();
-  const day = date.getDate();
-  const year = date.getFullYear();
-  if (month === 1 && (day === 13 || day === 14)) return true;
-  if (month === 2 && (day === 7 || day === 8)) {
-    const march7SameYear = new Date(year, 2, 7);
-    if (today >= march7SameYear) return true;
-    return false;
-  }
-  const lastSundayNov = getLastSundayOfNovember(year);
-  if (
-    month === 10 &&
-    day === lastSundayNov.getDate() &&
-    year === lastSundayNov.getFullYear()
-  )
-    return true;
-  if (
-    month === 10 &&
-    day === lastSundayNov.getDate() - 1 &&
-    year === lastSundayNov.getFullYear()
-  )
-    return true;
-  return false;
-};
-
 interface PickupFieldsProps {
   className?: string;
+  dateRestrictions: DateRestrictions;
   errors?: {
     name?: string;
     phone?: string;
@@ -77,6 +41,7 @@ interface PickupFieldsProps {
 
 export const PickupFields = ({
   className,
+  dateRestrictions,
   errors,
   onFieldChange,
 }: PickupFieldsProps) => {
@@ -158,7 +123,15 @@ export const PickupFields = ({
                 handleDateSelect(date);
                 onFieldChange?.("date");
               }}
-              disabled={date => isDisabledDate(date, today, maxDate)}
+              disabled={date =>
+                dateRestrictions.status !== "ready" ||
+                isOrderDateDisabled(
+                  date,
+                  today,
+                  maxDate,
+                  dateRestrictions.hasMothersDayProducts
+                )
+              }
               defaultMonth={today}
               formatters={{
                 formatCaption: date => {
@@ -169,6 +142,18 @@ export const PickupFields = ({
             />
           </PopoverContent>
         </Popover>
+        {dateRestrictions.status === "ready" &&
+          dateRestrictions.hasMothersDayProducts && (
+            <p className="caption text-grey-for-text">{MOTHERS_DAY_DATE_HINT}</p>
+          )}
+        {dateRestrictions.status === "loading" && (
+          <p className="caption text-grey-for-text">Проверяем доступные даты...</p>
+        )}
+        {dateRestrictions.status === "error" && (
+          <p className="caption text-red-500">
+            Не удалось проверить доступные даты. Обновите страницу.
+          </p>
+        )}
         {errors?.date && <p className="caption text-red-500">{errors.date}</p>}
       </div>
       <div className="flex flex-col gap-2">

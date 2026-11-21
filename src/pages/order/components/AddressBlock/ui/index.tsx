@@ -1,5 +1,6 @@
 "use client";
 
+import type { DateRestrictions } from "@/src/pages/order/lib/deliveryDateRules";
 import { SearchIcon } from "@/src/shared/icons/SearchIcon";
 import { cn } from "@/src/shared/lib/utils/cn";
 import YandexMap from "@/src/shared/ui/YandexMap/ui";
@@ -28,6 +29,7 @@ interface AddressBlockErrors {
 
 interface AddressBlockProps {
   mode?: DeliveryType;
+  dateRestrictions: DateRestrictions;
   errors?: AddressBlockErrors;
   // eslint-disable-next-line no-unused-vars
   onFieldChange?: (field: AddressBlockField) => void;
@@ -35,6 +37,7 @@ interface AddressBlockProps {
 
 export const AddressBlock = ({
   mode = "delivery",
+  dateRestrictions,
   errors,
   onFieldChange,
 }: AddressBlockProps) => {
@@ -63,6 +66,7 @@ export const AddressBlock = ({
                 Данные получателя
               </p>
               <PickupFields
+                dateRestrictions={dateRestrictions}
                 className="max-desktop:order-3"
                 errors={{
                   name: errors?.name,
@@ -114,6 +118,7 @@ export const AddressBlock = ({
             )}
           </div>
           <AddressGrid
+            dateRestrictions={dateRestrictions}
             className="max-desktop:order-3"
             errors={{ date: errors?.date, time: errors?.time }}
             onFieldChange={onFieldChange}

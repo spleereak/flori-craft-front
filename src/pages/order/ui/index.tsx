@@ -1,5 +1,6 @@
 "use client";
 
+import { addYears, startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 
 import { ReactNode, useEffect, useMemo, useState } from "react";
@@ -9,8 +10,16 @@ import { useRouter } from "next/navigation";
 
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
 import { CartItem } from "@/src/entities/cart/model/cart.types";
+import { categoryApi } from "@/src/entities/category/api";
+import { productsApi } from "@/src/entities/products/api";
 import { orderApi } from "@/src/entities/order/api/orderApi";
 import { authApi } from "@/src/entities/user/api";
+import {
+  DateRestrictions,
+  getMothersDayProductIds,
+  isOrderDateDisabled,
+  MOTHERS_DAY_DATE_HINT,
+} from "@/src/pages/order/lib/deliveryDateRules";
 import { cookies } from "@/src/shared/lib/utils/cookies";
 import { formatPrice, formatProduct } from "@/src/shared/lib/utils/helpers";
 import { Button } from "@/src/shared/ui";
@@ -58,7 +67,8 @@ const useOrderBlocks = (
   // eslint-disable-next-line no-unused-vars -- type-only param for clearError signature
   clearError: (key: keyof OrderErrors) => void,
   userData: UserData | undefined,
-  deliveryType: DeliveryType
+  deliveryType: DeliveryType,
+  dateRestrictions: DateRestrictions
 ): OrderBlock[] => {
   return useMemo(
     () => [
@@ -75,6 +85,7 @@ const useOrderBlocks = (
         render: () => (
           <AddressBlock
             mode={deliveryType}
+            dateRestrictions={dateRestrictions}
             errors={{
               address: errors.address,
               date: errors.date,
@@ -131,7 +142,7 @@ const useOrderBlocks = (
         render: () => <PostCardBlock />,
       },
     ],
-    [items, isAuth, errors, clearError, userData, deliveryType]
+    [items, isAuth, errors, clearError, userData, deliveryType, dateRestrictions]
   );
 };
 
@@ -144,6 +155,7 @@ export default function OrderPage() {
     deliveryZone,
     deliveryType,
     setDeliveryType,
+    setDelivery,
     postcard,
     getDeliveryPrice,
   } = useOrderStore();
@@ -156,6 +168,76 @@ export default function OrderPage() {
   const [userData, setUserData] = useState<UserData>();
   const [isLoading, setIsLoading] = useState(false);
   const [hasAccess, setHasAccess] = useState(false);
+  const [categoryCheck, setCategoryCheck] = useState<{
+    status: DateRestrictions["status"];
+    mothersDayProductIds: ReadonlySet<string>;
+  }>({ status: "loading", mothersDayProductIds: new Set() });
+
+  // У CartItem нет категории: проверяем по актуальному каталогу, включая товары
+  // из старых корзин и товары, которые входят сразу в несколько категорий.
+  useEffect(() => {
+    let active = true;
+    Promise.all([
+      productsApi.getCategories(),
+      categoryApi.getEditableCategories(),
+    ])
+      .then(([response, displayedCategories]) => {
+        if (!Array.isArray(response.categories)) {
+          throw new Error("Категории товаров не получены");
+        }
+        if (active) {
+          setCategoryCheck({
+            status: "ready",
+            mothersDayProductIds: getMothersDayProductIds(
+              response.categories,
+              displayedCategories
+            ),
+          });
+        }
+      })
+      .catch(error => {
+        console.error("Не удалось проверить категории товаров:", error);
+        if (active) {
+          // Если каталог недоступен, нельзя пропускать проверку ограничений.
+          setCategoryCheck({
+            status: "error",
+            mothersDayProductIds: new Set(),
+          });
+        }
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const hasMothersDayProducts = items.some(item =>
+    categoryCheck.mothersDayProductIds.has(item.product_id)
+  );
+  const dateRestrictions: DateRestrictions = {
+    status: categoryCheck.status,
+    hasMothersDayProducts,
+  };
+
+  // Выбранная ранее дата могла стать недоступной после изменения корзины.
+  useEffect(() => {
+    if (dateRestrictions.status !== "ready" || !delivery.date) return;
+    const today = startOfDay(new Date());
+    if (
+      isOrderDateDisabled(
+        delivery.date,
+        today,
+        addYears(today, 1),
+        dateRestrictions.hasMothersDayProducts
+      )
+    ) {
+      setDelivery({ date: undefined, time: "" });
+    }
+  }, [
+    dateRestrictions.status,
+    dateRestrictions.hasMothersDayProducts,
+    delivery.date,
+    setDelivery,
+  ]);
 
   useEffect(() => {
     const canAccess = sessionStorage.getItem("canAccessOrder");
@@ -188,7 +270,8 @@ export default function OrderPage() {
     errors,
     clearError,
     userData,
-    deliveryType
+    deliveryType,
+    dateRestrictions
   );
 
   const productsPrice = items.reduce(
@@ -211,10 +294,26 @@ export default function OrderPage() {
         validationErrors.address = "Укажите адрес доставки";
       }
     }
-    if (!delivery.date) {
+    if (dateRestrictions.status !== "ready") {
+      validationErrors.date = "Не удалось проверить доступные даты. Обновите страницу.";
+    } else if (!delivery.date) {
       validationErrors.date = isPickup
         ? "Выберите дату самовывоза"
         : "Выберите дату доставки";
+    } else {
+      const today = startOfDay(new Date());
+      if (
+        isOrderDateDisabled(
+          delivery.date,
+          today,
+          addYears(today, 1),
+          dateRestrictions.hasMothersDayProducts
+        )
+      ) {
+        validationErrors.date = dateRestrictions.hasMothersDayProducts
+          ? MOTHERS_DAY_DATE_HINT
+          : "Выбранная дата недоступна";
+      }
     }
     if (!delivery.time) {
       validationErrors.time = isPickup
@@ -426,7 +525,7 @@ export default function OrderPage() {
               <Button
                 className="desktop:w-391 max-desktop:w-full"
                 onClick={handleSubmitOrder}
-                disabled={isLoading}
+                disabled={isLoading || dateRestrictions.status !== "ready"}
               >
                 {isLoading ? (
                   <Loader2 className="h-20 w-20 animate-spin" />
@@ -434,6 +533,11 @@ export default function OrderPage() {
                   "Оформить заказ"
                 )}
               </Button>
+              {dateRestrictions.status === "error" && (
+                <p className="caption text-red-500">
+                  Не удалось проверить доступные даты. Обновите страницу.
+                </p>
+              )}
               <div className="flex flex-col gap-4">
                 <div className="desktop:gap-13 flex flex-row gap-11">
                   <Checkbox

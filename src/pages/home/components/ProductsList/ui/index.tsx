@@ -5,12 +5,20 @@ import Link from "next/link";
 import { saveHomeScrollPosition } from "@/src/shared/lib/home-scroll-restore";
 import { cn } from "@/src/shared/lib/utils/cn";
 
+import { isExpressDeliveryCategory } from "../../ProductCard/lib/cardPrice";
 import { ProductCard } from "../../ProductCard/ui";
 import { ProductsListProps } from "../types";
 
 export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
   (
-    { className, category, description, products, isFirstCategory = false },
+    {
+      className,
+      category,
+      categoryId,
+      description,
+      products,
+      isFirstCategory = false,
+    },
     ref
   ) => {
     return (
@@ -52,6 +60,7 @@ export const ProductsList = forwardRef<HTMLDivElement, ProductsListProps>(
                 variants={product.variants}
                 price={product.price ?? null}
                 description={product.description}
+                showFromPrice={!isExpressDeliveryCategory(categoryId, category)}
               />
             </Link>
           ))}

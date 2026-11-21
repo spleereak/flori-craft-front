@@ -4,6 +4,7 @@ export interface ProductCardProps {
   image_urls: string[];
   description: string;
   price?: number | null;
+  showFromPrice: boolean;
   variants?: {
     size: "S" | "M" | "L";
     price: number;

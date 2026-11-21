@@ -194,6 +194,7 @@ export function HomeClient({
                   sectionRefs.current[category.name] = el;
                 }}
                 category={category.name}
+                categoryId={category.id}
                 description={category.description}
                 products={category.products}
                 isFirstCategory={index === 0}

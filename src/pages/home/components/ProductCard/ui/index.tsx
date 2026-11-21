@@ -2,41 +2,21 @@ import React from "react";
 
 import Image from "next/image";
 
-import { Bouquet } from "@/src/entities/products/api";
 import { cn } from "@/src/shared/lib/utils/cn";
 import { formatPrice } from "@/src/shared/lib/utils/helpers";
 import { Button } from "@/src/shared/ui";
 
+import { getMinimumCardPrice } from "../lib/cardPrice";
 import { ProductCardProps } from "../types";
 
-function getPrice(bouquet: Bouquet) {
-  if (
-    "variants" in bouquet &&
-    Array.isArray(bouquet.variants) &&
-    bouquet.variants.length > 0
-  ) {
-    return bouquet.variants[0].price;
-  }
-
-  return bouquet.price;
-}
-
 export const ProductCard: React.FC<ProductCardProps> = ({
-  id,
   title,
   price,
   variants,
   image_urls,
-  description,
+  showFromPrice,
 }) => {
-  const visiblePrice = getPrice({
-    id,
-    title,
-    price,
-    variants,
-    image_urls,
-    description,
-  } as Bouquet);
+  const visiblePrice = getMinimumCardPrice(price, variants);
 
   return (
     <div
@@ -59,7 +39,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       )}
       <div className="desktop:p-24 desktop:h-218 desktop:rounded-b-2xl h-78 flex flex-col justify-between rounded-b-md bg-white p-6">
         <p className="text_p--switch line-clamp-2">{title}</p>
-        <Button appearance="accent">{formatPrice(visiblePrice!)} ₽</Button>
+        <Button appearance="accent">
+          {visiblePrice !== null
+            ? `${showFromPrice ? "от " : ""}${formatPrice(visiblePrice)} ₽`
+            : "Уточнить цену"}
+        </Button>
       </div>
     </div>
   );
